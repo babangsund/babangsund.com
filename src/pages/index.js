@@ -7,23 +7,28 @@ import Layout from "components/Layout"
 
 import { rhythm } from "utils/typography"
 
-const H3 = styled.h3`
-  margin: ${rhythm(2, 0, 0.5)};
+const Article = styled.article`
+  &:not(:first-of-type) {
+    margin-top: ${rhythm(2)};
+  }
+  h3 {
+    margin-bottom: ${rhythm(0.5)};
+  }
 `
 
 function BlogPost({ blogPost }) {
   return (
-    <article>
-      <H3>
+    <Article>
+      <h3>
         <Link to={blogPost.fields.slug}>
           {blogPost.frontmatter.title.toUpperCase()}
         </Link>
-      </H3>
+      </h3>
       <small>
         {blogPost.frontmatter.date} • {blogPost.timeToRead} minute read
       </small>
       <p>{blogPost.frontmatter.excerpt}</p>
-    </article>
+    </Article>
   )
 }
 

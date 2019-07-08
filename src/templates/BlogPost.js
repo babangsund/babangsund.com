@@ -16,16 +16,20 @@ function BlogPost({ data, location, pageContext }) {
 
   return (
     <Layout location={location}>
-      <H3>{mdx.frontmatter.title.toUpperCase()}</H3>
-      <p>
-        {mdx.frontmatter.date} • {mdx.timeToRead} minute read
-      </p>
-      <MDXRenderer>{mdx.code.body}</MDXRenderer>
-      <div style={{ display: "flex" }}>
-        {prev && <Link to={prev.fields.slug}>{prev.frontmatter.title}</Link>}
-        <div style={{ flex: 1 }} />
-        {next && <Link to={next.fields.slug}>{next.frontmatter.title}</Link>}
-      </div>
+      <article>
+        <header>
+          <H3>{mdx.frontmatter.title.toUpperCase()}</H3>
+          <p>
+            {mdx.frontmatter.date} • {mdx.timeToRead} minute read
+          </p>
+        </header>
+        <MDXRenderer>{mdx.code.body}</MDXRenderer>
+        <div style={{ display: "flex" }}>
+          {prev && <Link to={prev.fields.slug}>{prev.frontmatter.title}</Link>}
+          <div style={{ flex: 1 }} />
+          {next && <Link to={next.fields.slug}>{next.frontmatter.title}</Link>}
+        </div>
+      </article>
     </Layout>
   )
 }
