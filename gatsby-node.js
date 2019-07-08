@@ -28,7 +28,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
 exports.createPages = async ({ actions, graphql }) => {
   const { data, errors } = await graphql(`
-    {
+    query GatsbyNodeQuery {
       blog: allMdx(
         sort: { order: ASC, fields: [frontmatter___date] }
         filter: { fileAbsolutePath: { regex: "//src/blog//" } }

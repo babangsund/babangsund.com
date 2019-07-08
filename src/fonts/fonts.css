@@ -1,6 +1,7 @@
 @font-face {
   font-family: "Nunito";
   font-style: normal;
+  font-display: swap;
   font-weight: 300;
   src: local("Nunito Light"), local("Nunito-Light"),
     url("nunito-v10-latin-300.woff2") format("woff2"),
@@ -10,6 +11,7 @@
 @font-face {
   font-family: "Nunito";
   font-style: normal;
+  font-display: swap;
   font-weight: 400;
   src: local("Nunito Regular"), local("Nunito-Regular"),
     url("nunito-v10-latin-regular.woff2") format("woff2"),
@@ -19,6 +21,7 @@
 @font-face {
   font-family: "Nunito";
   font-style: normal;
+  font-display: swap;
   font-weight: 600;
   src: local("Nunito SemiBold"), local("Nunito-SemiBold"),
     url("nunito-v10-latin-600.woff2") format("woff2"),
@@ -28,6 +31,7 @@
 @font-face {
   font-family: "Nunito";
   font-style: normal;
+  font-display: swap;
   font-weight: 700;
   src: local("Nunito Bold"), local("Nunito-Bold"),
     url("nunito-v10-latin-700.woff2") format("woff2"),
@@ -37,6 +41,7 @@
 @font-face {
   font-family: "Fira Code";
   font-style: normal;
+  font-display: swap;
   font-weight: 400;
   src: local("Fira Code Regular"), local("FiraCode-Regular"),
     url("./FiraCode-Regular.woff2") format("woff2"),
