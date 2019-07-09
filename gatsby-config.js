@@ -1,7 +1,3 @@
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-})
-
 module.exports = {
   siteMetadata: {
     lang: "en",
@@ -14,10 +10,14 @@ module.exports = {
     stackoverflow: "https://stackoverflow.com/users/11754830/babangsund",
   },
   plugins: [
-    "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-styled-components",
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GA_ID,
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -46,8 +46,8 @@ module.exports = {
         name: "babangsund",
         short_name: "babangsund",
         start_url: "/",
-        background_color: "#353565",
-        theme_color: "#353565",
+        background_color: "#1C0046",
+        theme_color: "#1C0046",
         display: "standalone",
       },
     },

@@ -2,6 +2,12 @@
   "version": 2,
   "name": "babangsund.com",
   "alias": "babangsund.com",
+  "env": {
+    "GA_ID": "@ga-id"
+  },
+  "routes": [
+    {"src": "^/(.*).html", "headers": {"cache-control": "public,max-age=0,must-revalidate"}, "dest": "$1.html" }
+  ],
   "builds": [
     {
       "src": "package.json",
