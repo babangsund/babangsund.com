@@ -1,11 +1,11 @@
 import React from "react"
-import { MDXProvider } from "@mdx-js/react"
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components"
 
-import mdx from "components/mdx"
 import Main from "components/Main"
 import Header from "components/Header"
 import Footer from "components/Footer"
+
+import code from "./code.css"
 
 import theme from "utils/theme"
 
@@ -43,6 +43,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${p => p.theme.purple};
     border-left: 0.375rem solid ${p => p.theme.green};
   }
+  ${code};
 `
 
 function Layout({ children }) {
@@ -51,9 +52,7 @@ function Layout({ children }) {
       <Container>
         <GlobalStyle />
         <Header />
-        <Main>
-          <MDXProvider components={mdx}>{children}</MDXProvider>
-        </Main>
+        <Main>{children}</Main>
         <Footer />
       </Container>
     </ThemeProvider>

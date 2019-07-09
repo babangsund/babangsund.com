@@ -46,7 +46,7 @@ function Index({ data }) {
 
 export const query = graphql`
   query IndexQuery {
-    blog: allMdx(
+    blog: allMarkdownRemark(
       sort: { order: DESC, fields: [frontmatter___date] }
       filter: { fileAbsolutePath: { regex: "//src/blog//" } }
     ) {

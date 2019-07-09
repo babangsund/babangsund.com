@@ -14,7 +14,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
-  if (node.internal.type === "Mdx") {
+  if (node.internal.type === "MarkdownRemark") {
     const { createNodeField } = actions
     const slug = createFilePath({ node, getNode })
 
@@ -29,7 +29,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 exports.createPages = async ({ actions, graphql }) => {
   const { data, errors } = await graphql(`
     query GatsbyNodeQuery {
-      blog: allMdx(
+      blog: allMarkdownRemark(
         sort: { order: ASC, fields: [frontmatter___date] }
         filter: { fileAbsolutePath: { regex: "//src/blog//" } }
       ) {

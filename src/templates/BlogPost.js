@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 import styled from "styled-components"
-import MDXRenderer from "gatsby-mdx/mdx-renderer"
 
 import Layout from "components/Layout"
 import { rhythm } from "utils/typography"
@@ -11,19 +10,19 @@ const H3 = styled.h3`
 `
 
 function BlogPost({ data, location, pageContext }) {
-  const { mdx } = data,
+  const { post } = data,
     { prev, next } = pageContext
 
   return (
     <Layout location={location}>
       <article>
         <header>
-          <H3>{mdx.frontmatter.title.toUpperCase()}</H3>
+          <H3>{post.frontmatter.title.toUpperCase()}</H3>
           <p>
-            {mdx.frontmatter.date} • {mdx.timeToRead} minute read
+            {post.frontmatter.date} • {post.timeToRead} minute read
           </p>
         </header>
-        <MDXRenderer>{mdx.code.body}</MDXRenderer>
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
         <div style={{ display: "flex" }}>
           {prev && (
             <Link to={prev.fields.slug}>← {prev.frontmatter.title}</Link>
@@ -39,18 +38,16 @@ function BlogPost({ data, location, pageContext }) {
 }
 
 export const query = graphql`
-  fragment BlogPost on Mdx {
+  fragment BlogPost on MarkdownRemark {
+    html
     timeToRead
     frontmatter {
       title
       date(formatString: "MMMM DD, YYYY")
     }
-    code {
-      body
-    }
   }
   query BlogPostQuery($slug: String!) {
-    mdx(fields: { slug: { eq: $slug } }) {
+    post: markdownRemark(fields: { slug: { eq: $slug } }) {
       ...BlogPost
     }
   }

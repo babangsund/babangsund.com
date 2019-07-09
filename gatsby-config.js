@@ -32,13 +32,23 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-mdx",
+      resolve: `gatsby-transformer-remark`,
       options: {
-        extensions: [".md", ".mdx", ".markdown"],
-        defaultLayouts: {
-          default: `${__dirname}/src/templates/Markdown.js`,
-        },
-        gatsbyRemarkPlugins: ["gatsby-remark-copy-linked-files"],
+        plugins: [
+          "gatsby-remark-copy-linked-files",
+          {
+            resolve: "gatsby-remark-prismjs",
+            options: {
+              inlineCodeMarker: "÷",
+            },
+          },
+          {
+            resolve: "gatsby-remark-external-links",
+            options: {
+              target: "_blank",
+            },
+          },
+        ],
       },
     },
     {
