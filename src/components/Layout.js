@@ -37,9 +37,9 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${p => p.theme.green};
   }
   blockquote {
-    margin-left: 0;
     font-style: oblique;
     padding-left: 1.5rem;
+    margin-left: -1.875rem;
     color: ${p => p.theme.purple};
     border-left: 0.375rem solid ${p => p.theme.green};
   }

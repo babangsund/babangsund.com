@@ -38,6 +38,7 @@ module.exports = {
         defaultLayouts: {
           default: `${__dirname}/src/templates/Markdown.js`,
         },
+        gatsbyRemarkPlugins: ["gatsby-remark-copy-linked-files"],
       },
     },
     {

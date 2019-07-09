@@ -25,9 +25,13 @@ function BlogPost({ data, location, pageContext }) {
         </header>
         <MDXRenderer>{mdx.code.body}</MDXRenderer>
         <div style={{ display: "flex" }}>
-          {prev && <Link to={prev.fields.slug}>{prev.frontmatter.title}</Link>}
+          {prev && (
+            <Link to={prev.fields.slug}>← {prev.frontmatter.title}</Link>
+          )}
           <div style={{ flex: 1 }} />
-          {next && <Link to={next.fields.slug}>{next.frontmatter.title}</Link>}
+          {next && (
+            <Link to={next.fields.slug}>{next.frontmatter.title} →</Link>
+          )}
         </div>
       </article>
     </Layout>
