@@ -33,6 +33,16 @@ const GlobalStyle = createGlobalStyle`
       color: ${p => p.theme.pink};
     }
   }
+  hr {
+    background-color: ${p => p.theme.green};
+  }
+  blockquote {
+    margin-left: 0;
+    font-style: oblique;
+    padding-left: 1.5rem;
+    color: ${p => p.theme.purple};
+    border-left: 0.375rem solid ${p => p.theme.green};
+  }
 `
 
 function Layout({ children }) {
