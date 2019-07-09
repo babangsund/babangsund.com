@@ -1,6 +1,9 @@
 export default {
-  pink: "#E70077",
-  green: "#33E99F",
-  background: "#151535",
-  foreground: "#353565",
+  pink: "#FF0077",
+  green: "#00FFAA",
+  purple: "#DDD4FF",
+  orange: "#FF6600",
+  indigo: "#6500FF",
+  darker: "#25005D",
+  darkest: "#1C0046",
 }

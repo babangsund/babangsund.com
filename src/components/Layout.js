@@ -1,6 +1,6 @@
 import React from "react"
 import { MDXProvider } from "@mdx-js/react"
-import styled, { createGlobalStyle } from "styled-components"
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components"
 
 import mdx from "components/mdx"
 import Main from "components/Main"
@@ -24,27 +24,29 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     width: 100%;
     height: 100%;
-    background: ${theme.background};
+    background: ${p => p.theme.darkest};
   }
   a {
     color: inherit;
     text-decoration: none;
     &:hover {
-      color: ${theme.pink};
+      color: ${p => p.theme.pink};
     }
   }
 `
 
 function Layout({ children }) {
   return (
-    <Container>
-      <GlobalStyle />
-      <Header />
-      <Main>
-        <MDXProvider components={mdx}>{children}</MDXProvider>
-      </Main>
-      <Footer />
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container>
+        <GlobalStyle />
+        <Header />
+        <Main>
+          <MDXProvider components={mdx}>{children}</MDXProvider>
+        </Main>
+        <Footer />
+      </Container>
+    </ThemeProvider>
   )
 }
 
