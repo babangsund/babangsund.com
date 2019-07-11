@@ -142,7 +142,7 @@ pre[data-line] {
 .gatsby-highlight {
   margin-bottom: 1.75rem;
   border-radius: 10px;
-  background: #011627;
+  background: rgb(37, 0, 93);
   -webkit-overflow-scrolling: touch;
   overflow: auto;
 }
