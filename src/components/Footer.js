@@ -16,7 +16,6 @@ const Container = styled.section`
 
 const A = styled.a`
   color: ${p => p.theme.purple};
-  text-transform: uppercase;
 `
 
 function Footer() {
