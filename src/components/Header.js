@@ -39,7 +39,7 @@ function Header() {
   }, [])
 
   return (
-    <Container scrolling={scrolling || undefined}>
+    <Container scrolling={scrolling ? "true" : undefined}>
       <header>
         <h1>
           <Link to="/">{site.siteMetadata.title}</Link>

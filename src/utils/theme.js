@@ -4,6 +4,8 @@ export default {
   purple: "#DDD4FF",
   orange: "#FF6600",
   indigo: "#6500FF",
-  darker: "#25005D",
-  darkest: "#1C0046",
+  dark: "#5100CC",
+  darker: "#3D0099",
+  darkest: "#280066",
+  darkester: "#140033",
 }

@@ -24,11 +24,11 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     width: 100%;
     height: 100%;
-    background: ${p => p.theme.darkest};
+    background: ${p => p.theme.darkester};
   }
   a {
-    color: inherit;
     text-decoration: none;
+    color: ${p => p.theme.green};
     &:hover {
       color: ${p => p.theme.pink};
     }
@@ -41,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
     padding-left: 1.5rem;
     margin-left: -1.875rem;
     color: ${p => p.theme.purple};
-    border-left: 0.375rem solid ${p => p.theme.green};
+    border-left: 0.275rem solid ${p => p.theme.green};
   }
   ${code};
 `

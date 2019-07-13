@@ -14,6 +14,11 @@ const Container = styled.section`
   }
 `
 
+const A = styled.a`
+  color: ${p => p.theme.purple};
+  text-transform: uppercase;
+`
+
 function Footer() {
   const {
     site: {
@@ -34,17 +39,17 @@ function Footer() {
   return (
     <Container>
       <footer>
-        <a target="_blank" href={github} rel="noopener noreferrer">
+        <A target="_blank" href={github} rel="noopener noreferrer">
           github
-        </a>
+        </A>
         {" • "}
-        <a target="_blank" href={twitter} rel="noopener noreferrer">
+        <A target="_blank" href={twitter} rel="noopener noreferrer">
           twitter
-        </a>
+        </A>
         {" • "}
-        <a target="_blank" href={stackoverflow} rel="noopener noreferrer">
+        <A target="_blank" href={stackoverflow} rel="noopener noreferrer">
           stack overflow
-        </a>
+        </A>
       </footer>
     </Container>
   )

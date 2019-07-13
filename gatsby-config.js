@@ -10,6 +10,7 @@ module.exports = {
     stackoverflow: "https://stackoverflow.com/users/11754830/babangsund",
   },
   plugins: [
+    "gatsby-plugin-catch-links",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-styled-components",
     {

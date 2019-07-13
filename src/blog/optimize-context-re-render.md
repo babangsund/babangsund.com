@@ -21,11 +21,11 @@ in a scenario where we'd like to render our current state in one component, and 
 const CountContext = createContext();
 
 function App() {
-  const state = React.useState(0)
+  const state = useState(0)
   return (
 	<CountContext.Provider value={state}>
-		<Value />
-        <Updater />
+	  <Value />
+	  <Updater />
 	</CountContext.Provider>
   );
 }
@@ -57,29 +57,29 @@ Revisiting our previous example, it would now come to look like this:
 
 ```jsx
 const ValueContext = createContext();
-const UpdateContext = createContext();
+const OnChangeContext = createContext();
 
 function App() {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
 
   return (
-    <UpdateContext.Provider value={setCount}>
+    <OnChangeContext.Provider value={setCount}>
       <ValueContext.Provider value={count}>
         <Value />
         <Update />
       </ValueContext.Provider>
-    </UpdateContext.Provider>
+    </OnChangeContext.Provider>
   );
 }
 
-const Value = React.memo(() => {
+const Value = memo(() => {
   const value = useContext(ValueContext);
   return <div>{value}</div>;
 });
 
-const Update = React.memo(() => {
-  const update = useContext(UpdateContext);
-  return <button onClick={() => update(n => n + 1)}>update</button>;
+const Update = memo(() => {
+  const onChange = useContext(OnChangeContext);
+  return <button onClick={() => onChange(n => n + 1)}>update</button>;
 });
 ```
 

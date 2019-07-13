@@ -1,11 +1,9 @@
-/**
-   * Based on copypasta from Remy Bach and Sarah Drasner
-   */
 code[class*="language-"],
 pre[class*="language-"] {
   color: white;
   background: none;
-  font-family: Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace;
+  font-family: Fira Code, Consolas, Menlo, Monaco, source-code-pro, Courier New,
+    monospace;
   font-feature-settings: normal;
   text-align: left;
   white-space: pre;
@@ -130,19 +128,19 @@ pre[data-line] {
 }
 
 .gatsby-highlight-code-line {
-  background-color: hsla(207, 95%, 15%, 1);
+  background-color: #3d0099;
   display: block;
   margin-right: -1.3125rem;
   margin-left: -1.3125rem;
   padding-right: 1em;
   padding-left: 1.25em;
-  border-left: 0.25em solid #ffa7c4;
+  border-left: 0.25em solid #00ffaa;
 }
 
 .gatsby-highlight {
   margin-bottom: 1.75rem;
   border-radius: 10px;
-  background: rgb(37, 0, 93);
+  background: #280066;
   -webkit-overflow-scrolling: touch;
   overflow: auto;
 }
