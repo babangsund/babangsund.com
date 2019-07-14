@@ -2,6 +2,7 @@
 title: "Optimize context re-rendering"
 date: "2019-07-09"
 excerpt: "The solution is surprisingly simple!"
+published: true
 ---
 
 

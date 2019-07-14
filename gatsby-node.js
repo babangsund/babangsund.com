@@ -31,7 +31,10 @@ exports.createPages = async ({ actions, graphql }) => {
     query GatsbyNodeQuery {
       blog: allMarkdownRemark(
         sort: { order: ASC, fields: [frontmatter___date] }
-        filter: { fileAbsolutePath: { regex: "//src/blog//" } }
+        filter: {
+          frontmatter: { published: { eq: true } }
+          fileAbsolutePath: { regex: "//src/blog//" }
+        }
       ) {
         edges {
           node {
