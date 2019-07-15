@@ -2,7 +2,7 @@
 title: "Optimize state re-rendering"
 date: "2019-07-15"
 excerpt: "Avoid prop drilling and duplicate state!"
-published: false
+published: true
 ---
 
 Finding a balance between complexity, readability, and performance in your React application, is important.
