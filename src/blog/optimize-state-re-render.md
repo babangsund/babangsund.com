@@ -1,7 +1,7 @@
 ---
 title: "Optimize state re-rendering"
 date: "2019-07-15"
-excerpt: "Avoid prop drilling and duplicate state!"
+excerpt: "Performance without complexity."
 published: true
 ---
 
@@ -10,7 +10,7 @@ Finding a balance between complexity, readability, and performance in your React
 Although React is inherently fast, you are likely to encounter times, where you will find yourself having to optimize the re-rendering performance of your application.
 This can be especially true if you're working with large amounts of data (Think long lists, large tables) or complex UI interactions (Dnd, animations, etc.).
 
-In an attempt to solve some of these isses, we may come to find ourselves wearing blinders.
+In an attempt to solve some of these issues, we may come to find ourselves wearing blinders.
 
 A prime example of this, is when we're using Redux, to manage state in our application.
 Redux has been really successful, with one of the main reasons being, that it solved the prop drilling issue.
