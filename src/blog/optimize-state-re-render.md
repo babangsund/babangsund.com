@@ -10,6 +10,7 @@ Finding a balance between complexity, readability, and performance in your React
 Although React is inherently fast, you are likely to encounter times, where you will find yourself having to optimize the re-rendering performance of your application.
 This can be especially true if you're working with large amounts of data (Think long lists, large tables) or complex UI interactions (Dnd, animations, etc.).
 
+#### Blinders
 In an attempt to solve some of these issues, we may come to find ourselves wearing blinders.
 
 A prime example of this, is when we're using Redux, to manage state in our application.
@@ -21,6 +22,7 @@ Wearing blinders however, we've failed to realize that while readability is up, 
 Now that we're using Redux, we have to manage both reducers, actions and dispatch calls. The larger the application gets, the more difficult this becomes to handle.
 
 
+#### State management
 Now, state management is inarguably one of the hardest things about React.
 While Redux, Mobx, and all the other state management libraries have attempted, and many indeed succeeded, in providing developers with a better experience, for many applications, complexity has also gone up.
 One could definitely argue, that this falls on developer, using a library in a different way that was originally intended, by using them for local state, which React already did well on its own.
