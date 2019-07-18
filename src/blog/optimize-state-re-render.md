@@ -1,6 +1,6 @@
 ---
 title: "Optimize state re-rendering"
-date: "2019-07-15"
+date: "2019-07-13"
 excerpt: "Performance without complexity."
 published: true
 ---
