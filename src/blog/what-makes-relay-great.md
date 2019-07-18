@@ -15,13 +15,13 @@ What makes Relay great, may also be what makes the documentation opaque, and dif
 It originated as an internal tool at Facebook, which they eventually decided to open-source.
 So, the design is without a doubt, with engineering problems at Facebook in mind. If however, your application aligns with the goals of those at Facebook, Relay is for you.
 
->Relay is a highly opinionated framework, presumably built around Facebook-scale best-practices. And **you** get to build on top of that.
+>Relay is a highly opionionated framework, presumably built around Facebook-scale best-practices. And **you** get to build on top of that.
 
 Funnily enough, [Software Engineering Daily released a podcast today, featuring Tom Occhino](https://softwareengineeringdaily.com/2019/07/18/facebook-open-source-management-with-tom-occhino/) who is the engineering director of the React group at Facebook. He shares with us, that this is a very common pattern for open-source tools at Facebook. Which in hindsight is obvious, when you look at something like Relay.
 
 ---
 
-### Beyong the docs
+### Beyond the docs
 
 Using Relay in a complex application, you risk getting to a point, where you realize that the documentation may be insufficient for your needs. So you start reading the source code.
 
