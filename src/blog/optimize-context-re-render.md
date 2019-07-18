@@ -11,7 +11,7 @@ Why do you need to *optimize* your context?
 Chances are, that the answer to the question is simple - you don't.
 At least not in the majority, of the average application. After all, “*Premature optimization is the root of all evil*”.
 
-Sometimes however, you may encounter a situation, where your context value changes frequently enough, for the drop in performance to become noticeable. This may be especially true for users on lower-end hardware - unlike us spoiled developers, living blissfully unaware on our $5,000+ Macbooks. :money_with_wings::money_with_wings:
+Sometimes however, you may encounter a situation, where your context value changes frequently enough, for the drop in performance to become noticeable. This may be especially true for users on lower-end hardware - unlike us spoiled developers, living blissfully unaware on our $5,000+ Macbooks.
 
 >Given the inherent speed of React, optimizations usually needn't be implemented, unless unsatisfactory performance has already been established.
 
