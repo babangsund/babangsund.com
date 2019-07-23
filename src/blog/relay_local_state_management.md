@@ -5,8 +5,10 @@ excerpt: "It's easy!"
 published: true
 ---
 
+*It's easy!*
+
 Amongst the shrouds of the Relay source code, there are many a treasure to be found.
-One of these treasures is rumoured to be none other than local state.
+One of these treasures is rumoured to be none other, than local state.
 
 Local state? Like a local government?
 
@@ -37,7 +39,7 @@ You essentially run `relay-compiler` from the bin, with a couple of arguments, i
 One of the required arguments here, is the `--src` flag, which tells the compiler where your source code lives.
 And this is where it get's interesting for us!
 
-### Query local state
+### Query local data
 
 Inside this the src directory, which you provided to `relay-compiler`, you need to create a new `.graphql` file.
 Let's call it `relayIsAwesome.graphql`, to avoid any confusion.
@@ -86,7 +88,7 @@ In the query above, we're still faced with an issue - the value of `props.localV
 
 ### Initial values
 
-We know how to query local state, but we're still starting out with `undefined` as the default value.
+We know how to query local data, but we're still starting out with `undefined` as the default value.
 I've found, that your best bet here is to simply update the store right after you've instantiated it.
 
 Sticking to our previous example of `localValue: String`, the implementation is really simple:
@@ -104,7 +106,7 @@ commitLocalUpdate(environment, store => {
 
 Next time we make a query, the value of `props.localValue` with start out as an empty string instead of `undefined`.
 
-### Imperative local state
+### Imperative local data
 
 If you ever need to use your Relay state outside of a query, this is possible too.
 
@@ -121,9 +123,9 @@ const { localValue } = environment
 `ROOT_ID` is the dataID, for the root record. Since our `localValue` is on root, this is what we want.
 Although we know the value of `ROOT_ID` is `client:root`, importing it from Relay helps keep us safe, should they ever decide to change it.
 
-### Mutating local state
+### Mutating local data
 
-At this point we know how to query local state, and we know how to set an initial value.
+At this point we know how to query local data, and we know how to set an initial value.
 But that's not very exciting in itself, so let's take a shot at updating it!
 
 A *classic* example of how to use React state, is the controlled input.
@@ -177,11 +179,11 @@ Keep in mind, that just because you *can* use Relay for local component state, d
 
 ## Conclusion
 
-Using local state in Relay is easy - but then again, everything is easy once you know how.
+Using local data in Relay is easy - but then again, everything is easy once you know how.
 
 1. Create a `.graphql` in your `relay-compiler --src` directory and create whatever field you'd like.
 
-2. When fetching local state, it is treated as remote data. You can retrieve it from a `QueryRenderer`, `fetchQuery` or directly via. the store.  You should be using a `QueryRenderer` whenever possible.
+2. When fetching local data, it is treated as remote data. You can retrieve it from a `QueryRenderer`, `fetchQuery` or directly via. the store.  You should be using a `QueryRenderer` whenever possible.
 
 3. `commitLocalUpdate` is used to update the value in the store.
 
