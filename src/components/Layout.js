@@ -33,6 +33,10 @@ const GlobalStyle = createGlobalStyle`
       color: ${p => p.theme.pink};
     }
   }
+  img {
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
   hr {
     background-color: ${p => p.theme.green};
   }

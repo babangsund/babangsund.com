@@ -6,13 +6,15 @@ published: true
 ---
 
 Amongst the shrouds of the Relay source code, there are many a treasure to be found.
-One of these treasures is rumoured to be none other, than local state.
+One of these treasures is rumoured to be none other than local state.
 
 Local state? Like a local government?
 
+![government](https://miro.medium.com/max/1400/0*RFsq01F0sIPT4xPe)
+
 *sigh*.
 
-No. By local state, I'm referring to reactive state kept in Relay's internal store. [Like one might do in Apollo](https://www.apollographql.com/docs/react/essentials/local-state/)!
+**No**. By local state, I'm referring to reactive state kept in Relay's internal store. [Like one might do in Apollo](https://www.apollographql.com/docs/react/essentials/local-state/)!
 
 In Relay, you quickly get acquainted with how easy it is to retrieve remote data, by using queries and fragments to specify the data your component requires and how to use mutations, to then alter that data on the server.
 
@@ -100,7 +102,7 @@ commitLocalUpdate(environment, store => {
 });
 ```
 
-Next time we make a query, the value of `props.localValue` with start out as `""`.
+Next time we make a query, the value of `props.localValue` with start out as an empty string instead of `undefined`.
 
 ### Imperative local state
 
@@ -175,7 +177,7 @@ Keep in mind, that just because you *can* use Relay for local state, does **not*
 
 ## Conclusion
 
-Using local state in Relay is easy - but again, everything is easy, once you know how to do it.
+Using local state in Relay is easy - but then again, everything is easy once you know how.
 
 1. Create a `.graphql` in your `relay-compiler --src` directory and create whatever field you'd like.
 
@@ -183,4 +185,4 @@ Using local state in Relay is easy - but again, everything is easy, once you kno
 
 3. `commitLocalUpdate` is used to update the value in the store.
 
-*Easy*
+*I told you it was easy!*
