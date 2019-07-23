@@ -5,8 +5,6 @@ excerpt: "It's easy!"
 published: true
 ---
 
-*It's easy!*
-
 Amongst the shrouds of the Relay source code, there are many a treasure to be found.
 One of these treasures is rumoured to be none other, than local state.
 
@@ -186,5 +184,3 @@ Using local data in Relay is easy - but then again, everything is easy once you 
 2. When fetching local data, it is treated as remote data. You can retrieve it from a `QueryRenderer`, `fetchQuery` or directly via. the store.  You should be using a `QueryRenderer` whenever possible.
 
 3. `commitLocalUpdate` is used to update the value in the store.
-
-*I told you it was easy!*
