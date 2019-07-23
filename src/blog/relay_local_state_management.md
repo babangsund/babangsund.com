@@ -173,7 +173,7 @@ Hopefully, you're [caching](https://relay.dev/docs/en/network-layer#caching) the
 
 > With great power comes great global state.
 
-Keep in mind, that just because you *can* use Relay for local state, does **not** mean that you should. This is a job best left to React. [Are you using hooks yet](https://reactjs.org/docs/hooks-intro.html)? If not, you're missing out!
+Keep in mind, that just because you *can* use Relay for local component state, does **not** mean that you should. This is a job best left to React. [Are you using hooks yet](https://reactjs.org/docs/hooks-intro.html)? If not, you're missing out!
 
 ## Conclusion
 
