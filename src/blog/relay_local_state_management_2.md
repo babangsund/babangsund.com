@@ -6,11 +6,14 @@ published: true
 ---
 
 [In my previous post](https://babangsund.com/relay_local_state_management/), I explained how to use [Relay](https://relay.dev/) as a global state management library.
+
 If you haven’t read it yet, I highly recommend doing so *first*.
 
 ![government](https://miro.medium.com/max/1400/0*x4DFSRHRY_uT2ZqT)
 
-In this post, we will explore how an implementation of this concept might look in a more realistic scenario, than in my previous controlled input example.
+---
+
+In this post, we will explore how an implementation of this concept might look in a more realistic scenario than in my previous controlled input example.
 
 ## Global state
 
@@ -33,7 +36,7 @@ application
 ```
 
 And the `src/index.js` file looks like this.
-We won't be making changing to this file.
+We won't be making any changes to this file.
 
 ```javascript
 // src/index.js
@@ -59,7 +62,7 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 ```
 
-In the end, we want to be able to update the global state in our header, and react to that change in the Drawer and Main components.
+In the end, we want to be able to update the global state in our header, and react to that change in the `Drawer` and `Main` components.
 
 ### Updating the client schema
 
@@ -131,7 +134,7 @@ commitLocalUpdate(environment, store => {
 export default environment;
 ```
 
-In Relay, it's common practice to append "client:" to the ID of any client-side fields, as you'll notice did we here.
+In Relay, it's common practice to append "client:" to the ID of any client-side fields, as you’ll notice we’ve done in the example here above.
 Then, we created a new  record of type `Settings`, and set the initial `isDrawerOpen` value to `true`.
 
 `environment.retain` is to prevent Relay from garbage collecting our local record.
