@@ -323,15 +323,16 @@ That in itself is actually pretty darn neat. Thumbs up!
 ![pretty cool](https://media.giphy.com/media/mgqefqwSbToPe/giphy.gif)
 
 But what if the user was to log out, or refresh the page? Oops. Now our state is gone.
-If we want it to persist, we oughta store it on the server - right?
-
-Well, maybe. But there's also the option of storing it in localStorage.
+If we want it to persist, we oughta store it on the server - right? Well, maybe. But there's also the option of storing it in localStorage.
 
 ### Putting it in localStorage.
 
-If you're not interested in storing anything in `localStorage`, there isn't much else to see here.
-But if you are, please read on.
+In case you’re not interested in storing anything in the browser localStorage, there isn’t much else to see here, and I don’t want to waste your precious time.
 
+If that’s you — thanks for reading. `break`;  
+Else if this sounds interesting to you, then please read on. `continue`;
+
+---
 
 To get started, let's take another look at setting our initial values.
 Instead of always defaulting to the same value, we need to grab the previous value from `localStorage` and use that instead.
