@@ -315,7 +315,7 @@ export default Drawer;
 At this point, you might say that we've achieved our goal.
 We're able to make changes in the `Header`, via the `DrawerButton` component and we can then React to those changes across our application.
 
-That in itself is actually pretty darn neat.
+That in itself is actually pretty darn neat. Thumbs up!
 
 ![pretty cool](https://media.giphy.com/media/mgqefqwSbToPe/giphy.gif)
 
