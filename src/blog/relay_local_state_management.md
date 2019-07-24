@@ -1,7 +1,7 @@
 ---
-title: "Relay: Local state management"
+title: "React to Relay: local state management, part 1"
 date: "2019-07-23"
-excerpt: "It's easy!"
+excerpt: "A controlled input using Relay"
 published: true
 ---
 
