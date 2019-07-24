@@ -6,17 +6,18 @@ published: true
 ---
 
 
-Why do you need to *optimize* your context?
+Why do you *need* to optimize your context?
 
 Chances are, that the answer to the question is simple - you don't.
 At least not in the majority, of the average application. After all, “*Premature optimization is the root of all evil*”.
 
-Sometimes however, you may encounter a situation, where your context value changes frequently enough, for the drop in performance to become noticeable. This may be especially true for users on lower-end hardware - unlike us spoiled developers, living blissfully unaware on our $5,000+ Macbooks.
+Sometimes however, you may encounter a situation where your context value changes frequently enough for the drop in performance to become noticeable.
+This may be especially true for users on lower-end hardware - unlike us spoiled developers, living blissfully unaware on our $3,000+ Macbooks.
 
->Given the inherent speed of React, optimizations usually needn't be implemented, unless unsatisfactory performance has already been established.
+>Given the inherent speed of React, optimizations usually needn't be implemented  
+>unless unsatisfactory performance has already been established.
 
-Assuming an outermost Component - in this case `App`, which holds our state,
-in a scenario where we'd like to render our current state in one component, and update it in another, our code may look like this:
+Image an outermost component - in this case `App`, in a scenario where we'd like to render our current state in one child component, and update it in another.
 
 ```jsx
 const CountContext = createContext();
@@ -46,10 +47,10 @@ const Updater = () => {
 
 As indicated by the outline, each click triggers a re-render of both components.
 
-Given how React's Context API is implemented, all consumers of a contexts value, will re-render upon updates.
-The reasoning for this is obvious, as we would otherwise have to worry about dealing with stale data.
+Given how React's Context API is implemented, all consumers of a contexts value will re-render upon updates.
+The reasoning for this is obvious, as we would otherwise have to worry about dealing with stale context.
 
-In the case of performance though. we're shooting ourselves in the foot, by consuming a context, which provides us with a value, which will *update*, whenever the value of the state changes.
+In the case of performance though, we're shooting ourselves in the foot by consuming a context, which provides us with a value, which *will* update whenever the value of the state changes.
 
 As I've been hinting at, the solution here is simple.
 We provide two contexts. One which holds the value, and another which holds the updater.
@@ -86,10 +87,10 @@ const Update = memo(() => {
 
 ![Post-optimization](./post-optimization.gif)
 
-You will notice, that the outline no longer appears on our button, because the component only consumes `UpdateContext`, which provides the `setCount` function.
+You will notice, that the outline no longer appears on our button.  
+This is because the component only consumes `UpdateContext`, which provides the `setCount` function.
 
-Because [React guarantees that the `setCount` function is stable across re-renders]([https://reactjs.org/docs/hooks-reference.html](https://reactjs.org/docs/hooks-reference.html)), the context value never changes, and the consumer has no reason to update.
+Since [React guarantees that the `setCount` function is stable across re-renders]([https://reactjs.org/docs/hooks-reference.html](https://reactjs.org/docs/hooks-reference.html)), the context value never changes and the consumer has no reason to update.
 
----
-
-Although this is a contrived example, the implementation of this pattern in a real-world application remains simple, and the performance gains are potentially huge - provided a scenario, where the updater component for some reason is expensive to re-render.
+Although this is a contrived example, the implementation of this pattern in a real-world application remains clear and simple.
+The performance gains are potentially big - provided a scenario, where the updater component for some reason is expensive to re-render.

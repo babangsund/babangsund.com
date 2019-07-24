@@ -20,32 +20,34 @@ In Relay, you quickly get acquainted with how easy it is to retrieve remote data
 
 But what about local data? Things like settings, dark or light theme, whether the modal is open or closed - basically anything you would want or *need* to put in ***global state***.
 
-We *could* use a separate state-management library like Redux, or a multi-store system like Mobx, which we would have to maintain on the side. With the *"new"* Context API, you could even forgo Redux and Mobx entirely, and just create a high-level component, passing down whatever we need through context.
+We *could* use a separate state-management library like Redux, or a multi-store system like Mobx, which we would have to maintain on the side. With the *"new"* Context API, you could even forgo Redux and Mobx entirely and just create a high-level component, passing down whatever we need through context.
 
 > It's good to have options.
 
 But you don't have to! And it's good to have options.
-Would you believe, that Relay actually provides this functionality out of the box? It this were any another framework, I would probably be linking to the documentation on the website and that would be the very abrupt end of this blog post. Fortunately for me, that is not the case.
+Would you believe, that Relay actually provides this functionality out of the box? It this were any another framework, I would probably be linking to the documentation on the website and that would be the very abrupt end of this blog post.
+
+Fortunately for me, *that is not the case.*
 
 ## Just show me how it's done!
 
 Hey, don't be rude - I'm getting to it!
 
 If you've ever used Relay, you're probably *all too familiar* with the [compilation step](https://relay.dev/docs/en/graphql-in-relay.html#relay-compiler).
-You essentially run `relay-compiler` from the bin, with a couple of arguments, in order to convert your `graphql` tagged queries into generated files, which contain runtime artifacts - and types, should you have chosen to do so.
+You essentially run `relay-compiler` from the bin with a couple of arguments, in order to convert your `graphql` tagged queries into generated files which contain runtime artifacts - and types, should you have chosen to do so.
 
-One of the required arguments here, is the `--src` flag, which tells the compiler where your source code lives.
+One of the required arguments for `relay-compiler`, is the `--src` flag, which tells the compiler where your source code lives.
 And this is where it get's interesting for us!
 
 ### Query local data
 
-Inside this the src directory, which you provided to `relay-compiler`, you need to create a new `.graphql` file.
+Inside this the `src` directory, which you provided to `relay-compiler`, you need to create a new `.graphql` file.  
 Let's call it `relayIsAwesome.graphql`, to avoid any confusion.
 
 This schema is what Relay will refer to, as the *"client"* schema. You can put anything you want in this schema, but you probably shouldn't be overwriting your server schema, although I have yet to try this myself.
 
-Inside the client schema, you'll be able to `extend` existing types, and refer to, say - enums.
-Let's start by adding a field on the root, and then query it out in a component.
+Inside the client schema you'll be able to `extend` existing types, and refer to, say - enums.
+Let's start by adding a `String` type field on the root, and then query it out in a component.
 
 ```graphql
 extend type Query {
@@ -53,7 +55,7 @@ extend type Query {
 }
 ```
 
-```jsx
+```jsx{6}
 function MyComponent() {
   return (
     <QueryRenderer
@@ -104,7 +106,7 @@ commitLocalUpdate(environment, store => {
 
 Next time we make a query, the value of `props.localValue` with start out as an empty string instead of `undefined`.
 
-### Imperative local data
+### Imperative access outside of React
 
 If you ever need to use your Relay state outside of a query, this is possible too.
 
@@ -118,18 +120,18 @@ const { localValue } = environment
 	.get(ROOT_ID);
 ```
 
-`ROOT_ID` is the dataID, for the root record. Since our `localValue` is on root, this is what we want.
+`ROOT_ID` is the dataID of the root record. Since our `localValue` is on root, this is what we want.
 Although we know the value of `ROOT_ID` is `client:root`, importing it from Relay helps keep us safe, should they ever decide to change it.
 
 ### Mutating local data
 
-At this point we know how to query local data, and we know how to set an initial value.
+At this point we know how to query local data and we know how to set an initial value.  
 But that's not very exciting in itself, so let's take a shot at updating it!
 
-A *classic* example of how to use React state, is the controlled input.
+A *classic* example of how to use React state, is the [controlled input](https://reactjs.org/docs/forms.html).  
 Let's see what that looks like using Relay!
 
-```javascript
+```javascript{1,20-24}
 import { commitLocalUpdate } from "relay-runtime";
 import environment from "./Environment";
 
@@ -162,10 +164,10 @@ function MyComponent() {
 }
 ```
 
-On every change, we're updating the root field `localValue`, with the new value of our input.
-Updating the value of `localValue`, will cause Relay to push new `renderProps` down to the `QueryRenderer`, which will cause a re-render, and in turn provide us with the updated value of `localValue`.
+On every change, we're updating the root field `localValue` with the new value of our input.
+Updating the value of `localValue`, will cause Relay to push new `renderProps` down to the `QueryRenderer`, which will cause a re-render and in turn provide us with the updated value of `localValue`.
 
-The value of `props.localValue` - a field entirely invented by the client, now has whatever value we tell it to, and can react to that change as it occurs in real-time.
+The value of `props.localValue` - a field entirely invented by the client now has whatever value we tell it to, and can react to that change as it occurs in real-time.
 
 ![neat](https://media.giphy.com/media/8vtm3YCdxtUvjTn0U3/giphy.gif)
 
@@ -173,7 +175,10 @@ Hopefully, you're [caching](https://relay.dev/docs/en/network-layer#caching) the
 
 > With great power comes great global state.
 
-Keep in mind, that just because you *can* use Relay for local component state, does **not** mean that you should. This is a job best left to React. [Are you using hooks yet](https://reactjs.org/docs/hooks-intro.html)? If not, you're missing out!
+Keep in mind that just because you *can* use Relay for local component state, does **not** mean that you should.  
+This is a job best left to React. [Are you using hooks yet](https://reactjs.org/docs/hooks-intro.html)? If not, you're missing out!
+
+---
 
 ## Conclusion
 

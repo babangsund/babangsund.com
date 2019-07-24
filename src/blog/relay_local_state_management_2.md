@@ -5,20 +5,20 @@ excerpt: "Is the drawer open or closed?"
 published: true
 ---
 
-[In my previous post](https://babangsund.com/relay_local_state_management/), I explained how to use [Relay](https://relay.dev/) as a global state management library.
+[In my previous post](https://babangsund.com/relay_local_state_management/), I explain how to use [Relay](https://relay.dev/) as a local state management library.
 
 If you haven’t read it yet, I highly recommend doing so *first*.
 
-![government](https://miro.medium.com/max/1400/0*x4DFSRHRY_uT2ZqT)
-
 ---
+
+![government](https://miro.medium.com/max/1400/0*x4DFSRHRY_uT2ZqT)
 
 In this post, we will explore how an implementation of this concept might look in a more realistic scenario than in my previous controlled input example.
 
 ## Global state
 
-A common use-case for global state is the theme, and another could be whether a side-menu - the drawer, is open or closed.
-In this post, we will implement global state to control the latter.
+A common use-case for global state is the theme and another could be whether a side-menu - the drawer, is open or closed.
+In this post we will implement global state to control the latter.
 
 Our folder structure looks like this:
 
@@ -35,7 +35,7 @@ application
 └── package.json
 ```
 
-And the `src/index.js` file looks like this.
+The `src/index.js` file looks like this.  
 We won't be making any changes to this file.
 
 ```javascript
@@ -49,24 +49,24 @@ import Drawer from "./Drawer";
 import Main from "./Main";
 
 function App() {
-    return (
-        <div>
-            <Header />
-            <Drawer />
-            <Main />
-        </div>
-    )
+  return (
+    <div>
+      <Header />
+      <Drawer />
+      <Main />
+    </div>
+  );
 }
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 ```
 
-In the end, we want to be able to update the global state in our header, and react to that change in the `Drawer` and `Main` components.
+Our goal is to able to update the global state in the `Header` and have the ability to then react to that change in the `Drawer` and `Main` components.
 
 ### Updating the client schema
 
-For starters, we will need to make some new additions to our client-side schema.
+For starters, we will need to make some new additions to our client-side schema.  
 Let's call it `clientSchema.graphql`, and add it to our `src` directory.
 
 ```graphql
@@ -81,7 +81,7 @@ extend type Query {
 }
 ```
 
-We've created a new type `Settings`, and added a new field `isDrawerOpen: Boolean!`.
+We've created a new type `Settings`, and added a new field `isDrawerOpen: Boolean!`.  
 The root `Query`, has been extended with a new field `settings` of type `Settings!`.
 
 ### Setting the initial value
@@ -89,7 +89,7 @@ The root `Query`, has been extended with a new field `settings` of type `Setting
 Since our schema specifies that `settings: Settings!` and `isDrawerOpen: Boolean!` are both required fields, we need to set the initial values.
 In most cases, you will find yourself wanting to set these anyway.
 
-```javascript
+```javascript{28}
 // Environment.js
 
 import {
@@ -98,8 +98,8 @@ import {
   Environment,
   RecordSource,
   commitLocalUpdate
-} from 'relay-runtime';
-import RelayQueryResponseCache from 'relay-runtime/lib/RelayQueryResponseCache';
+} from "relay-runtime";
+import RelayQueryResponseCache from "relay-runtime/lib/RelayQueryResponseCache";
 
 // Make the request, and implement the cache
 function fetchQuery(...) {
@@ -134,19 +134,19 @@ commitLocalUpdate(environment, store => {
 export default environment;
 ```
 
-In Relay, it's common practice to append "client:" to the ID of any client-side fields, as you’ll notice we’ve done in the example here above.
+In Relay, it's common practice to append "`client:`" to the type of any client-side fields as an ID, as you’ll notice we’ve done in the example here above.
 Then, we created a new  record of type `Settings`, and set the initial `isDrawerOpen` value to `true`.
 
-`environment.retain` is to prevent Relay from garbage collecting our local record.
+`environment.retain` is there to prevent Relay from garbage collecting our local record.  
 Lastly, we attach the `Settings` record that we've created, onto the root `Query` record.
 
 ### Creating a reusable Component
 
-To update the global state, we're going to make use of a `button`.
+To update the global state, we're going to make use of a `button`.  
 We want the label of this button to correspond with the current state.
 
-> I debated whether this should be a query or a fragment, but in the end I decided to leave it as a fragment,
-> to demonstrate how it can work in tandem with a server query.
+> I debated whether this should be a query or a fragment, but in the end I decided to leave it as a fragment,  
+> in order to demonstrate how it can work in tandem with a server query.
 
 Let's make a reusable component, with a fragment of its own.
 
@@ -184,9 +184,9 @@ export default createFragmentContainer(DrawerButton, {
 });
 ```
 
-We're using `commitLocalUpdate` to alter Relay internal records.
+We're using `commitLocalUpdate` to alter Relay's internal records.
 
-`getRoot()` gives us the root `Query` record, and `getLinkedRecord` returns the record we're looking to update.
+`getRoot()` gives us the root `Query` record, and `getLinkedRecord` returns the record we're looking to update.  
 On the `settings` record, we toggle the value of `isDrawerOpen` by using `setValue`.
 
 ### Put it in the header!
@@ -237,8 +237,8 @@ export default Header;
 
 ### Just sit back and React.
 
-Next up, we want to react to any changes emitted by the store.
-Let's wrap our `Main` component in a `QueryRenderer` and watch for changes emitted through `props`.
+Next up, we want to react to any changes emitted by the store.  
+Let's wrap our `Main` component in a `QueryRenderer` and watch for any changes emitted through `props`.
 
 ```javascript
 // src/Main.js
@@ -315,19 +315,23 @@ function Drawer() {
 export default Drawer;
 ```
 
-At this point, you might say that we've achieved our goal.
+At this point, you might say that we've successfully achieved our goal.
 We're able to make changes in the `Header`, via the `DrawerButton` component and we can then React to those changes across our application.
 
-That in itself is actually pretty darn neat. Thumbs up!
+That in itself is actually pretty darn cool. Thumbs up!
 
 ![pretty cool](https://media.giphy.com/media/mgqefqwSbToPe/giphy.gif)
 
-But what if the user was to log out, or refresh the page? Oops. Now our state is gone.
-If we want it to persist, we oughta store it on the server - right? Well, maybe. But there's also the option of storing it in localStorage.
+But what if the user was to log out, or refresh the page?
 
-### Putting it in localStorage.
+*Oops.*
 
-In case you’re not interested in storing anything in the browser localStorage, there isn’t much else to see here, and I don’t want to waste your precious time.
+Now our state is gone. If we want it to persist, we oughta store it on the server - right?  
+Well, maybe. But there's also the option of putting it in *localStorage*.
+
+### Persist with localStorage
+
+In case you’re not interested in storing anything in the browsers `localStorage`, there isn’t much else to see here, and I don’t want to waste your valuable time.
 
 If that’s you — thanks for reading. `break`;  
 Else if this sounds interesting to you, then please read on. `continue`;
@@ -348,8 +352,8 @@ import {
   Environment,
   RecordSource,
   commitLocalUpdate
-} from 'relay-runtime';
-import RelayQueryResponseCache from 'relay-runtime/lib/RelayQueryResponseCache';
+} from "relay-runtime";
+import RelayQueryResponseCache from "relay-runtime/lib/RelayQueryResponseCache";
 
 // Make the request, and implement the cache
 function fetchQuery(...) {
@@ -404,9 +408,8 @@ function getInitialValue(key, value) {
 ```
 
 Next up, we use the result of `getInitialValue` to determine and set our initial value.
-Nothing else has changed.
 
-```javascript
+```javascript{9,11}
 // Environment.js
 
 commitLocalUpdate(environment, store => {
@@ -429,8 +432,8 @@ commitLocalUpdate(environment, store => {
 });
 ```
 
-When we update the value of `isDrawerOpen` in our `DrawerButton`, we need to update `localStorage` as well.
-To make reuse of this functionality easy let's turn it into a function.
+When we update the value of `isDrawerOpen` in our `DrawerButton`, we need to update `localStorage` as well.  
+To make reuse of this functionality easy, let's turn it into a function.
 
 It needs to get the record, and then update that record alongside localStorage.
 
@@ -448,7 +451,7 @@ export function updateLocalSetting(key, value) {
 
 Just for the sake of clarity - `Environment.js` now looks like this in it's entirety.
 
-```javascript
+```javascript{23-31,40,42,53-60}
 // Environment.js
 
 import {
@@ -515,7 +518,7 @@ export default environment;
 
 Now let's use the `updateLocalSetting` function we created earlier, to update state in the `DrawerButton`.
 
-```javascript
+```javascript{6,12}
 // src/DrawerButton.js
 
 import React from 'react';
