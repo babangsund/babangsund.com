@@ -8,7 +8,7 @@ published: true
 [In my previous post](https://babangsund.com/relay_local_state_management/), I explained how to use [Relay](https://relay.dev/) as a global state management library.
 If you haven’t read it yet, I highly recommend doing so *first*.
 
-![government](https://miro.medium.com/max/1400/0*RFsq01F0sIPT4xPe)
+![government](https://miro.medium.com/max/1400/0*x4DFSRHRY_uT2ZqT)
 
 In this post, we will explore how an implementation of this concept might look in a more realistic scenario, than in my previous controlled input example.
 
