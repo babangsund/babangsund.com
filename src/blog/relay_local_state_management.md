@@ -167,7 +167,7 @@ function MyComponent() {
 On every change, we're updating the root field `localValue` with the new value of our input.
 Updating the value of `localValue`, will cause Relay to push new `renderProps` down to the `QueryRenderer`, which will cause a re-render and in turn provide us with the updated value of `localValue`.
 
-The value of `props.localValue` - a field entirely invented by the client now has whatever value we tell it to, and can react to that change as it occurs in real-time.
+The value of `props.localValue` - a field entirely invented by the client now has whatever value we tell it to and we can react to that change as it occurs in real-time.
 
 ![neat](https://media.giphy.com/media/8vtm3YCdxtUvjTn0U3/giphy.gif)
 
