@@ -113,6 +113,10 @@ export default css`
     color: #ff9d00;
   }
 
+  .token.operator + .token.keyword {
+    color: #ff7200;
+  }
+
   .token.tag {
     color: #9effff;
     & .token.function {
