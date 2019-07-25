@@ -10,7 +10,7 @@ const Container = styled.section`
   display: flex;
   position: fixed;
   padding: ${p => (p.scrolling ? rhythm(1, 2) : rhythm(2.5, 2))};
-  background: ${p => (p.scrolling ? p.theme.darker : "unset")};
+  background: ${p => (p.scrolling ? p.theme.bg(9) : "unset")};
   transition: padding 0.4s ease-in-out, background 0.4s ease-in-out;
   h1 {
     margin: 0;

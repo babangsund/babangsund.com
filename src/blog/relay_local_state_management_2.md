@@ -38,7 +38,7 @@ application
 The `src/index.js` file looks like this.  
 We won't be making any changes to this file.
 
-```javascript
+```jsx
 // src/index.js
 
 import React from "react";
@@ -150,7 +150,7 @@ We want the label of this button to correspond with the current state.
 
 Let's make a reusable component, with a fragment of its own.
 
-```javascript
+```jsx
 // src/DrawerButton.js
 
 import React from 'react';
@@ -194,7 +194,7 @@ On the `settings` record, we toggle the value of `isDrawerOpen` by using `setVal
 We want our `DrawerButton` component to appear in the `Header`, so let's use the `HeaderQuery` to spread our `DrawerButton` fragment.
 The `settings` prop is passed down the `DrawerButton` to provide it with the data it requires.
 
-```javascript
+```jsx
 // src/Header.js
 
 import React from "react";
@@ -240,7 +240,7 @@ export default Header;
 Next up, we want to react to any changes emitted by the store.  
 Let's wrap our `Main` component in a `QueryRenderer` and watch for any changes emitted through `props`.
 
-```javascript
+```jsx
 // src/Main.js
 
 import React from "react";
@@ -279,7 +279,7 @@ export default Main;
 Let's do the same in the Drawer, to cover our bases.
 The implementation of the two is almost identical, but I didn't want to leave it out just for brevity.
 
-```javascript
+```jsx
 // src/Drawer.js
 
 import React from "react";
@@ -518,7 +518,7 @@ export default environment;
 
 Now let's use the `updateLocalSetting` function we created earlier, to update state in the `DrawerButton`.
 
-```javascript{6,12}
+```jsx{6,12}
 // src/DrawerButton.js
 
 import React from 'react';

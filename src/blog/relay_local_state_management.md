@@ -131,7 +131,7 @@ But that's not very exciting in itself, so let's take a shot at updating it!
 A *classic* example of how to use React state, is the [controlled input](https://reactjs.org/docs/forms.html).  
 Let's see what that looks like using Relay!
 
-```javascript{1,20-24}
+```jsx{1,20-24}
 import { commitLocalUpdate } from "relay-runtime";
 import environment from "./Environment";
 

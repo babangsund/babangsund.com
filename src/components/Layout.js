@@ -5,7 +5,7 @@ import Main from "components/Main"
 import Header from "components/Header"
 import Footer from "components/Footer"
 
-import code from "./code.css"
+import code from "./code"
 
 import theme from "utils/theme"
 
@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     width: 100%;
     height: 100%;
-    background: ${p => p.theme.darkester};
+    background: ${p => p.theme.bg(13)};
   }
   a {
     text-decoration: none;
@@ -34,8 +34,9 @@ const GlobalStyle = createGlobalStyle`
     }
   }
   img {
-    margin-left: 50%;
-    transform: translateX(-50%);
+    width: 100%;
+    height: auto;
+    display: block;
   }
   hr {
     background-color: ${p => p.theme.green};
