@@ -41,7 +41,7 @@ And this is where it get's interesting for us!
 
 ### Query local data
 
-Inside this the `src` directory, which you provided to `relay-compiler`, you need to create a new `.graphql` file.  
+Inside the `src` directory, which you provided to `relay-compiler`, you need to create a new `.graphql` file.  
 Let's call it `relayIsAwesome.graphql`, to avoid any confusion.
 
 This schema is what Relay will refer to, as the *"client"* schema. You can put anything you want in this schema, but you probably shouldn't be overwriting your server schema, although I have yet to try this myself.
