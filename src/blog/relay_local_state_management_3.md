@@ -17,19 +17,22 @@ If you're unfamiliar with state managment using [Relay](https://relay.dev/), I r
 ![back to the future](https://images.unsplash.com/photo-1530981279185-9f0960715267?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80)
 
 When using Relay for state, I generally consider it inadvisible to use it in the context of local component scope.  
-React does it very well, and Relay very little to offer in comparison.
+React does it very well, and Relay has very little to offer in comparison.
 
-With that being said, I want to share how I've recently used Relay, and how it has helped me greatly simplify a complicated dialog architechture.
+With that being said, I want to share how I've recently used Relay, and how it helped me greatly simplify a complicated dialog architechture.
 Reading that, you might be thinking: "How can a dialog be complicated?" - and how could it possibly warrant the use of something like Relay?
 
 Well, let's take a look at the specs.
 
+### Specifications
+
 * It can create an Activity.
 * It can edit  an Activity.
-* Input fields are determined from user defined type.
-* The type is selected when upon creation create.
+* Input fields are determined by a user defined type.
+* The type is selected upon creation.
 * Some input fields are dynamic, and visually change depending on your selection.  
-  Rerenders can be somewhat expensive. We probably want to avoid re-rendering them, unless their input has changed.
+  Re-renders can be somewhat expensive. We probably want to avoid re-rendering them, unless their input has changed.
+* Some inputs, rely on the value of other fields.
 * Nothing is saved, until you press *save*.
 * You cannot press save, unless the inputs are all valid.
 
@@ -45,4 +48,27 @@ Ideally however, we don't want to write two dialogs. One for creating, and one f
 When you're creating a new Activity, you have to select a type, and then whatever subfields that type requires.
 To avoid having Relay throw a bunch of warnings at us, we would have to pass null in place of a fragment to our fragment components.
 
-To complicate the matter of isolated local state, some fields depend on the input value of other fields, and the save button should always know whether all given inputs are valid.
+To throw a wrench in the matter of isolated local state, we need to keeep in mind, that some fields depend on the input value of other fields, and the save button should always know whether all given inputs are valid.
+
+### Speculations
+
+Knowing that fields may rely on each other, and that the save button should always know all input values, tells us that state should probably be placed at the top-level of our dialog.
+
+Let's start, by doing that.
+
+```jsx
+function Dialog() {
+  const [activity, setActivity] = React.useState();
+  return (
+    <div>
+      <div>
+        // Fields go here
+      </div>
+      <button>
+        Save
+      </button>
+    </div>
+  )
+}
+
+```
