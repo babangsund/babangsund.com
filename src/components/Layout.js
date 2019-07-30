@@ -37,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: auto;
     display: block;
+    border-radius: 0.6em;
   }
   hr {
     background-color: ${p => p.theme.green};
