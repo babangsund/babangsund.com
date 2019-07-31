@@ -2,7 +2,7 @@
 title: "React to Relay: local state management, part 3"
 date: "2019-07-30"
 excerpt: "Nesting nested nests"
-published: true
+published: false
 ---
 
 Every great movie series, is a triology.  
