@@ -502,7 +502,7 @@ export default createFragmentContainer(DialogContainer, {
 ```
 
 It's shaping up pretty good. Let's hope the new guy is in charge of maintenance, though.
-Sure, it's an exaggeration of contrived example, but the point is, that having a query like this is not unrealistic and nor is it uncommon.
+Sure, it's an exaggeration of a contrived example, but the point remains, that having a query like this is not unrealistic and nor is it uncommon.
 
 But if everyone is doing it, it's probably fine - right?
 
