@@ -305,7 +305,7 @@ export default createFragmentContainer(DialogContainer, {
 ```
 
 The `Notes` component has a fragment, which expects a list of `Note` notes with a selection of fields.  
-Fair enough. But what what happens when we create a new note on the client, and save it in state?
+Fair enough. But what happens when we create a new note on the client, and save it in state?
 
 For example:
 ```jsx
