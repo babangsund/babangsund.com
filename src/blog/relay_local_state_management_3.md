@@ -12,14 +12,14 @@ This is a law and thus, there are no exceptions.
 2. [Global state - controlling the drawer](/relay_local_state_management_2)  
 3. *You are here*.
 
-If you're unfamiliar with state using [Relay](https://relay.dev/), I recommend you take the time to read part 1 and 2, first.  
+If you're unfamiliar with state using [Relay](https://relay.dev/), I recommend you take the time to read part 1 and 2 first.  
 
 ![back to the future](https://images.unsplash.com/photo-1530981279185-9f0960715267?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3900&q=80)
 
 When using Relay for state, I generally consider it inadvisable to use it in the context of local component scope.  
-React does it very well and on the surface, Relay has very little to offer in comparison.
+React does it very well, and on the surface, Relay has very little to offer in comparison.
 
-With that being said, I want to share how I've recently used Relay to drastically simplify a complicated dialog implementation. Reading that, you might be thinking: "How can a dialog be complicated, and how could it possibly warrant the use of something like Relay state"
+With that being said, I want to share how I've recently used Relay to drastically simplify a complicated dialog implementation. Reading that, you might be thinking: "How can a dialog be complicated, and how could it possibly warrant the use of something like Relay state?"
 
 Well, let's take a look at the specs.
 
@@ -66,7 +66,7 @@ On root, we have a queryable field `node`, which returns the `Node` interface, w
 
 Working with Relay, you want to take advantage of data-masking fragments, whenever possible.
 
-Let's start out, by creating our `QueryRenderer` component.
+Let's start out by creating our `QueryRenderer` component.
 
 Because we want to be able to use this dialog for both creating and editing a task, `taskId` is not required.
 The schema however, says otherwise:`node(id: ID!)`.
@@ -127,10 +127,11 @@ export default createFragmentContainer(DialogContainer, {
 ```
 
 Basic stuff. It receives a fragment, and passes the Person fragment down in the hierarchy.
-Let's take a look at the `Person`.
+Let's take a look at the `Person` component.
 
 ```jsx
 // Person.js
+
 function Person({ initialPerson }) {
 	const [person, setPerson] = React.useState(initialPerson);
 
@@ -152,7 +153,8 @@ export default createFragmentContainer(Person, {
 });
 ```
 
-The `initialPerson` comes from the fragment provided by the `DialogContainer`, which is used to set the initial state. We've managed to leverage the isolation of Relay's data-masking, as well as local component state to control any future changes.
+The `initialPerson` comes from the fragment provided by the `DialogContainer`, which is used to set the initial state.
+We've managed to leverage the isolation of Relay's data-masking, as well as local component state to control any future changes.
 
 Great!
 
@@ -194,7 +196,7 @@ Even though we've placed the `task` with `person` in our `DialogContainer`, the 
 
 This means, that if we want access to any properties on `Person`, we have to place them directly in the `DialogContainer` fragment.
 
-Let's pretend we need access to the `id` and `firstName` properties from `person`, outside of `Person`.
+Let's pretend we need access to the `id` and `firstName` properties from `person`, outside of the `Person` component.
 
 ```jsx{7,8}
 // DialogContainer.js
@@ -216,7 +218,7 @@ export default createFragmentContainer(DialogContainer, {
 
 At this point, you may be wondering why we even bother with fragments in the first place.
 
-The answer is ***Isolation, and reusability***. Whenever I select a `Person` in the context of my dialog, I will need to *know* which fields are required by the `Person` and it's respective sub-fields.
+The answer is ***Isolation, and reusability***. Whenever I select a `Person` in the context of my dialog, I will need to *know* which fields are required by the `Person` component and it's respective sub-fields.
 
 This can be a harrowing thought - especially if you consider a scenario where you might have a lot of fields, which in turn have a sub-selection of fields of their own.
 
