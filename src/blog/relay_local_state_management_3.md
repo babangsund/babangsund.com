@@ -773,7 +773,7 @@ const SaveButton = createFragmentContainer(function SaveButton({ activity }) {
 
 ## Are you not entertained?
 
-I'd say we're probably *way* overdue for a recap of what we've actually achieved here.  
+I'd say it's time for a recap of what we've achieved.
 Let's review:
 
 1. The QueryRenderer at the top-level is responsible for fetching any initial data,
