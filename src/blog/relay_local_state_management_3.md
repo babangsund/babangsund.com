@@ -68,54 +68,68 @@ Working with Relay, you want to take advantage of data-masking fragments, whenev
 
 Let's start out by creating our `QueryRenderer` component.
 
-Because we want to be able to use this dialog for both creating and editing a task, `taskId` is not required.
-The schema however, says otherwise:`node(id: ID!)`.
+Because we wanna be able to use this dialog for both creating and editing a task, `taskId` is not required.
+We also want to add the option of passing a `personId` in order to fetch a default person.
 
-We don't want two queries, so let's use the `@include` directive.
+Since the schema says we have to pass an ID of `ID!` when using `node(id: ID!)`, we *need* to pass a value to `id` when using it in our query.
 
-```jsx{11}
+We don't want multiple queries, so let's use the `@include` directive to determine whether or not we want to fetch the `task` and/or `person` fragments.
+
+```jsx{12}
 // DialogRenderer.js
-function DialogRenderer({ taskId }) {
+
+function DialogRenderer({ taskId, personId }) {
   return (
     <QueryRenderer
       variables={{
         taskId,
-        getTask: !!taskId
+        personId,
+        getTask: !!taskId,
+        getPerson: !!personId
       }}
       query={graphql`
+
         query DialogQuery($taskId: ID!) {
           task: node(id: $taskId) @include(if: $getTask) {
-            ...DialogContainer
+            ...DialogContainerTask
+          }
+          person: node(id: $personId) @include(if: $getPerson) {
+            ...DialogContainerPerson
           }
         }
       `}
       render={({ error, props }) => {
         if (error) throw error;
         if (!props) return null;
-        return <DialogContainer task={props.task || null} />;
+        return <DialogContainer task={props.task || null} person={props.person || null} />;
       }}
     />
   );
 }
 ```
 
-If `taskId` has a value, we're telling graphQL to include the task in our query.
-If there's a task, we pass it to `DialogContainer`; Otherwise, we just pass null to avoid any warnings from Relay.
+If `taskId` has a value, we're telling graphQL to include the task in our query. `personId` works the same way.
+If there's a task or a person, we pass it to `DialogContainer`; Otherwise, we just pass null to avoid any warnings from Relay.
 
 Let's take a peek at the `DialogContainer`.
 
 ```jsx
-function DialogContainer({ task }) {
+function DialogContainer({ task, person }) {
   return (
     <div>
-      <Person initialPerson={task?.person || null} />
+      <Person initialPerson={person || task?.person || null} />
     </div>
   );
 }
 
 export default createFragmentContainer(DialogContainer, {
+  person: graphql`
+    fragment DialogContainerPerson on Person {
+      ...Person
+    }
+  `,
   task: graphql`
-    fragment DialogContainer on Task {
+    fragment DialogContainerTask on Task {
       id
       title
       person {
@@ -126,7 +140,8 @@ export default createFragmentContainer(DialogContainer, {
 });
 ```
 
-Basic stuff. It receives a fragment, and passes the Person fragment down in the hierarchy.
+Basic stuff.  
+It receives a fragment, and passes the Person fragment down in the hierarchy.
 Let's take a look at the `Person` component.
 
 ```jsx
@@ -153,13 +168,13 @@ export default createFragmentContainer(Person, {
 });
 ```
 
-The `initialPerson` comes from the fragment provided by the `DialogContainer`, which is used to set the initial state.
+The `initialPerson` comes from one of the `Person` fragments provided by the `DialogContainer`, which is used to set the initial state.
 We've managed to leverage the isolation of Relay's data-masking, as well as local component state to control any future changes.
 
 Great!
 
-But what if we need access to the value of person, outside of `Person`? 
-When we want to save any changes we've made, we're currently unaware of what's changed.
+But what if we need access to the value of person, outside of the `Person` component?
+When we want to save any changes we've made, we're currently unaware of what's changed beyond the initial state.
 
 *Hmm*
 
@@ -167,8 +182,8 @@ The answer here is obvious. We need to move person state up in the hierarchy. No
 
 ```jsx{3,6,12}
 // DialogContainer.js
-function DialogContainer({ task: initialTask }) {
-  const [task, setTask] = React.useState(initialTask || {});
+function DialogContainer({ task: initialTask, person }) {
+  const [task, setTask] = React.useState(initialTask || person ? { person } : {});
   return (
     <div>
       <Person person={task?.person || null} setTask={setTask} />
@@ -184,26 +199,33 @@ const Person = memo(({ person, setTask }) => {
 });
 ```
 
-Now the `person` value is passed down the parent so we can access it here as well.
-Notice that we've memoized the `Person`, since we're assuming it's expensive.
+Now the `person` value is owned by the parent, so we can access it here as well.  
+Notice that we've memoized the `Person` component, since state updates can now be triggered in the parent, and we're assuming `Person` is expensive. (And that we'll have more than just the Person component at some point.)
 
-So what's the problem?
+It's a little ugly, but it seems to work fine so far. So what's the problem?
 
 ## Take off your mask!
 
 There's an issue with our person fragment.
 Even though we've placed the `task` with `person` in our `DialogContainer`, the data is still masked, so if we try to access any of the properties, we'll be unable to read the data we may need.
 
-This means, that if we want access to any properties on `Person`, we have to place them directly in the `DialogContainer` fragment.
+This means, that if we want access to any properties on `Person`, we have to place them directly in the `DialogContainerPerson` *and* in the `DialogContainerTask` person fragment.
 
 Let's pretend we need access to the `id` and `firstName` properties from `person`, outside of the `Person` component.
 
-```jsx{7,8}
+```jsx{6,7,16,17}
 // DialogContainer.js
 
 export default createFragmentContainer(DialogContainer, {
+  person: graphql`
+    fragment DialogContainerPerson on Person {
+      id
+      firstName
+      ...Person
+    }
+  `,
   task: graphql`
-    fragment DialogContainer on Task {
+    fragment DialogContainerTask on Task {
       id
       title
       person {
@@ -220,7 +242,7 @@ At this point, you may be wondering why we even bother with fragments in the fir
 
 The answer is ***Isolation, and reusability***. Whenever I select a `Person` in the context of my dialog, I will need to *know* which fields are required by the `Person` component and it's respective sub-fields.
 
-This can be a harrowing thought - especially if you consider a scenario where you might have a lot of fields, which in turn have a sub-selection of fields of their own.
+This can be a harrowing thought - especially if you consider a scenario where you might have a lot of duplicate fields like `task.person` and `person`, which in turn have a sub-selection of fields of their own.
 
 Let's introduce an additional problem, by adding another field to the `Task` type.  
 A list of notes.
@@ -274,12 +296,11 @@ export default createfragmentcontainer(notes, {
 
 And we'll add it to the `DialogContainer`.
 
-```jsx{9,23-26}
+```jsx{8,22-25}
 // DialogContainer.js
 
-
-function DialogContainer({ task: initialTask }) {
-  const [task, setTask] = React.useState(initialTask || {});
+function DialogContainer({ task: initialTask, person }) {
+  const [task, setTask] = React.useState(initialTask || person ? { person } : {});
   return (
     <div>
       <Person person={task?.person || null} setTask={setTask} />
@@ -288,13 +309,22 @@ function DialogContainer({ task: initialTask }) {
   );
 }
 
+
 export default createFragmentContainer(DialogContainer, {
+  person: graphql`
+    fragment DialogContainerPerson on Person {
+      id
+      firstName
+      ...Person
+    }
+  `,
   task: graphql`
-    fragment DialogContainer on Task {
+    fragment DialogContainerTask on Task {
       id
       title
       person {
         id
+        firstName
         ...Person
       }
       notes {
@@ -324,16 +354,23 @@ Relay will be angry with you, and throw a bunch of warnings in your face.
 
 ![roll eyes](https://media.giphy.com/media/Lry6jqqgMf3kk/giphy.gif)
 
-Our *only* option is to get rid of the `Notes` fragment entirely, and move *all* the fields from notes, into the `DialogContainer` fragment.
+Our *only* option is to get rid of the `Notes` fragment entirely, and move *all* the fields from notes, into the `DialogContainerTask` fragment.
 
 *Sigh* Fine, Relay - whatever you say.
 
-```jsx{13-18}
+```jsx{20-25}
 // DialogContainer.js
 
 export default createFragmentContainer(DialogContainer, {
+  person: graphql`
+    fragment DialogContainerPerson on Person {
+      id
+      firstName
+      ...Person
+    }
+  `,
   task: graphql`
-    fragment DialogContainer on Task {
+    fragment DialogContainerTask on Task {
       id
       title
       person {
@@ -358,9 +395,17 @@ Let's fast-forward a couple of chapters.
 
 ```jsx
 // DialogContainer.js
+
 export default createFragmentContainer(DialogContainer, {
+  person: graphql`
+    fragment DialogContainerPerson on Person {
+      id
+      firstName
+      ...Person
+    }
+  `,
   task: graphql`
-    fragment DialogContainer on Task {
+    fragment DialogContainerTask on Task {
       id
       title
       dueDate
@@ -409,19 +454,27 @@ It's getting pretty big, but you know what would make this query infinitely more
 Say we need access to the previous task in a series of follow-ups.  
 Call it `previousTask`.
 
-Since we can't refer to the `DialogContainer` fragment:
+Since we can't refer to the `DialogContainerTask` fragment:
 ```bash
 ERROR:
-Found a circular reference from fragment 'DialogContainer'.
+Found a circular reference from fragment 'DialogContainerTask'.
 ```
 
 We'll just have to write everything twice, and since we're **unable** to use fragments in some cases, *well*...
 
-```jsx{42-80}
+```jsx{50-88}
 // DialogContainer.js
+
 export default createFragmentContainer(DialogContainer, {
+  person: graphql`
+    fragment DialogContainerPerson on Person {
+      id
+      firstName
+      ...Person
+    }
+  `,
   task: graphql`
-    fragment DialogContainer on Task {
+    fragment DialogContainerTask on Task {
       id
       title
       dueDate
@@ -517,7 +570,7 @@ So what do we do?
 
 The trick is to use fragments.
 
-During the process of creating a new `task`, we don't yet have a `taskId` to use in the `activity: node(id: $taskId)` query, and thus we lose the ability to fetch any data fragments from the server.
+During the process of creating a new `task`, we don't yet have a `taskId` to use in the `task: node(id: $taskId)` query, and thus we lose the ability to fetch any data fragments from the server.
 
 But what if we could query a *local* node with fragments? Certainly an idea worth exploring.  
 Let's create a new field `temp` in the client schema, which will hold the local data from the dialog.
@@ -539,10 +592,10 @@ A `Task`, for instance. We've also added `isNew`, to help us distinguish between
 
 Next, let's make some changes to the `DialogContainer`.
 
-```jsx{4,7,15,35,38,39,49,51,54}
+```jsx{7,15,21,41,44,45}
 // DialogContainer.js
 
-function DialogContainer({ task }) {
+function DialogContainer({ task, person }) {
   React.useEffect(() => {
     commitLocalUpdate(environment, store => {
       const root = store.getRoot();
@@ -556,6 +609,11 @@ function DialogContainer({ task }) {
         const proxy = store.get(task.id);
         record.copyFieldsFrom(proxy);
         record.setValue(false, "isNew");
+      }
+
+      if (person) {
+        const proxy = store.get(person.id);
+        record.setLinkedRecord(proxy, "person");
       }
     });
     return () =>
@@ -585,8 +643,14 @@ function DialogContainer({ task }) {
 }
 
 export default createFragmentContainer(DialogContainer, {
+  person: graphql`
+    fragment DialogContainerPerson on Person {
+      id
+      ...Person
+    }
+  `,
   task: graphql`
-    fragment DialogContainer on Task {
+    fragment DialogContainerTask on Task {
       id
       ...Notes
       ...Title
@@ -604,7 +668,8 @@ Okay, what just happened?
 
 There's a lot to unpack here.
 
-Using the `React.useEffect`, we get (or create) `temp`, of type `Task`. If we're editing a task, we copy everything we've fetched onto the `temp` record. The return function is just to make sure we clean up the store upon closing the dialog. The fragment has been reduced to spread a selection of fragments which will be fetched by the QueryRenderer.
+Using the `React.useEffect`, we get (or create) `temp`, of type `Task`. If we're editing a task, we copy everything we've fetched onto the `temp` record. If there's a person, we link it to the `temp` task.
+The return function is just to make sure we clean up the store upon closing the dialog. The fragment has been reduced to spread a selection of fragments which will be fetched by the QueryRenderer.
 
 Next up, is the Notes component.
 
