@@ -389,7 +389,7 @@ export default createFragmentContainer(DialogContainer, {
 });
 ```
 
-As you might imagine (which you'll have to, because I don't have all day), a query following this pattern, can get quite large with scale. I should point out, that any scalar fields on `Task`, will also need to be added directly on the soon-to-be mega query.
+As you might imagine, a query following this pattern, can get quite large with scale. I should point out, that any scalar fields on `Task`, will also need to be added directly on the soon-to-be mega query.
 
 Let's fast-forward a couple of chapters.
 
