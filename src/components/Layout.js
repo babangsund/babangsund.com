@@ -23,8 +23,11 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
-    background: ${p => p.theme.bg(13)};
+    background-color: inherit;
+  }
+  body {
+    padding-bottom: 230px
+    background-color: ${p => p.theme.bg(13)};
   }
   a {
     text-decoration: none;

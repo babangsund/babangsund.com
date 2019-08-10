@@ -5,8 +5,13 @@ import { useStaticQuery, graphql } from "gatsby"
 import { rhythm } from "utils/typography"
 
 const Container = styled.section`
+  bottom: 0;
+  z-index: 0;
   width: 100%;
+  position: fixed;
+  background: ${p => p.theme.bg(9)};
   footer {
+    height: 230px;
     margin: 0 auto;
     max-width: 60rem;
     box-sizing: border-box;

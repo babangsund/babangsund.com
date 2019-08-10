@@ -1,17 +1,27 @@
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { useStaticQuery, graphql, Link } from "gatsby"
 
 import { rhythm } from "utils/typography"
 
 const Container = styled.section`
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   display: flex;
   position: fixed;
-  padding: ${p => (p.scrolling ? rhythm(1, 2) : rhythm(2.5, 2))};
-  background: ${p => (p.scrolling ? p.theme.bg(9) : "unset")};
   transition: padding 0.4s ease-in-out, background 0.4s ease-in-out;
+  ${p =>
+    !p.scrolling
+      ? css`
+          background: unset;
+          padding: ${rhythm(2.5, 2)};
+        `
+      : css`
+          padding: ${rhythm(1, 2)};
+          background: ${p.theme.bg(9)};
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05),
+            0 6px 12px rgba(0, 0, 0, 0.1);
+        `}
   h1 {
     margin: 0;
     color: hsla(0, 0%, 100%, 0.95);
