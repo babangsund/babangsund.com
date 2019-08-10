@@ -19,7 +19,7 @@ const Container = styled.section`
     justify-content: flex-end;
     padding: ${rhythm(2.5, 2)};
     & > * {
-      margin-right: 10px;
+      margin-left: 10px;
     }
   }
 `
