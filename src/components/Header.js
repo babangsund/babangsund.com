@@ -18,7 +18,7 @@ const Container = styled.section`
         `
       : css`
           padding: ${rhythm(1, 2)};
-          background: ${p.theme.bg(9)};
+          background: ${p.theme.bg(10)};
           box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05),
             0 6px 12px rgba(0, 0, 0, 0.1);
         `}

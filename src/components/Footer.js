@@ -9,7 +9,7 @@ const Container = styled.section`
   z-index: 0;
   width: 100%;
   position: fixed;
-  background: ${p => p.theme.bg(9)};
+  background: ${p => p.theme.bg(10)};
   footer {
     display: flex;
     height: 230px;
