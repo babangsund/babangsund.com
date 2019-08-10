@@ -9,12 +9,12 @@ const H3 = styled.h3`
   margin: ${rhythm(0, 0, 0.25)};
 `
 
-function BlogPost({ data, location, pageContext }) {
+function BlogPost({ data, path, pageContext }) {
   const { post } = data,
     { prev, next } = pageContext
 
   return (
-    <Layout location={location}>
+    <Layout path={path}>
       <article>
         <header>
           <H3>{post.frontmatter.title.toUpperCase()}</H3>

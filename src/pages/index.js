@@ -32,10 +32,10 @@ function BlogPost({ blogPost }) {
   )
 }
 
-function Index({ data }) {
+function Index({ data, path }) {
   const blogposts = data.blog.edges
   return (
-    <Layout>
+    <Layout path={path}>
       <SEO title="Blog by Benjamin Bangsund" />
       {blogposts.map(({ node }) => (
         <BlogPost key={node.id} blogPost={node} />

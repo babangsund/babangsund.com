@@ -55,14 +55,14 @@ const GlobalStyle = createGlobalStyle`
   ${code};
 `
 
-function Layout({ children }) {
+function Layout({ path, children }) {
   return (
     <ThemeProvider theme={theme}>
       <Container>
         <GlobalStyle />
-        <Header />
-        <Main>{children}</Main>
-        <Footer />
+        <Header path={path} />
+        <Main path={path}>{children}</Main>
+        <Footer path={path} />
       </Container>
     </ThemeProvider>
   )
