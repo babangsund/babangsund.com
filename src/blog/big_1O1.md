@@ -58,7 +58,7 @@ In big O, this is described as a **constant** runtime, notated as `O(1)`, `1` be
 > Throw away the constant
 
 Because big O only describes the rate of increase, we always throw away the constant.
-For example, an algorithm described as `O(2N)`, actually becomes `O(N)`.
+For example, an algorithm described as `O(2n)`, actually becomes `O(n)`.
 
 > Throw away the coefficient
 
@@ -78,15 +78,15 @@ function logNumbersAndSums(nums) {
 }
 ```
 
-The first loop in this function, has a runtime of `O(N)`. The second nested loop, has a runtime of `O(N^2)`.
-Instinctively, you would want to add them together `O(N + N^2)`. In big O however, you drop the first `N`.
+The first loop in this function, has a runtime of `O(n)`. The second nested loop, has a runtime of `O(n^2)`.
+Instinctively, you would want to add them together `O(n + n^2)`. In big O however, you drop the first `n`.
 Why? Because it's not especially important. We only care about the fastest growing part of the expression.
 
 As with most rules however, there are exceptions.
 
 If there is ever any ambiguity between the inputs of a function, it wouldn't make sense to drop them, when describing the runtime. For instance, given the expression `O(B + A^2)`, it wouldn't make sense to drop `B` like we did in our previous example, since the value of `A` and `B` are different. It's important to acknowledge that both carry relevance in this context.
 
-### Linear time `O(N)`
+### Linear time `O(n)`
 
 ```javascript
 function logAllEntries(array) {
@@ -99,9 +99,9 @@ function logAllEntries(array) {
 The runtime of this function, is described as *linear*, or `O(A)` where `A` is the length of `array`.
 Whenever the length of `array` increases, the runtime increases linearly at worst.
 
-If you're working with a sequentially iterative loop which spans from `0` to `array.length`, there's a good chance the runtime is `O(N)`.
+If you're working with a sequentially iterative loop which spans from `0` to `array.length`, there's a good chance the runtime is `O(n)`.
 
-### Logarithmic time `O(log(N))`
+### Logarithmic time `O(log(n))`
 
 Logarithms in computer science, assumes a base of `2`, unlike in mathematics where it is assumed to be `10`.
 The Logarithm of a number, is the inverse of the exponent, meaning base b of x `log b(x)`, is the exponent to which `b` needs to be raised to obtain `x`.
@@ -141,9 +141,9 @@ function binarySearch(array, target) {
 }
 ```
 
-If doubling the number of entries that you're iterating does not double the amount of work, the runtime complexity is `O(log(N))` where `N` is the number of entries.
+If doubling the number of entries that you're iterating does not double the amount of work, the runtime complexity is `O(log(n))` where `n` is the number of entries.
 
-### Quasilinear time `O(N log(N))`
+### Quasilinear time `O(n log(n))`
 
 Common examples of *quasilinear*, or *log-linear* runtime is *quick sort* and *merge sort*.
 
@@ -155,14 +155,14 @@ For each of these levels, we're required to do a linear amount of work, or `O(n)
 
 Add it together and we're left with `O(n log(n))`.
 
-### Quadratic time `O(N^2)`
+### Quadratic time `O(n^2)`
 
 Image a room full of people. A new person enters the room and is then introduced to everyone else in the room.
 This is the commonly referred to, as the *handshake problem*.
 
 *Bubble sort* is common example of quadratic runtime. It iterates through an array, and compares adjacent values which are then swapped, should the first value be greater than the second.
 
-Another *very* common example of `O(N^2)`, is a nested loop.
+Another *very* common example of `O(n^2)`, is a nested loop.
 
 ```javascript
 function logPairs(array) {
@@ -176,7 +176,7 @@ function logPairs(array) {
 
 Whenever every entry *(what a tongue twister!)* of an array has to interact with every other entry, you're likely dealing with a *quadratic* runtime.
 
-### Exponential time `O(2^N)`
+### Exponential time `O(2^n)`
 
 Whenever a single entry is added to the input, the the runtime significantly increases.  
 The workload would in fact *double*. Ouch. This is commonly seen in backtracking problems and recursive functions which are calling multiple subsets of itself - i.e. a *fork* pattern.
@@ -194,7 +194,7 @@ In the case of fibonacci as seen above, we're doing a lot of unnecessary work.
 Function calls with the same input and result are likely to reoccur, which means it can be converted to a `constant` amount of work, by caching the result of a function call.
 
 
-### Factorial time `O(N!)`
+### Factorial time `O(n!)`
 
 *n-nfactorial* is usually seen, when calculating all permutations of a given string.
 
