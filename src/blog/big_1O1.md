@@ -57,12 +57,12 @@ function logLastIndex(array) {
 Regardless of the length of `array`, the runtime of this function will always remain the same.  
 In big O, this is described as a **constant** runtime, notated as `O(1)`, `1` being the constant.
 
-> Throw away the constant
+#### Throw away the constant
 
 Because big O only describes the rate of increase, we always throw away the constant.  
 For example, an algorithm described as `O(2n)`, actually becomes `O(n)`.
 
-> Throw away the coefficient
+#### Throw away the coefficient
 
 The same is true for any notation coefficient, also commonly referred to as the "non dominant", or "less efficient" term.
 
