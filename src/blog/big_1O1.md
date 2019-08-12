@@ -157,6 +157,39 @@ Common examples of *quasilinear*, or *log-linear* runtime is *quick sort* and *m
 
 Given an array, *merge sort* recursively splits the array in half, until it's left with a single entry at the bottom of the tree, which is then compared and worked back up to a single, sorted array.
 
+```javascript
+function merge(leftArray, rightArray) {
+  const sortedArray = []
+  let rightIndex = 0
+  let leftIndex = 0
+
+  while (leftIndex < leftArray.length && rightIndex < rightArray.length) {
+    if (leftArray[leftIndex] > rightArray[rightIndex]) {
+      sortedArray.push(rightArray[rightIndex])
+      rightIndex++
+    } else {
+      sortedArray.push(leftArray[leftIndex])
+      leftIndex++
+    }
+  }
+
+  return sortedArray.concat(
+    leftArray.slice(leftIndex),
+    rightArray.slice(rightIndex)
+  )
+}
+
+function mergeSort(array) {
+  if (array.length < 2) return array
+
+  const midPoint = Math.floor(array.length / 2)
+  const leftArr = array.slice(0, midPoint)
+  const rightArr = array.slice(midPoint)
+
+  return merge(mergeSort(leftArr), mergeSort(rightArr))
+}
+```
+
 Say we're given an array of 8 entries as the input.
 Because the log of 8 is 3, we know we'll be doing 3 levels work, or  `O(log(n))`.
 For each of these levels, we're required to do a linear amount of work, or `O(n)` amount of work.
