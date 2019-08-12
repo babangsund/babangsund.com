@@ -206,6 +206,29 @@ This is the commonly referred to, as the *handshake problem*.
 *Bubble sort* is common example of quadratic runtime. It iterates through an array, and compares adjacent values which are then swapped, should the first value be greater than the second.
 Rinse and repeat.
 
+```javascript
+function bubbleSort(array) {
+  let sorted = true
+
+  while (sorted) {
+    sorted = false
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] > array[i + 1]) {
+        const swap = array[i]
+        array[i] = array[i + 1]
+        array[i + 1] = swap
+        sorted = true
+      }
+    }
+  }
+
+  return array
+}
+```
+
+In a worst-case scenario, the input `array` would be sorted completely backwards `[8,7,6,5,4,3,2,1]`, and the `for` loop would run for a total of 64 times.
+We know this, because the length of the input is 8, and 8x8 = 64. *Quadratic*.
+
 Another *very* common example of `O(n^2)`, is the nested loop.
 
 ```javascript
