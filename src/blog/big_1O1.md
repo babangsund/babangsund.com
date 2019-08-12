@@ -50,7 +50,7 @@ Okay, the description has remained amazingly abstract so far - let's dive into s
 
 ```javascript
 function logLastIndex(array) {
-  console.log(array[array.lenght - 1])
+  console.log(array[array.length- 1])
 }
 ```
 
@@ -264,7 +264,7 @@ In the case of fibonacci as seen above, we're doing a lot of unnecessary work.
 Function calls with the same input and output are likely to reoccur, 
 which means we're doing a redundant amount of linear work.
 
-We can fix this, by cache the output of `fib(n)` with a generic javascript cache implementation.
+We can fix this, by memoizing the output of `fib(n)` with a generic javascript cache implementation.
 
 ```javascript
 function memoize(fn) {
