@@ -87,7 +87,7 @@ There are ways around this issue, but that might be better left for another time
 In the query above, we're still faced with an issue - the value of `props.localValue` is `undefined`.
 
 ***Edit*** *2019-07-28:*  
-I've released a [package](https://github.com/babangsund/react-relay-local-query-renderer) that mirrors the `LocalQueryRenderer` which will likely ship with `^v6.0.0` of `react-relay`.
+I've released a [package](https://github.com/babangsund/react-relay-local-query) that mirrors the `LocalQueryRenderer`, with the addition of a hook implementation which will likely ship with `^v6.0.0` of `react-relay`.
 
 ### Initial values
 
