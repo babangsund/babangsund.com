@@ -42,7 +42,7 @@ than it is to academia's big O, and even so, is still not quite the same.
 
 ---
 
-Okay, the description has remained amazingly abstract so far - let's dive into some examples.
+Okay, the description has remained amazingly abstract so far - let's dive into some examples, by exploring some common runtime expressions.
 
 ### Constant time `O(1)`
 
@@ -109,9 +109,9 @@ If you're working with a sequentially iterative loop which spans from `0` to `ar
 
 > *"O of log n"*
 
-Logarithms in computer science, assumes a base of `2`, unlike in mathematics where it is assumed to be `10`.
+Logarithms in computer science assume a base of `2`, unlike in mathematics where it is assumed to be `10`.
 
-The Logarithm of a number, is the inverse of the exponent, meaning base b of x `log b(x)`, is the exponent to which `b` needs to be raised to obtain `x`.
+The Logarithm of a number is the inverse of the exponent, meaning base b of x `log b(x)`, is the exponent to which `b` needs to be raised to obtain `x`.
 For example, given `2^3 = 8`, the equivalent logarithm would be `log(8) = 3`, again assuming a base of `2`.
 
 A very common example of a `logarithmic` runtime, is the binary search.  
@@ -264,7 +264,7 @@ In the case of fibonacci as seen above, we're doing a lot of unnecessary work.
 Function calls with the same input and output are likely to reoccur, 
 which means we're doing a redundant amount of linear work.
 
-We can fix this, by memoizing the output of `fib(n)` with a generic javascript cache implementation.
+We can fix this by memoizing the output of `fib(n)` with a generic javascript cache implementation.
 
 ```javascript
 function memoize(fn) {
