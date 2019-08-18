@@ -1,7 +1,7 @@
 ---
 title: "Big 1O1"
 date: "2019-08-11"
-excerpt: "What is big O notation?"
+excerpt: "An introduction to big O"
 published: true
 ---
 
