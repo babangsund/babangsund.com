@@ -11,7 +11,7 @@ should you ever find yourself contributing to Relay or just building cool stuff 
 
 ### retain
 
-`environment.retain` is useful, if you ever need to tell the Relay garbage collection,
+`environment.retain` is useful if you ever need to tell the Relay garbage collection,
 to *retain* some data in a garbage collection cycle.
 
 Input signature:
@@ -24,11 +24,10 @@ type NormalizationSelector = {|
 |};
 ```
 
-dataID is the ID of the data node you want to retain.
-
+dataID is the ID of the data node you want to retain.  
 Example usage:
 
-```javascript
+```javascript{2}
 environment.retain({
   dataID,
   variables: {},
@@ -37,6 +36,10 @@ environment.retain({
 ```
 
 ### lookup
+
+`environment.lookup` returns a snapshot of the most recent data for a given operation.
+It is used internally by Relay, as can be seen in the `QueryRenderer` render prop,
+where the response data snapshot is passed as `props`.
 
 Input signature:
 
@@ -52,15 +55,15 @@ type SingularReaderSelector = {|
 
 Example usage:
 
-```javascript
+```javascript{4}
+import {getRequest, createOperationDescriptor} from 'relay-runtime';
+
 const request = getRequest(query);
 const operation = createOperationDescriptor(request, latestVariables);
 
 const response = environment.lookup(operation.fragment, operation);
+// => response.data
 ```
-
-`response` is a snapshot, which contains the `data` property, which is what is normally passed to the `render`
-method, in the `QueryRenderer`.
 
 ### subscribe
 
