@@ -55,7 +55,7 @@ type SingularReaderSelector = {|
 
 Example usage:
 
-```javascript{4}
+```javascript{6}
 import {getRequest, createOperationDescriptor} from 'relay-runtime';
 
 const request = getRequest(query);
@@ -67,7 +67,16 @@ const response = environment.lookup(operation.fragment, operation);
 
 ### subscribe
 
-Coming soon!
+`environment.subscribe` *subscribes* to a `Snapshot`, like the one provided by `environment.lookup`.  
+
+Input signature:
+
+```javascript
+snapshot: Snapshot,
+callback: (snapshot: Snapshot) => void,
+```
+
+Input signature:
 
 ### applyUpdate
 
