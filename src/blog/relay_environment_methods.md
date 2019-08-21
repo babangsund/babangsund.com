@@ -65,9 +65,16 @@ const response = environment.lookup(operation.fragment, operation);
 // => response.data
 ```
 
+`response.data` is of type `SelectorData`, which boils down to `{[key: string]: mixed}`,
+which is essentially just an object of unknown shape.
+
 ### subscribe
 
-`environment.subscribe` *subscribes* to a `Snapshot`, like the one provided by `environment.lookup`.  
+`environment.subscribe` *subscribes* to a provided `Snapshot`, like the one provided by `environment.lookup`.  
+The second argument is a callback, which is triggered by the Relay Store whenever there's an update
+to the snapshot provided in the first argument.
+
+Upon an update, a new `Snapshot` is passed, which could then be used to, say, update a `QueryRenderer`.
 
 Input signature:
 
@@ -76,7 +83,7 @@ snapshot: Snapshot,
 callback: (snapshot: Snapshot) => void,
 ```
 
-Input signature:
+`environment.subscribe` returns a disposable, which should be called whenever the subscription calls your callback function.
 
 ### applyUpdate
 
