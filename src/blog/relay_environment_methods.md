@@ -11,7 +11,7 @@ should you ever find yourself contributing to Relay or just building cool stuff 
 
 ### retain
 
-`environment.retain` is useful if you ever need to tell the Relay garbage collection,
+`environment.retain` is handy if you ever need to tell the Relay garbage collection,
 to *retain* some data in a garbage collection cycle.
 
 Input signature:
@@ -24,15 +24,28 @@ type NormalizationSelector = {|
 |};
 ```
 
-dataID is the ID of the data node you want to retain.  
+`dataID` is the relay id of the record you want to retain.  
+The method returns a disposable, which can be called to discard the record from the list of *retained* nodes, and schedule a garbage collection cycle.
+
 Example usage:
 
-```javascript{2}
-environment.retain({
+```javascript{6,9,16}
+// with a query
+import {getRequest, createOperationDescriptor} from 'relay-runtime';
+
+const request = getRequest(query);
+const operation = createOperationDescriptor(request, variables);
+const retainDisposable = environment.retain(operation.root);  
+
+// without a query
+const retainDisposable = environment.retain({
   dataID,
   variables: {},
   node: { selections: [] }
 })
+
+// clean-up
+retainDisposable();
 ```
 
 ### lookup
@@ -59,7 +72,7 @@ Example usage:
 import {getRequest, createOperationDescriptor} from 'relay-runtime';
 
 const request = getRequest(query);
-const operation = createOperationDescriptor(request, latestVariables);
+const operation = createOperationDescriptor(request, variables);
 
 const response = environment.lookup(operation.fragment, operation);
 // => response.data
@@ -84,6 +97,24 @@ callback: (snapshot: Snapshot) => void,
 ```
 
 `environment.subscribe` returns a disposable, which should be called whenever the subscription calls your callback function.
+
+Example usage:
+
+```javascript{7,13}
+import {getRequest, createOperationDescriptor} from 'relay-runtime';
+
+const request = getRequest(query);
+const operation = createOperationDescriptor(request, variables);
+const response = environment.lookup(operation.fragment, operation);
+
+const subscribeDisposable = environment.subscribe(response, newSnapshot => {
+  // do something with newSnapshot
+  console.log(newSnapshot.data)
+});
+
+// cleanup
+subscribeDisposable();
+```
 
 ### applyUpdate
 
