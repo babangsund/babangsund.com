@@ -118,7 +118,29 @@ subscribeDisposable();
 
 ### applyUpdate
 
-Coming soon!
+`environment.applyUpdate` as the name implies, *applies* or *commits* an update to the Relay Store, very much like `commitLocalUpdate`.
+
+Input signature:
+
+```javascript
+type OptimisticUpdateFunction = {|
+  +storeUpdater: (store: RecordSourceProxy) => void,
+|};
+```
+
+`environment.applyUpdate` returns a disposable, allowing you to revert any changes made by the `storeUpdater` function.
+
+Example usage:
+
+```javascript
+function storeUpdater(store) {
+  // do something with store
+}
+const updaterDisposable = environment.applyUpdate({storeUpdater});
+
+// revert
+updaterDisposable();
+```
 
 ### revertUpdate
 
