@@ -1,12 +1,12 @@
 ---
-title: "Relay Environment methods (WIP)"
+title: "Relay Environment methods"
 date: "2019-08-18"
 excerpt: "It's not all useless!"
 published: true
 ---
 
-The Relay Environment exposes a set of methods, which you might find useful,
-should you ever find yourself contributing to Relay or just building cool stuff on your own.
+The [Relay Environment](https://relay.dev/docs/en/relay-environment) exposes a set of methods, which you might find useful,
+should you ever find yourself contributing to Relay - or just building cool new stuff on your own.
 
 
 ### retain
@@ -25,7 +25,7 @@ type NormalizationSelector = {|
 ```
 
 `dataID` is the relay id of the record you want to retain.  
-The method returns a disposable, which can be called to discard the record from the list of *retained* nodes, and schedule a garbage collection cycle.
+`environment.retain` returns a disposable, which can be called to discard the record from the list of *retained* nodes, and schedule a garbage collection cycle.
 
 Example usage:
 
@@ -44,7 +44,7 @@ const retainDisposable = environment.retain({
   node: { selections: [] }
 })
 
-// clean-up
+// cleanup
 retainDisposable();
 ```
 
@@ -83,7 +83,7 @@ which is essentially just an object of unknown shape.
 
 ### subscribe
 
-`environment.subscribe` *subscribes* to a provided `Snapshot`, like the one provided by `environment.lookup`.  
+`environment.subscribe` *subscribes* to a provided `Snapshot`, like the one returned by `environment.lookup`.  
 The second argument is a callback, which is triggered by the Relay Store whenever there's an update
 to the snapshot provided in the first argument.
 
@@ -132,7 +132,7 @@ type OptimisticUpdateFunction = {|
 
 Example usage:
 
-```javascript
+```javascript{4,7}
 function storeUpdater(store) {
   // do something with store
 }
@@ -144,4 +144,28 @@ updaterDisposable();
 
 ### revertUpdate
 
-Coming soon!
+`environment.revertUpdate` very intuitively, *reverts an update*.
+
+Input signature:
+
+```javascript
+type OptimisticUpdateFunction = {|
+  +storeUpdater: (store: RecordSourceProxy) => void,
+|};
+```
+
+Example usage:
+
+```javascript{11}
+import {commitLocalUpdate} from 'relay-runtime';
+
+function storeUpdater(store) {
+  // do something with store
+}
+
+// apply
+commitLocalUpdate(environment, storeUpdater);
+
+// revert
+environment.revertUpdate(storeUpdater);
+```
