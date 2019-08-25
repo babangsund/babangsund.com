@@ -38,6 +38,13 @@ module.exports = {
         plugins: [
           "gatsby-remark-copy-linked-files",
           {
+            resolve: "gatsby-remark-autolink-headers",
+            options: {
+              offsetY: 100,
+              maintainCase: true,
+            },
+          },
+          {
             resolve: "gatsby-remark-prismjs",
             options: {
               inlineCodeMarker: "÷",

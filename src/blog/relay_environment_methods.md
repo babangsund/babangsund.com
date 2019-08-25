@@ -8,6 +8,13 @@ published: true
 The [Relay Environment](https://relay.dev/docs/en/relay-environment) exposes a set of methods, which you might find useful,
 should you ever find yourself contributing to Relay - or just building cool new stuff on your own.
 
+* [retain](#retain)
+* [lookup](#lookup)
+* [subscribe](#subscribe)
+* [applyUpdate](#applyUpdate)
+* [revertUpdate](#revertUpdate)
+
+---
 
 ### retain
 
