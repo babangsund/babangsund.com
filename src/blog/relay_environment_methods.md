@@ -8,6 +8,7 @@ published: true
 The [Relay Environment](https://relay.dev/docs/en/relay-environment) exposes a set of methods, which you might find useful,
 should you ever find yourself contributing to Relay - or just building cool new stuff on your own.
 
+* [check](#check)
 * [retain](#retain)
 * [lookup](#lookup)
 * [subscribe](#subscribe)
@@ -15,6 +16,34 @@ should you ever find yourself contributing to Relay - or just building cool new 
 * [revertUpdate](#revertUpdate)
 
 ---
+
+### check
+
+`environment.check` is used by Relay to determine whether or not a given set of records are present in the store,
+which are required to fulfill the provided selector (essentially a normalized query response data signature).
+
+Input signature:
+
+```javascript
+type NormalizationSelector = {|
+  +dataID: DataID,
+  +node: NormalizationSelectableNode,
+  +variables: Variables,
+|};
+```
+
+`environment.check` returns `true` if all required records are present, otherwise `false`.
+
+Example usage:
+
+```javascript{6}
+import {getRequest, createOperationDescriptor} from 'relay-runtime';
+
+const request = getRequest(query);
+const operation = createOperationDescriptor(request, variables);
+
+const canFulfillRequest = environment.check(operation.root);
+```
 
 ### retain
 
@@ -49,7 +78,7 @@ const retainDisposable = environment.retain({
   dataID,
   variables: {},
   node: { selections: [] }
-})
+});
 
 // cleanup
 retainDisposable();
@@ -116,7 +145,7 @@ const response = environment.lookup(operation.fragment, operation);
 
 const subscribeDisposable = environment.subscribe(response, newSnapshot => {
   // do something with newSnapshot
-  console.log(newSnapshot.data)
+  console.log(newSnapshot.data);
 });
 
 // cleanup
