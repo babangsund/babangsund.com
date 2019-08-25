@@ -1,7 +1,7 @@
 ---
 title: "Relay Environment methods"
 date: "2019-08-18"
-excerpt: "It's not all useless!"
+excerpt: "In-depth"
 published: true
 ---
 
