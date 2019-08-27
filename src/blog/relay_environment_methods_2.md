@@ -1,7 +1,7 @@
 ---
 title: "Relay Environment methods, part 2 (WIP)"
 date: "2019-08-25"
-excerpt: "Creating useLocalQuery"
+excerpt: "Re-creating useLocalQuery"
 published: true
 ---
 
