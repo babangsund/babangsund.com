@@ -154,7 +154,9 @@ subscribeDisposable();
 
 ### applyUpdate
 
-`environment.applyUpdate` as the name implies, *applies* or *commits* an update to the Relay Store, very much like `commitLocalUpdate`.
+`environment.applyUpdate` as the name implies, *applies* or *commits* an update to the Relay Store, very much like `commitLocalUpdate`,
+except this update will remain *rebased* on top of the queue until removed.
+
 
 Input signature:
 
@@ -164,7 +166,8 @@ type OptimisticUpdateFunction = {|
 |};
 ```
 
-`environment.applyUpdate` returns a disposable, allowing you to revert any changes made by the `storeUpdater` function.
+`environment.applyUpdate` returns a disposable, allowing you to revert and dispose any changes made by the `storeUpdater` function.
+>**The update is re-applied on each request, so make sure to dispose when it is no longer current.**
 
 Example usage:
 
@@ -178,9 +181,10 @@ const updaterDisposable = environment.applyUpdate({storeUpdater});
 updaterDisposable();
 ```
 
+
 ### revertUpdate
 
-`environment.revertUpdate` very intuitively, *reverts an update*.
+`environment.revertUpdate` very intuitively, *reverts an optimistic update*.
 
 Input signature:
 
@@ -193,14 +197,12 @@ type OptimisticUpdateFunction = {|
 Example usage:
 
 ```javascript{11}
-import {commitLocalUpdate} from 'relay-runtime';
-
 function storeUpdater(store) {
   // do something with store
 }
 
 // apply
-commitLocalUpdate(environment, storeUpdater);
+environment.applyUpdate({storeUpdater});
 
 // revert
 environment.revertUpdate(storeUpdater);
