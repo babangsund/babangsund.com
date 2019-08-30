@@ -3,7 +3,7 @@ module.exports = {
     lang: "en",
     title: "babangsund",
     author: "bbangsund",
-    description: "Blog, lab",
+    description: "Blog",
     url: "https://babangsund.com",
     github: "https://github.com/babangsund",
     twitter: "https://mobile.twitter.com/babangsund",
@@ -62,6 +62,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
+        icon: "./favicon.png",
         name: "babangsund",
         short_name: "babangsund",
         start_url: "/",
