@@ -29,51 +29,20 @@ function SEO({ url, title, description }) {
       htmlAttributes={{
         lang: site.siteMetadata.lang,
       }}
-      title={metaTitle}
       titleTemplate={`${site.siteMetadata.title} | %s`}
-      meta={[
-        {
-          name: "description",
-          content: metaDescription,
-        },
-        {
-          property: "og:url",
-          content: metaUrl,
-        },
-        {
-          property: "og:title",
-          content: metaTitle,
-        },
-        {
-          property: "og:description",
-          content: metaDescription,
-        },
-        {
-          property: "og:type",
-          content: "website",
-        },
-        {
-          property: "og:image",
-          content: bab_image,
-        },
-        {
-          name: "twitter:card",
-          content: "summary",
-        },
-        {
-          name: "twitter:creator",
-          content: site.siteMetadata.twitter,
-        },
-        {
-          name: "twitter:title",
-          content: metaTitle,
-        },
-        {
-          name: "twitter:description",
-          content: metaDescription,
-        },
-      ]}
-    />
+    >
+      <title>{metaTitle}</title>
+      <meta name="description" content={metaDescription} />
+      <meta property="og=url" content={metaUrl} />
+      <meta property="og:title" content={metaTitle} />
+      <meta property="og:description" content={metaDescription} />
+      <meta property="og:type" content="website" />
+      <meta property="og:image" content={bab_image} />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:creator" content={site.siteMetadata.twitter} />
+      <meta name="twitter:title" content={metaTitle} />
+      <meta name="twitter:description" content={metaDescription} />
+    </Helmet>
   )
 }
 
