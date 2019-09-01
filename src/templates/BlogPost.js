@@ -2,6 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import styled from "styled-components"
 
+import Seo from "components/Seo"
 import Layout from "components/Layout"
 import { rhythm } from "utils/typography"
 
@@ -33,6 +34,11 @@ function BlogPost({ data, path, pageContext }) {
           )}
         </div>
       </article>
+      <Seo
+        url={path}
+        title={post.frontmatter.title}
+        description={post.excerpt}
+      />
     </Layout>
   )
 }
@@ -40,6 +46,7 @@ function BlogPost({ data, path, pageContext }) {
 export const query = graphql`
   fragment BlogPost on MarkdownRemark {
     html
+    excerpt
     timeToRead
     frontmatter {
       title

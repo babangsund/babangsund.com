@@ -3,7 +3,7 @@ import Helmet from "react-helmet"
 import bab_image from "../../favicon.png"
 import { useStaticQuery, graphql } from "gatsby"
 
-function SEO({ url, title, description }) {
+function SEO({ url = "", title = "", description = "" }) {
   const { site } = useStaticQuery(
     graphql`
       query SeoQuery {
@@ -20,7 +20,7 @@ function SEO({ url, title, description }) {
     `
   )
 
-  const metaUrl = url || site.siteMetadata.url
+  const metaUrl = site.siteMetadata.url + url
   const metaTitle = title || site.siteMetadata.title
   const metaDescription = description || site.siteMetadata.description
 
