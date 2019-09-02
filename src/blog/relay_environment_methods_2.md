@@ -23,7 +23,7 @@ function useLocalQuery({environment, query, variables}) {
 }
 ```
 
-Next up, we'll go ahead and implement `useDeepCompare`. It's implements the functionality of isEqual from lodash or underscore, to check if two values are equal based on the value, and not necessarily the reference.
+Next up, we'll go ahead and implement `useDeepCompare`. It implements the functionality of isEqual from lodash or underscore, to check if two values are equal based on the value, and not necessarily the reference.
 
 ```javascript
 import areEqual from 'fbjs/lib/areEqual';
