@@ -38,7 +38,7 @@ function SEO({ url = "", title = "", description = "" }) {
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
       <meta property="og:image" content={site.siteMetadata.url + bab_image} />
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
       <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:description" content={metaDescription} />
