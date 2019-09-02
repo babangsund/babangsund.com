@@ -176,7 +176,7 @@ Inside snapshot, we use `environment.lookup` to extract the response object from
 
 The data is assigned to `dataRef`.
 
-```javascript{2,3,18}
+```javascript{2,3,17,18}
 const snapshot = useMemo(() => {
   const response = environment.lookup(operation.fragment, operation);
   dataRef.current = response.data;
