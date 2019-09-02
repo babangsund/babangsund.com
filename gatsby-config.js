@@ -62,7 +62,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        icon: "./favicon.png",
+        icon: "./bab_lg.png",
         name: "babangsund",
         short_name: "babangsund",
         start_url: "/",

@@ -1,6 +1,6 @@
 import React from "react"
 import Helmet from "react-helmet"
-import bab_image from "../../favicon.png"
+import bab_sm from "../../bab_sm.png"
 import { useStaticQuery, graphql } from "gatsby"
 
 function SEO({ url = "", title = "", description = "" }) {
@@ -37,7 +37,7 @@ function SEO({ url = "", title = "", description = "" }) {
       <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content={site.siteMetadata.url + bab_image} />
+      <meta property="og:image" content={site.siteMetadata.url + bab_sm} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
       <meta name="twitter:title" content={metaTitle} />
