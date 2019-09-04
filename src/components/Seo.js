@@ -33,15 +33,20 @@ function SEO({ url = "", title = "", description = "" }) {
     >
       <title>{metaTitle}</title>
       <meta name="description" content={metaDescription} />
+      <meta property="author" content={site.siteMetadata.author} />
       <meta property="og=url" content={metaUrl} />
       <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content={site.siteMetadata.url + bab_sm} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
       <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:description" content={metaDescription} />
+      <meta
+        name="image"
+        property="og:image"
+        content={site.siteMetadata.url + bab_sm}
+      />
     </Helmet>
   )
 }
