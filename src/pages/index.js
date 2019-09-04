@@ -2,7 +2,7 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import styled from "styled-components"
 
-import SEO from "components/Seo"
+import Seo from "components/Seo"
 import Layout from "components/Layout"
 
 import { rhythm } from "utils/typography"
@@ -36,7 +36,7 @@ function Index({ data, path }) {
   const blogposts = data.blog.edges
   return (
     <Layout path={path}>
-      <SEO title="Blog by Benjamin Bangsund" />
+      <Seo title="Blog by Benjamin A. Bangsund" />
       {blogposts.map(({ node }) => (
         <BlogPost key={node.id} blogPost={node} />
       ))}
