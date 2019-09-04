@@ -50,7 +50,7 @@ Okay, the description has remained amazingly abstract so far - let's dive into s
 
 ```javascript
 function logLastIndex(array) {
-  console.log(array[array.length- 1])
+  console.log(array[array.length- 1]);
 }
 ```
 
