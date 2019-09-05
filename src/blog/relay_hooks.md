@@ -1,5 +1,5 @@
 ---
-title: "Relay Debugging (WIP)"
+title: "Relay Hooks (WIP)"
 date: "2019-09-01"
 excerpt: "Inspect and log"
 published: true
