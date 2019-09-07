@@ -229,11 +229,74 @@ and then looking for the new path at `~/relay/dist/<package>/lib/`, should it no
 
 ### MatchContainer
 ### fetchQuery
+
+Not unlike the v5 iteration of `fetchQuery`, it fetches the given operation,
+and implements de-duplication of in-flight requests.
+
+A RelayObservable is returned by default,
+which is a limited implementation of the [ESObservable](https://github.com/tc39/proposal-observable).
+The primary benefit of RelayObservable, is the ability to subscribe to updates with a synchronous callback.
+
+When using the Observable, `fetchQuery` returns a disposable, which can be called to
+cancel any in-flight requests.
+
+Example usage:
+
+```javascript
+const dispose = fetchQuery(environment, query, variables).subscribe({
+  // Called when network requests starts
+  start: (subsctiption) => {},
+
+  // Called after a payload is received and written to the local store
+  next: (payload) => {},
+
+  // Called when network requests errors
+  error: (error) => {},
+
+  // Called when network requests fully completes
+  complete: () => {},
+
+  // Called when network request is unsubscribed
+  unsubscribe: (subscription) => {},
+});
+
+// cancel the request
+dispose();
+```
+
+The RelayObservable from `fetchQuery` can be converted to a Promise, which will instead
+resolve to a snapshot of the query data when the *first* (and only first) response is received from the server.
+
+> Converting Observable to a Promise will invalidate the returned disposer function.
+
+Example usage:
+
+```
+fetchQuery(environment, query, variables).then((data) => {
+  // do something with data
+});
+```
+
+It's important to know that unlike `useQuery`, `fetchQuery` does *NOT* retain query data, meaning that it is not guaranteed
+that the fetched data will remain in the Relay store after the request has completed.
+
 ### useBlockingPaginationFragment
 
 ### usePaginationFragment
 ### useLegacyPaginationFragment
 
+function TodoList() {
+  const {
+    data: fragmentData,
+    loadNext,
+    loadPrevious,
+    hasNext,
+    hasPrevious,
+    isLoadingNext,
+    isLoadingPrevious,
+    refetch: refetchPagination,
+  } = usePaginationFragment(graphql``);
+}
 
 
 ### RelayEnvironmentProvider
@@ -291,14 +354,12 @@ Cache key.
 
 #### fetchPolicy
 
-Enum.
+Settings for how a query may be fetched.
 
-```javascript
-'store-only'
-'store-or-network'
-'store-and-network'
-'network-only'
-```
+- 'store-only'
+- 'store-or-network'
+- 'store-and-network'
+- 'network-only'
 
 #### networkCacheConfig
 
@@ -349,14 +410,12 @@ Example usage:
 import {graphql,useFragment} from "react-relay";
 
 function TodoItem(props) {
-  const {todo} = useFragment({
-    todo: graphql`
-      fragment TodoItem on Todo {
-        text
-        isComplete
-      }
-    `
-  }, props.todo);
+  const [todo, refetch] = useRefetchableFragment(graphql`
+    fragment TodoItem on Todo {
+      text
+      isComplete
+    }
+  `, props.data);
 }
 ```
 
@@ -375,14 +434,12 @@ Example usage:
 import {graphql,useRefetchableFragment} from "react-relay";
 
 function TodoItem(props) {
-  const [{todo}, refetch] = useRefetchableFragment({
-    todo: graphql`
-      fragment TodoItem on Todo {
-        text
-        isComplete
-      }
-    `
-  }, props.todo);
+  const [todo, refetch] = useRefetchableFragment(graphql`
+    fragment TodoItem on Todo {
+      text
+      isComplete
+    }
+  `, props.data);
 
   // refetch the fragment
   refetch(fetchPolicy, onComplete)
