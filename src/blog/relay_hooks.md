@@ -11,18 +11,18 @@ The `relay-experimental` package was recently merged into the Relay `master` bra
 providing us with some much needed insight into how the Relay hooks API will look once it has been released. 
 
 Although we're told an actual release might be a couple of months away, we don't have to wait.
-I atleast, have never known to be a patient individual.
+I have for one, never known to be a patient individual.
 
 ## Building Relay from source
 
-> My local fork of Relay is located at `~/relay/`.
-
 First up, we need to tell Gulp that we're building the `relay-experimental` package.
 
-Open up `~/relay/gulpfile.js`, and find the `const builds = [...]` declaration.
+> My local fork of Relay is located at `~/relay/`.
+
+Open up `~/relay/gulpfile.js`, and find the `const builds = [...]` declaration.  
 As of this writing, you will find it at `line 110`.
 
-Inside the `builds` array, we'll add the `relay-experimental` build.
+Inside the `builds` array, we'll add the `relay-experimental` package.
 It should look something like this:
 
 ```javascript
@@ -44,7 +44,7 @@ const builds = [
     ],
   },
   // ...
-]
+];
 ```
 
 Once done, save the file and close it.
@@ -59,7 +59,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-Now we're ready to compile the source code into consumable production (or development) code.  
+Now we're ready to compile the source code into consumable production code.  
 Navigate to the root of the project and run the following command:
 
     $ npm run build
@@ -71,7 +71,16 @@ If you've built Relay from source before, you may need to run the cleanup script
 
     $ npm run build:clean
 
-### Fix resolutions 
+### Resolving broken imports 
+
+There are currently three files containing broken imports:
+
+- `useRelayEnvironment.js`
+- `RelayEnvironmentProvider.js`
+- `useRefetchableFragmentNode.js`
+
+But no need to worry! These are easily solved.
+We will simply open these files, and make a quick change.
 
 #### useRelayEnvironment
 
@@ -111,26 +120,45 @@ var _require5 = require('relay-runtime/store/RelayStoreUtils'),
 var _require5 = require('relay-runtime/lib/store/RelayStoreUtils'),
 ```
 
+### Packing for distribution
+
+// Explain `npm pack`
+
 Once the imports have been replaced, `relay-experimental` is ready for distribution.
-Navigate to the folder containing the build, and run `npm pack`.
+Navigate to the folder containing the build, and run `npm pack`:
 
     $ cd ~/relay/dist/relay-experimental
     $ npm pack
 
-At Facebook, many (if not all?) projects are using the master branch in their production builds.
-Since `relay-experimental` was recently ported to `relay` open source, it relies on the most recent build from `master`.
+At Facebook, most (if not all?) projects are part of one big monorepo, which essentially means they're all running the latest `master` build.
+Since `relay-experimental` was recently ported to Relay open source, it relies on the most recent build from `master`.
 
-This means, that installing `relay-experimental` alone is insufficient,
-due to it's incompatibility with version `5.0.0` of `relay`.
+For this reason, installing `relay-experimental` alone is insufficient,
+due to its incompatibility with version `5.0.0` of Relay.
 
-Therefore, we need to pack `react-relay` and `relay-runtime` as well.
+Therefore, we also need to pack `react-relay` and `relay-runtime`.
+
+Packing `react-relay`:
 
     $ cd ~/relay/dist/react-relay
     $ npm pack
 
+Packing `relay-runtime`:
 
     $ cd ~/relay/dist/relay-runtime
     $ npm pack
+
+## Installing to project
+
+Now that we've built and packed `relay-experimental`, `react-relay` and `relay-runtime`, they're ready for installation.
+To install them locally, simply navigate to your project and install them from path:
+
+    $ npm install ~/relay/dist/relay-experimental/relay-experimental-5.0.0.tgz
+    $ npm install ~/relay/dist/react-relay/react-relay-5.0.0.tgz
+    $ npm install ~/relay/dist/relay-runtime/relay-runtime-5.0.0.tgz
+
+Ofcourse, if you're deploying to another machine in production,
+you may benefit from hosting these builds elsewhere. Any private registry (i.e. npm,proget) will do.
 
 ## hooks
 
