@@ -11,7 +11,7 @@ The `relay-experimental` package was recently merged into the Relay `master` bra
 providing us with some much needed insight into how the Relay hooks API will look once it has been released. 
 
 Although we're told an actual release might be a couple of months away, we don't have to wait.
-I have for one, never known to be a patient individual.
+I for one, have never been known as a particularly patient individual.
 
 ## Building Relay from source
 
@@ -22,7 +22,7 @@ First up, we need to tell Gulp that we're building the `relay-experimental` pack
 Open up `~/relay/gulpfile.js`, and find the `const builds = [...]` declaration.  
 As of this writing, you will find it at `line 110`.
 
-Inside the `builds` array, we'll add the `relay-experimental` package.
+Inside the `builds` array, we'll add the `relay-experimental` package.  
 It should look something like this:
 
 ```javascript
@@ -43,7 +43,7 @@ const builds = [
       },
     ],
   },
-  // ...
+   ...
 ];
 ```
 
@@ -64,8 +64,8 @@ Navigate to the root of the project and run the following command:
 
     $ npm run build
 
-This command will run `gulp` with the `gulpfile` config we edited previously
-and output compiled files in the `dist` directory, located at the root of the project.
+This command will run `gulp` with the `gulpfile` config, which we previously edited,
+and output compiled files in the `dist` directory, located at the very root of the project.
 
 If you've built Relay from source before, you may need to run the cleanup script first:
 
@@ -87,7 +87,7 @@ We will simply open these files, and make a quick change.
 ```javascript
 // ~/relay/dist/relay-experimental/lib/useRelayEnvironment.js 
 
-// line 15
+// line 13
 var ReactRelayContext = require('react-relay/ReactRelayContext');
 // => 
 var ReactRelayContext = require('react-relay/lib/ReactRelayContext');
@@ -120,9 +120,10 @@ var _require5 = require('relay-runtime/store/RelayStoreUtils'),
 var _require5 = require('relay-runtime/lib/store/RelayStoreUtils'),
 ```
 
-### Packing for distribution
+And that's it!
+If you know a better(correct-ier?) way to resolve these imports, please let me know!
 
-// Explain `npm pack`
+### Packing for distribution
 
 Once the imports have been replaced, `relay-experimental` is ready for distribution.
 Navigate to the folder containing the build, and run `npm pack`:
@@ -148,6 +149,8 @@ Packing `relay-runtime`:
     $ cd ~/relay/dist/relay-runtime
     $ npm pack
 
+// TODO: Explain `npm pack`
+
 ## Installing to project
 
 Now that we've built and packed `relay-experimental`, `react-relay` and `relay-runtime`, they're ready for installation.
@@ -157,10 +160,66 @@ To install them locally, simply navigate to your project and install them from p
     $ npm install ~/relay/dist/react-relay/react-relay-5.0.0.tgz
     $ npm install ~/relay/dist/relay-runtime/relay-runtime-5.0.0.tgz
 
-Ofcourse, if you're deploying to another machine in production,
-you may benefit from hosting these builds elsewhere. Any private registry (i.e. npm,proget) will do.
+*If* you're using third party Relay libraries, you may need enforce package resolutions for your project:
+
+```javascript
+// package.json
+
+{
+  "resolutions": {
+    "react-relay": "file:../relay/dist/react-relay/react-relay-5.0.0.tgz",
+    "relay-runtime": "file:../relay/dist/relay-runtime/relay-runtime-5.0.0.tgz",
+    "relay-experimental": "file:../relay/dist/relay-experimental/relay-experimental-5.0.0.tgz"
+  },
+  ...
+}
+```
+
+Followed by running `npm install`.
+
+Ofcourse, if you're deploying to another machine, you may benefit from hosting these packages elsewhere.
+Although beyond the scope of this post, suffice to say that any private registry (i.e. npm,proget) will do.
+
+## Relay *"not 6.0.0"*
+
+Now that Relay has been upgraded to *"not 6.0.0"*, some import paths have been altered.
+
+I only encountered this problem with `RelayQueryResponseCache`, which has been changed from
+`relay-runtime/lib/RelayQueryResponseCache` to `relay-runtime/lib/network/RelayQueryResponseCache`.
+
+Luckily, it has also been added as a module export:
+
+```javascript
+import {QueryResponseCache} from 'relay-runtime';
+```
+
+Should you encounter a similar issue (but with a different API), I advise you to first try importing it as a module,
+and then looking for the new path at `~/relay/dist/<package>/lib/`, should it not exist as a module export.
 
 ## hooks
+
+### RelayEnvironmentProvider
+
+Before we can use any hooks, Relay requires access to the `Environment` via a built-in context provider.
+This is meant to be done only once, at the root of your application.
+
+As an example, I've created an arbitrary `Providers` component,
+which wraps the entire application with `RelayEnvironmentProvider`.
+
+```javascript
+// Providers.js
+
+import environment from './environment';
+import {RelayEnvironmentProvider} from 'relay-experimental';
+
+function Providers() {
+  return (
+    <RelayEnvironmentProvider environment={environment}>
+      <App />
+    </RelayEnvironmentProvider>
+  );
+}
+```
 
 ### useQuery
 
