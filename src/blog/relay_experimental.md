@@ -1,7 +1,7 @@
 ---
-title: "Relay Hooks (WIP)"
+title: "Relay Experimental (WIP)"
 date: "2019-09-01"
-excerpt: "hooks from relay-experimental"
+excerpt: "Hooks!"
 published: true
 ---
 
