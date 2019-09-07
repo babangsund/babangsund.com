@@ -165,7 +165,9 @@ Packing `relay-runtime`:
     $ cd ~/relay/dist/relay-runtime
     $ npm pack
 
-// TODO: Explain `npm pack`
+
+Running the `npm pack` command creates a tarball `.tgz`,
+producing the exact file that would've been published to npm, had we run `npm publish` instead.
 
 ## Installing to project
 
