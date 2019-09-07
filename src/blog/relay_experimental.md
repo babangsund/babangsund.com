@@ -13,6 +13,22 @@ providing us with some much needed insight into how the Relay hooks API will loo
 Although we're told an actual release might be a couple of months away, we don't have to wait.
 I for one, have never been known as a particularly patient individual.
 
+- [Building Relay from source](#Building-Relay-from-source)
+  - [Resolving broken imports](#Resolving-broken-imports)
+  - [Packing for distribution](#Packing-for-distribution)
+  - [Installing to project](#Installing-to-Project)
+- [API](#API)
+  - [MatchContainer](#MatchContainer)
+  - [RelayEnvironmentProvider](#RelayEnvironmentProvider)
+  - [fetchQuery](#fetchQuery)
+  - [useQuery](#useQuery)
+  - [useFragment](#useFragment)
+  - [useBlockingPaginationFragment](#useBlockingPaginationFragment)
+  - [usePaginationFragment](#usePaginationFragment)
+  - [useRefetchableFragment](#useRefetchableFragment)
+  - [useRelayEnvironment](#useRelayEnvironment)
+  - [useLegacyPaginationFragment](#useLegacyPaginationFragment)
+
 ## Building Relay from source
 
 First up, we need to tell Gulp that we're building the `relay-experimental` package.
@@ -196,7 +212,25 @@ import {QueryResponseCache} from 'relay-runtime';
 Should you encounter a similar issue (but with a different API), I advise you to first try importing it as a module,
 and then looking for the new path at `~/relay/dist/<package>/lib/`, should it not exist as a module export.
 
-## hooks
+## API
+
+- [MatchContainer](#MatchContainer)
+- [RelayEnvironmentProvider](#RelayEnvironmentProvider)
+- [fetchQuery](#fetchQuery)
+- [useQuery](#useQuery)
+- [useFragment](#useFragment)
+- [useBlockingPaginationFragment](#useBlockingPaginationFragment)
+- [usePaginationFragment](#usePaginationFragment)
+- [useRefetchableFragment](#useRefetchableFragment)
+- [useRelayEnvironment](#useRelayEnvironment)
+- [useLegacyPaginationFragment](#useLegacyPaginationFragment)
+
+### MatchContainer
+### fetchQuery
+### useBlockingPaginationFragment
+### usePaginationFragment
+### useRelayEnvironment
+### useLegacyPaginationFragment
 
 ### RelayEnvironmentProvider
 
@@ -220,6 +254,8 @@ function Providers() {
   );
 }
 ```
+
+## hooks
 
 ### useQuery
 
