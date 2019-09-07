@@ -20,14 +20,14 @@ I for one, have never been known as a particularly patient individual.
 - [API](#API)
   - [MatchContainer](#MatchContainer)
   - [RelayEnvironmentProvider](#RelayEnvironmentProvider)
+  - [useRelayEnvironment](#useRelayEnvironment)
   - [fetchQuery](#fetchQuery)
   - [useQuery](#useQuery)
   - [useFragment](#useFragment)
-  - [useBlockingPaginationFragment](#useBlockingPaginationFragment)
-  - [usePaginationFragment](#usePaginationFragment)
   - [useRefetchableFragment](#useRefetchableFragment)
-  - [useRelayEnvironment](#useRelayEnvironment)
+  - [usePaginationFragment](#usePaginationFragment)
   - [useLegacyPaginationFragment](#useLegacyPaginationFragment)
+  - [useBlockingPaginationFragment](#useBlockingPaginationFragment)
 
 ## Building Relay from source
 
@@ -218,21 +218,23 @@ and then looking for the new path at `~/relay/dist/<package>/lib/`, should it no
 
 - [MatchContainer](#MatchContainer)
 - [RelayEnvironmentProvider](#RelayEnvironmentProvider)
+- [useRelayEnvironment](#useRelayEnvironment)
 - [fetchQuery](#fetchQuery)
 - [useQuery](#useQuery)
 - [useFragment](#useFragment)
-- [useBlockingPaginationFragment](#useBlockingPaginationFragment)
-- [usePaginationFragment](#usePaginationFragment)
 - [useRefetchableFragment](#useRefetchableFragment)
-- [useRelayEnvironment](#useRelayEnvironment)
+- [usePaginationFragment](#usePaginationFragment)
 - [useLegacyPaginationFragment](#useLegacyPaginationFragment)
+- [useBlockingPaginationFragment](#useBlockingPaginationFragment)
 
 ### MatchContainer
 ### fetchQuery
 ### useBlockingPaginationFragment
+
 ### usePaginationFragment
-### useRelayEnvironment
 ### useLegacyPaginationFragment
+
+
 
 ### RelayEnvironmentProvider
 
@@ -257,7 +259,16 @@ function Providers() {
 }
 ```
 
-## hooks
+### useRelayEnvironment
+
+```javascript
+import {useRelayEnvironment} from "relay-experimental";
+
+function App() {
+  const environment = useRelayEnvironment();
+  // do something with environment
+}
+```
 
 ### useQuery
 
@@ -350,6 +361,15 @@ function TodoItem(props) {
 ```
 
 ### useRefetchableFragment
+
+Input signature:
+
+```javascript
+fragmentInput: GraphQLTaggedNode,
+fragmentRef: TKey,
+```
+
+Example usage:
 
 ```jsx
 import {graphql,useRefetchableFragment} from "react-relay";
