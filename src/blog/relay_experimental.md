@@ -362,7 +362,6 @@ options?: {|
 
 #### fetchKey
 
-
 It can be a string or a number. Acts as a custom cacheKey.
 
 #### fetchPolicy
@@ -390,8 +389,23 @@ Settings for how a query response may be cached.
 
 Example usage:
 
+```jsx{5}
+// App.js
+
+function App() {
+  return (
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <TodoList />
+    </React.Suspense>
+  );
+}
+```
+
 ```jsx
-import {graphql,useQuery} from "react-relay";
+// TodoList.js
+
+import {graphql} from 'react-relay';
+import {useQuery} from 'relay-experimental';
 
 function TodoList(props) {
   const data = useQuery(
@@ -400,59 +414,83 @@ function TodoList(props) {
         viewer {
           todos {
             id
-            ...TodoItem
+            ...TodoItemFragment
           }
         }
       }
     `);
+
+  return data.todos.map(todo => (
+    <TodoItem todo={todo} />
+  ));
 }
 ```
 
 ### useFragment
 
-Input signature:
-
-```javascript
-fragmentInput: GraphQLTaggedNode,
-fragmentRef: TKey,
-```
-
 Example usage:
 
+```jsx{7,13,20}
+// TodoList.js
+
+import {graphql} from 'react-relay';
+import {useQuery} from 'relay-experimental';
+
+function TodoList(props) {
+  const data = useQuery(
+    graphql`
+      query TodoListQuery {
+        viewer {
+          todos {
+            id
+            ...TodoItemFragment
+          }
+        }
+      }
+    `);
+
+    return data.todos.map(todo => (
+      <TodoItem todo={todo} />
+    ));
+}
+```
+
 ```jsx
-import {graphql,useFragment} from "react-relay";
+// TodoItem.js
+
+import {graphql} from 'react-relay';
+import {useFragment} from 'relay-experimental';
 
 function TodoItem(props) {
-  const [todo, refetch] = useRefetchableFragment(graphql`
-    fragment TodoItem on Todo {
-      text
-      isComplete
+  const todo = useFragment(graphql`
+    fragment TodoItemFragment on Todo {
+      id
+      name
     }
-  `, props.data);
+
+  `, props.todo);
 }
 ```
 
 ### useRefetchableFragment
 
-Input signature:
-
-```javascript
-fragmentInput: GraphQLTaggedNode,
-fragmentRef: TKey,
-```
+A `useRefetchableFragment` fragment requires the `@refetchable` GraphQL directive.
+This directive takes the `queryName` parameter, which is the name of the query used when refetching the fragment.
 
 Example usage:
 
-```jsx
-import {graphql,useRefetchableFragment} from "react-relay";
+```jsx{6}
+import {graphql} from 'react-relay';
+import {useRefetchableFragment} from 'relay-experimental';
 
 function TodoItem(props) {
   const [todo, refetch] = useRefetchableFragment(graphql`
-    fragment TodoItem on Todo {
+    fragment TodoItemFragment on Todo 
+    @refetchable(queryName: "TodoItemFragmentRefetchQuery") {
       text
       isComplete
     }
-  `, props.data);
+  `, props.todo);
 
   // refetch the fragment
   refetch(fetchPolicy, onComplete)
