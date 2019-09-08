@@ -16,7 +16,7 @@ I for one, have never been known as a particularly patient individual.
 - [Building Relay from source](#Building-Relay-from-source)
   - [Resolving broken imports](#Resolving-broken-imports)
   - [Packing for distribution](#Packing-for-distribution)
-  - [Installing to project](#Installing-to-Project)
+  - [Installing to project](#Installing-to-project)
 - [API](#API)
   - [RelayEnvironmentProvider](#RelayEnvironmentProvider)
   - [useRelayEnvironment](#useRelayEnvironment)
@@ -25,7 +25,6 @@ I for one, have never been known as a particularly patient individual.
   - [useFragment](#useFragment)
   - [useRefetchableFragment](#useRefetchableFragment)
   - [usePaginationFragment](#usePaginationFragment)
-  - [useLegacyPaginationFragment](#useLegacyPaginationFragment)
 
 ## Building Relay from source
 
@@ -258,7 +257,6 @@ and then looking for the new path at `~/relay/dist/<package>/lib/` in case it do
 - [useFragment](#useFragment)
 - [useRefetchableFragment](#useRefetchableFragment)
 - [usePaginationFragment](#usePaginationFragment)
-- [useLegacyPaginationFragment](#useLegacyPaginationFragment)
 
 ### fetchQuery
 
@@ -364,8 +362,8 @@ options?: {|
 
 #### fetchKey
 
-It can be a string or a number.
-Cache key.
+
+It can be a string or a number. Acts as a custom cacheKey.
 
 #### fetchPolicy
 
@@ -462,7 +460,6 @@ function TodoItem(props) {
 ```
 
 ### usePaginationFragment
-### useLegacyPaginationFragment
 
 ```javascript
 // User.js
