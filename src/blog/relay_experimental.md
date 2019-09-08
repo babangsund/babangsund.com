@@ -280,68 +280,14 @@ fetchQuery(environment, query, variables).then((data) => {
 It's important to know that unlike `useQuery`, `fetchQuery` does *NOT* retain query data, meaning that it is not guaranteed
 that the fetched data will remain in the Relay store after the request has been completed.
 
+---
+
 TODO:
 
 ### MatchContainer
 ### useBlockingPaginationFragment
 
-### usePaginationFragment
-### useLegacyPaginationFragment
-
-```javascript
-// User.js
-
-function User() {
-  const data = useQuery(
-    graphql`
-      query UserQuery(
-        $id: ID!
-        $first: Int
-        $cursor: ID
-      ) {
-        node(id: $id) {
-          ...UserTodosFragment
-        }
-      }
-    `,
-    {
-      cursor: "cursor:1",
-      first: 5
-    });
-
-    return <UserTodos data={data} />
-}
-
-// UserTodos.js
-function UserTodos(props) {
-  const {
-    data: fragmentData,
-    loadNext,
-    loadPrevious,
-    hasNext,
-    hasPrevious,
-    isLoadingNext,
-    isLoadingPrevious,
-    refetch: refetchPagination,
-    } = usePaginationFragment(graphql`
-      fragment UserTodosFragment on User
-      @refetchable(queryName: "UserTodosPaginationQuery") {
-        id
-        todos (
-          after: $cursor,
-          first: $count,
-          ) @connection(key: "UserTodos_todos") {
-            edges {
-              node {
-                id
-                ...TodoFragment
-              }
-            }
-          }
-      }
-    `, props.data.node);
-}
-```
+---
 
 ### RelayEnvironmentProvider
 
@@ -487,5 +433,63 @@ function TodoItem(props) {
 
   // refetch the fragment
   refetch(fetchPolicy, onComplete)
+}
+```
+
+### usePaginationFragment
+### useLegacyPaginationFragment
+
+```javascript
+// User.js
+
+function User() {
+  const data = useQuery(
+    graphql`
+      query UserQuery(
+        $id: ID!
+        $first: Int
+        $cursor: ID
+      ) {
+        node(id: $id) {
+          ...UserTodosFragment
+        }
+      }
+    `,
+    {
+      cursor: "cursor:1",
+      first: 5
+    });
+
+    return <UserTodos data={data} />
+}
+
+// UserTodos.js
+function UserTodos(props) {
+  const {
+    data: fragmentData,
+    loadNext,
+    loadPrevious,
+    hasNext,
+    hasPrevious,
+    isLoadingNext,
+    isLoadingPrevious,
+    refetch: refetchPagination,
+    } = usePaginationFragment(graphql`
+      fragment UserTodosFragment on User
+      @refetchable(queryName: "UserTodosPaginationQuery") {
+        id
+        todos (
+          after: $cursor,
+          first: $count,
+          ) @connection(key: "UserTodos_todos") {
+            edges {
+              node {
+                id
+                ...TodoFragment
+              }
+            }
+          }
+      }
+    `, props.data.node);
 }
 ```
