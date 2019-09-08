@@ -152,8 +152,7 @@ Since `relay-experimental` was recently ported to Relay open source, it relies o
 
 For this reason, installing `relay-experimental` alone is insufficient,
 due to its incompatibility with version `5.0.0` of Relay.
-
-Therefore, we also need to pack `react-relay` and `relay-runtime`.
+Let's pack `react-relay` and `relay-runtime`.
 
 Packing `react-relay`:
 
@@ -168,6 +167,7 @@ Packing `relay-runtime`:
 
 Running the `npm pack` command creates a tarball `.tgz`,
 producing the exact file that would've been published to npm, had we run `npm publish` instead.
+This file can be both copied, moved and uploaded however you please.
 
 ## Installing to project
 
@@ -198,7 +198,7 @@ Followed by running `npm install`.
 Ofcourse, if you're deploying to another machine, you may benefit from hosting these packages elsewhere.
 Although beyond the scope of this post, suffice to say that any private registry (i.e. npm,proget) will do.
 
-## Relay *"not 6.0.0"*
+## Relay version *"not 6.0.0"*
 
 Now that Relay has been upgraded to *"not 6.0.0"*, some import paths have been altered.
 
@@ -227,18 +227,18 @@ and then looking for the new path at `~/relay/dist/<package>/lib/`, should it no
 - [useLegacyPaginationFragment](#useLegacyPaginationFragment)
 - [useBlockingPaginationFragment](#useBlockingPaginationFragment)
 
-### MatchContainer
 ### fetchQuery
 
-Not unlike the v5 iteration of `fetchQuery`, it fetches the given operation,
-and implements de-duplication of in-flight requests.
+Not unlike the v5 iteration of `fetchQuery`, it fetches the given operation
+and implements de-duplication of in-flight requests
+by checking on-going requests with matching parameters (query, variables) beforehand.
 
 A RelayObservable is returned by default,
-which is a limited implementation of the [ESObservable](https://github.com/tc39/proposal-observable).
-The primary benefit of RelayObservable, is the ability to subscribe to updates with a synchronous callback.
+which is a limited implementation of the [ESObservable proposal](https://github.com/tc39/proposal-observable).
+The primary benefit of Observable, is the ability to subscribe to updates with a synchronous callback.
 
-When using the Observable, `fetchQuery` returns a disposable, which can be called to
-cancel any in-flight requests.
+The `fetchQuery` function returns a disposable, which can be called to
+cancel the in-flight request.
 
 Example usage:
 
@@ -265,7 +265,7 @@ dispose();
 ```
 
 The RelayObservable from `fetchQuery` can be converted to a Promise, which will instead
-resolve to a snapshot of the query data when the *first* (and only first) response is received from the server.
+resolve to a single snapshot of the query data when the *first* (and only first) response is received from the server.
 
 > Converting Observable to a Promise will invalidate the returned disposer function.
 
@@ -278,14 +278,42 @@ fetchQuery(environment, query, variables).then((data) => {
 ```
 
 It's important to know that unlike `useQuery`, `fetchQuery` does *NOT* retain query data, meaning that it is not guaranteed
-that the fetched data will remain in the Relay store after the request has completed.
+that the fetched data will remain in the Relay store after the request has been completed.
 
+TODO:
+
+### MatchContainer
 ### useBlockingPaginationFragment
 
 ### usePaginationFragment
 ### useLegacyPaginationFragment
 
-function TodoList() {
+```javascript
+// User.js
+
+function User() {
+  const data = useQuery(
+    graphql`
+      query UserQuery(
+        $id: ID!
+        $first: Int
+        $cursor: ID
+      ) {
+        node(id: $id) {
+          ...UserTodosFragment
+        }
+      }
+    `,
+    {
+      cursor: "cursor:1",
+      first: 5
+    });
+
+    return <UserTodos data={data} />
+}
+
+// UserTodos.js
+function UserTodos(props) {
   const {
     data: fragmentData,
     loadNext,
@@ -295,9 +323,25 @@ function TodoList() {
     isLoadingNext,
     isLoadingPrevious,
     refetch: refetchPagination,
-  } = usePaginationFragment(graphql``);
+    } = usePaginationFragment(graphql`
+      fragment UserTodosFragment on User
+      @refetchable(queryName: "UserTodosPaginationQuery") {
+        id
+        todos (
+          after: $cursor,
+          first: $count,
+          ) @connection(key: "UserTodos_todos") {
+            edges {
+              node {
+                id
+                ...TodoFragment
+              }
+            }
+          }
+      }
+    `, props.data.node);
 }
-
+```
 
 ### RelayEnvironmentProvider
 
