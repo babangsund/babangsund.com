@@ -161,6 +161,8 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
+[I have opened a pull request, so these changes will hopefully become unnecessary in the near future.](https://github.com/facebook/relay/pull/2847)
+
 Now we're ready to compile the source code into consumable production code.  
 Navigate to the root of the Relay project and run the following command:
 
@@ -172,6 +174,7 @@ and output compiled files in the `dist` directory, located at the very root of t
 If you've built Relay from source before, you may need to run the cleanup script first:
 
     $ npm run build:clean
+
 
 ### Packing for distribution
 
@@ -185,8 +188,8 @@ At Facebook, most (if not all?) projects are part of one big monorepo, which ess
 Since `relay-experimental` was recently ported to Relay open source, it relies on the most recent build.
 
 Therefore, installing `relay-experimental` alone is insufficient,
-due to its incompatibility with version `5.0.0` of Relay.
-We need to pack `react-relay` and `relay-runtime` as well.
+due to its incompatibility with the overall version `5.0.0` of Relay.
+We need to pack `react-relay`,`relay-runtime` and `relay-compiler` as well.
 
 Packing `react-relay`:
 
@@ -198,6 +201,10 @@ Packing `relay-runtime`:
     $ cd ~/relay/dist/relay-runtime
     $ npm pack
 
+Packing `relay-compiler`:
+
+    $ cd ~/relay/dist/relay-compiler
+    $ npm pack
 
 Running the `npm pack` command creates a tarball `.tgz`,
 producing the exact file that would've been published to npm, had we run `npm publish` instead.
@@ -205,12 +212,13 @@ This file can be copied, moved and uploaded however you please.
 
 ## Installing to project
 
-Now that we've built and packed `relay-experimental`, `react-relay` and `relay-runtime`, they're ready for installation.
+Now that we've built and packed `relay-experimental`, `react-relay`, `relay-runtime` and `relay-compiler`, they're ready for installation.
 To install them locally, simply navigate to your project and install the packages from path:
 
     $ npm install ~/relay/dist/relay-experimental/relay-experimental-5.0.0.tgz
     $ npm install ~/relay/dist/react-relay/react-relay-5.0.0.tgz
     $ npm install ~/relay/dist/relay-runtime/relay-runtime-5.0.0.tgz
+    $ npm install ~/relay/dist/relay-compiler/relay-compiler-5.0.0.tgz
 
 If you're using third party Relay libraries, you may need to enforce package resolutions for your project:
 
@@ -221,6 +229,7 @@ If you're using third party Relay libraries, you may need to enforce package res
   "resolutions": {
     "react-relay": "file:../relay/dist/react-relay/react-relay-5.0.0.tgz",
     "relay-runtime": "file:../relay/dist/relay-runtime/relay-runtime-5.0.0.tgz",
+    "relay-compiler": "file:../relay/dist/relay-compiler/relay-compiler-5.0.0.tgz",
     "relay-experimental": "file:../relay/dist/relay-experimental/relay-experimental-5.0.0.tgz"
   },
   ...
@@ -260,8 +269,8 @@ and then looking for the new path at `~/relay/dist/<package>/lib/` in case it do
 
 ### fetchQuery
 
-Not unlike the v5 iteration of `fetchQuery`, it fetches the given operation
-and implements de-duplication by checking for in-flight requests with matching parameters (query, variables) upon each request.
+Not unlike the v5 iteration of `fetchQuery`, it fetches the given operation in an imperative manner - outside of React.
+In addition, it implements de-duplication by checking for in-flight requests with matching parameters (query, variables) upon each request.
 
 A RelayObservable is returned by default,
 which is a limited implementation of the [ESObservable proposal](https://github.com/tc39/proposal-observable).
@@ -269,7 +278,7 @@ The primary benefit of Observable, is the ability to subscribe to updates with a
 
 > [I've talked about `RelayObservable` in a previous post.](/what-makes-relay-great)
 
-The `fetchQuery` function returns a disposable, which can be called to
+This implementation of `fetchQuery` function returns a disposable, which can be called to
 cancel the current in-flight request.
 
 Example usage:
@@ -292,7 +301,7 @@ const dispose = fetchQuery(environment, query, variables).subscribe({
   unsubscribe: (subscription) => {},
 });
 
-// cancel the request
+// cancel the in-flight request
 dispose();
 ```
 
@@ -312,6 +321,9 @@ fetchQuery(environment, query, variables).then((data) => {
 It's important to know that unlike `useQuery`, `fetchQuery` does *NOT* retain query data, meaning that it is not guaranteed
 that the fetched data will remain in the Relay store after the request has been completed.
 
+To clarify, `fetchQuery` from `relay-experimental` is just like `fetchQuery` from `relay-runtime`,
+with the addition of de-duplicating requests and returning an observable which can be cancelled or converted to a promise.
+
 ### RelayEnvironmentProvider
 
 Before we can use any hooks, Relay requires access to the `Environment` via a built-in context provider.
@@ -319,6 +331,8 @@ This is meant to be done only once, at the very root of your application.
 
 As an example, I've created an arbitrary `Providers` component,
 which wraps the entire application with `RelayEnvironmentProvider`.
+
+Example usage:
 
 ```javascript
 // Providers.js
@@ -335,7 +349,17 @@ function Providers() {
 }
 ```
 
+This is the same pattern as implemented in [relay-fns](https://github.com/babangsund/relay-fns#usage).
+(Yeah it's a shameless plug - sue me.)
+
 ### useRelayEnvironment
+
+If you're familiar with React's Context API, `useRelayEnvironment` should require no explanation as to what it does.
+
+Just in case you aren't; It's basically a function that "consumes",
+or "captures" the Context value from a parent provider - in this case `environment` from `RelayEnvironmentProvider`.
+
+Example usage:
 
 ```javascript
 import {useRelayEnvironment} from "relay-experimental";
@@ -348,44 +372,32 @@ function App() {
 
 ### useQuery
 
-Input signature:
+The hook implementation of [QueryRenderer](https://relay.dev/docs/en/query-renderer).
 
-```javascript
-gqlQuery: GraphQLTaggedNode,
-variables: $ElementType<TQuery, 'variables'>,
-options?: {|
-  fetchKey?: string | number,
-  fetchPolicy?: FetchPolicy,
-  networkCacheConfig?: CacheConfig,
-|},
-```
+Instead of the `render` callback, this hook will suspend the component upon a request,
+which means it will throw a Promise and render a fallback component until data is received.
 
-#### fetchKey
+It takes three unnamed parameters:
 
-It can be a string or a number. Acts as a custom cacheKey.
-
-#### fetchPolicy
-
-Settings for how a query may be fetched.
-
-- 'store-only'
-- 'store-or-network'
-- 'store-and-network'
-- 'network-only'
-
-#### networkCacheConfig
-
-Settings for how a query response may be cached.
-
-- `force`: causes a query to be issued unconditionally, irrespective of the
-  state of any configured response cache.
-- `poll`: causes a query to live update by polling at the specified interval
-  in milliseconds. (This value will be passed to setTimeout.)
-- `liveConfigId`: causes a query to live update by calling GraphQLLiveQuery,
-  it represents a configuration of gateway when doing live query
-- `metadata`: user-supplied metadata.
-- `transactionId`: a user-supplied value, intended for use as a unique id for
-  a given instance of executing an operation.
+- The graphql tagged query.  (i.e. graphql\`\`)
+- The GraphQL query variables, in the shape of an object mapping from variable name to value.
+- An object containing a set of options:
+  - `fetchKey`: String or a number. Acts as a custom cacheKey
+  - `fetchPolicy`: Enum. Setting for how a query may be fetched.
+		- `'store-only'`: Returns local data. No request is made.
+		- `'store-or-network'`: Returns local data if available, otherwise suspends and makes a request.
+		- `'store-and-network'`: Returns local data and then makes a request.
+		- `'network-only'`: Always suspends and sends a request, even if data is available locally.
+	- `networkCacheConfig`: An object. Settings for how a query response may be cached.
+		- `force`: causes a query to be issued unconditionally, irrespective of the
+			state of any configured response cache.
+		- `poll`: causes a query to live update by polling at the specified interval
+			in milliseconds. (This value will be passed to setTimeout.)
+		- `liveConfigId`: causes a query to live update by calling GraphQLLiveQuery,
+			it represents a configuration of gateway when doing live query
+		- `metadata`: user-supplied metadata.
+		- `transactionId`: a user-supplied value, intended for use as a unique id for
+			a given instance of executing an operation.
 
 Example usage:
 
@@ -423,6 +435,33 @@ function TodoList(props) {
   return data.todos.map(todo => (
     <TodoItem todo={todo} />
   ));
+}
+```
+
+Because of suspension, we never have to worry about data being null.  
+Once the component is rendered, the request sent by `useQuery` will have been resolved.
+
+I'm happy to say that `useQuery` replaces the need for `useLocalQuery` from [react-relay-local-query](https://github.com/babangsund/react-relay-local-query).
+
+Example usage:
+
+```jsx
+// UserSettings.js
+
+import {graphql} from 'react-relay';
+import {useQuery} from 'relay-experimental';
+
+function UserSettings(props) {
+  const data = useQuery(
+    graphql`
+      query UserSettingsQuery {
+				someClientSchemaField
+      }
+    `,
+		null,
+		{ fetchPolicy: 'store-only' });
+
+	return <div>{data.someClientSchemaField}</div>;
 }
 ```
 

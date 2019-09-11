@@ -58,10 +58,10 @@ export default css`
 
   /* Inline code */
   :not(pre) > code[class*="language-"] {
+    background-color: hsla(0, 0%, 100%, 0.15);
     border-radius: 0.3em;
-    background: var(--inlineCode-bg);
     color: var(--inlineCode-text);
-    padding: 0.15em 0.2em 0.05em;
+    padding: 0.2em 0.4em;
     white-space: normal;
   }
 
