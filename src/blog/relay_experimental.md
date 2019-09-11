@@ -267,8 +267,9 @@ and then looking for the new path at `~/relay/dist/<package>/lib/` in case it do
 
 ### fetchQuery
 
-Not unlike the v5 iteration of `fetchQuery`, it fetches the given operation in an imperative manner - outside of React.
-In addition, it implements de-duplication by checking for in-flight requests with matching parameters (query, variables) upon each request.
+Not unlike the v5 iteration of `fetchQuery`, it fetches the given operation in an imperative manner - outside of React.  
+
+This version however, also implements query de-duplication by checking for in-flight requests with matching parameters (query, variables) upon each request.
 
 A RelayObservable is returned by default,
 which is a limited implementation of the [ESObservable proposal](https://github.com/tc39/proposal-observable).
@@ -277,7 +278,7 @@ The primary benefit of Observable, is the ability to subscribe to updates with a
 > [I've talked about `RelayObservable` in a previous post.](/what-makes-relay-great)
 
 This implementation of `fetchQuery` function returns a disposable, which can be called to
-cancel the current in-flight request.
+cancel an in-flight request.
 
 **Example usage:**
 
