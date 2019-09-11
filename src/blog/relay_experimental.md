@@ -1,11 +1,9 @@
 ---
-title: "Relay Experimental (WIP)"
+title: "Relay Experimental"
 date: "2019-09-01"
-excerpt: "Hooks!"
+excerpt: "Hooks"
 published: true
 ---
-
-> This post is currently being written.
 
 The `relay-experimental` package was recently merged into the Relay `master` branch,
 providing us with some much needed insight into how the Relay hooks API will look once it has been released. 
