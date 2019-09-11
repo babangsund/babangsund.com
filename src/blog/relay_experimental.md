@@ -5,7 +5,7 @@ excerpt: "Hooks"
 published: true
 ---
 
-The `relay-experimental` package was recently merged into the Relay `master` branch,
+The `relay-experimental` package was [recently merged](https://github.com/facebook/relay/commit/b83aace7a95f5fd82cbb30d1f6888bcc4767eeb5) into the Relay `master` branch,
 providing us with some much needed insight into how the Relay hooks API will look once it has been released. 
 
 Although we're told an actual release might be a couple of months away, we don't have to wait.
