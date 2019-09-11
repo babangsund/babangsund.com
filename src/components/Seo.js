@@ -21,6 +21,7 @@ function SEO({ url = "", title = "", description = "" }) {
   )
 
   const metaUrl = site.siteMetadata.url + url
+  const metaImage = site.siteMetadata.url + bab_sm
   const metaTitle = title || site.siteMetadata.title
   const metaDescription = description || site.siteMetadata.description
 
@@ -38,15 +39,13 @@ function SEO({ url = "", title = "", description = "" }) {
       <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
+      <mega name="twitter:site" content="@babangsund" />
+      <meta name="twitter:image" content={metaImage} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
       <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:description" content={metaDescription} />
-      <meta
-        name="image"
-        property="og:image"
-        content={site.siteMetadata.url + bab_sm}
-      />
+      <meta name="image" property="og:image" content={metaImage} />
     </Helmet>
   )
 }
