@@ -281,7 +281,7 @@ The primary benefit of Observable, is the ability to subscribe to updates with a
 This implementation of `fetchQuery` function returns a disposable, which can be called to
 cancel the current in-flight request.
 
-Example usage:
+**Example usage:**
 
 ```javascript
 const dispose = fetchQuery(environment, query, variables).subscribe({
@@ -310,7 +310,7 @@ resolve to a snapshot of the query data when the *first* (and only first) respon
 
 > Converting RelayObservable to a Promise will nullify the returned disposer function.
 
-Example usage:
+**Example usage:**
 
 ```javascript
 fetchQuery(environment, query, variables).then((data) => {
@@ -332,7 +332,7 @@ This is meant to be done only once, at the very root of your application.
 As an example, I've created an arbitrary `Providers` component,
 which wraps the entire application with `RelayEnvironmentProvider`.
 
-Example usage:
+**Example usage:**
 
 ```javascript
 // Providers.js
@@ -359,7 +359,7 @@ If you're familiar with React's Context API, `useRelayEnvironment` should requir
 Just in case you aren't; It's basically a function that "consumes",
 or "captures" the Context value from a parent provider - in this case `environment` from `RelayEnvironmentProvider`.
 
-Example usage:
+**Example usage:**
 
 ```javascript
 import {useRelayEnvironment} from "relay-experimental";
@@ -382,13 +382,13 @@ It takes three unnamed parameters:
 - The graphql tagged query.  (i.e. graphql\`\`)
 - The GraphQL query variables, in the shape of an object mapping from variable name to value.
 - An object containing a set of options:
-  - `fetchKey`: String or a number. Acts as a custom cacheKey
+  - `fetchKey`: String or a number. Acts as a custom cacheKey.
   - `fetchPolicy`: Enum. Setting for how a query may be fetched.
 		- `'store-only'`: Returns local data. No request is made.
 		- `'store-or-network'`: Returns local data if available, otherwise suspends and makes a request.
 		- `'store-and-network'`: Returns local data and then makes a request.
 		- `'network-only'`: Always suspends and sends a request, even if data is available locally.
-	- `networkCacheConfig`: An object. Settings for how a query response may be cached.
+	- `networkCacheConfig`: An object containing settings for how a query response may be cached.
 		- `force`: causes a query to be issued unconditionally, irrespective of the
 			state of any configured response cache.
 		- `poll`: causes a query to live update by polling at the specified interval
@@ -399,7 +399,9 @@ It takes three unnamed parameters:
 		- `transactionId`: a user-supplied value, intended for use as a unique id for
 			a given instance of executing an operation.
 
-Example usage:
+**Example usage:**
+
+Make sure we have a `React.Suspense` boundary in place.
 
 ```jsx{5}
 // App.js
@@ -412,6 +414,8 @@ function App() {
   );
 }
 ```
+
+And then use `useQuery` to request some data.
 
 ```jsx
 // TodoList.js
@@ -443,9 +447,12 @@ Once the component is rendered, the request sent by `useQuery` will have been re
 
 I'm happy to say that `useQuery` replaces the need for `useLocalQuery` from [react-relay-local-query](https://github.com/babangsund/react-relay-local-query).
 
-Example usage:
+**Example usage:**
 
-```jsx
+If you recall, `fetchPolicy` value `store-only` does not send a request.
+We will use this to acquire local data from the Relay store.
+
+```jsx{14}
 // UserSettings.js
 
 import {graphql} from 'react-relay';
@@ -455,11 +462,11 @@ function UserSettings(props) {
   const data = useQuery(
     graphql`
       query UserSettingsQuery {
-				someClientSchemaField
+        someClientSchemaField
       }
     `,
-		null,
-		{ fetchPolicy: 'store-only' });
+    null,
+    { fetchPolicy: 'store-only' });
 
 	return <div>{data.someClientSchemaField}</div>;
 }
@@ -474,7 +481,7 @@ It takes two unnamed parameters:
 - The graphql tagged fragment.  (i.e. graphql\`\`)
 - The data prop containing the fragment spread.
 
-Example usage:
+**Example usage:**
 
 The fragment is spread inside a query, and is then passed to a child.
 
@@ -506,7 +513,7 @@ function TodoList(props) {
 The component requesting this fragment will then consume the data fragment from props (referred to as a fragmentRef),
 and subscribe to future data.
 
-```jsx
+```jsx{13}
 // TodoItem.js
 
 import {graphql} from 'react-relay';
@@ -518,8 +525,8 @@ function TodoItem(props) {
       id
       name
     }
-
-  `, props.todo);
+  `,
+  props.todo);
 }
 ```
 
@@ -540,9 +547,11 @@ This directive takes the `queryName` parameter, which is the name of the generat
 
 The `@refetchable` directive can only be used on the Query type, Viewer type, Node type, or types implementing Node.
 
-Example usage:
+**Example usage:**
 
-```jsx{6}
+```jsx{9}
+// TodoItem.js
+
 import {graphql} from 'react-relay';
 import {useRefetchableFragment} from 'relay-experimental';
 
@@ -561,68 +570,144 @@ function TodoItem(props) {
 ```
 
 Upon a refetch call, **this component will suspend**, which currently results in a very sketchy user experience.
-It is expected that the upcoming release of React will come with a solution to this issue
+It is expected that the upcoming release of React will ship with a solution to this issue
 (Which is probably also why this version of Relay has yet to be officially released).
 
 When the refetch request completes, the query fragment is extracted from the response,
-which will point to the refetch query as owner.
+which will point to the refetch query as its owner.
 
 **Note:** The path to the refetch query generated by `relay-compiler` is currently broken, but is hopefully fixed very soon.
-[This pull request has been suggested as a possible solution](https://github.com/facebook/relay/pull/2846).
+[This pull request has been submitted as a possible solution](https://github.com/facebook/relay/pull/2846).
 
 ### usePaginationFragment
+
+The hook implementation of [createPaginationContainer](https://relay.dev/docs/en/classic/pagination-container#createpaginationcontainer).
+
+Just like `useFragment` and `useRefetchableFragment` it takes two unnamed parameters:
+
+- The graphql tagged fragment.  (i.e. graphql\`\`)
+- The data prop containing the fragment spread.
+
+Unlike `createPaginationContainer`, `usePaginationFragment` will provide most of the pagination functionality for you.
+No need for a large, somewhat complicated and obscure configuration object. Rejoice!
+
+The `usePaginationFragment` function returns data along with a set of additional functions and values, which provide both backward and forward pagination functionality.
+
+- `data`: The data consumed and returned by the fragment.
+- `loadNext`: A function to load the next *n* items, in the `forward` direction. Takes two parameters.
+    - The amount *n* of items to fetch.
+    - An object containing a set of options:
+      - `onComplete` Function called when the new page has been fetched.
+      If an error occurred during refetch, this function will receive that error as an argument.
+- `loadPrevious`: Same as `loadNext`, except the direction is `backward`.
+- `hasNext`: Whether or not there are more items in the `forward` direction.
+- `hasPrevious`: Whether or not there are more items in the `backward` direction.
+- `isLoadingNext`: Whether or not `loadNext` is in-flight.
+- `isLoadingPrevious`: Whether or not `loadPrevious` is in-flight.
+- `refetch`: Function to restart the pagination on the connection.
+  Disposes in-flight pagination queries before refetching. Takes two parameters.
+    - The GraphQL query variables, in the shape of an object mapping from variable name to value.
+    - An object containing a set of options:
+      - `fetchPolicy`: Enum. Setting for how a query may be fetched.
+          - `'store-only'`: Returns local data. No request is made.
+          - `'store-or-network'`: Returns local data if available, otherwise suspends and makes a request.
+          - `'store-and-network'`: Returns local data and then makes a request.
+          - `'network-only'`: Always suspends and sends a request, even if data is available locally.
+      - `onComplete` Function called when the new page has been fetched.
+      If an error occurred during refetch, this function will receive that error as an argument.
+
+**Example usage:**
+
+`useQuery` is responsible for fetching the `UserFragment` and passes the user fragmentRef to a child.
 
 ```javascript
 // User.js
 
+import {graphql} from 'react-relay';
+import {useQuery} from 'relay-experimental';
+
 function User() {
-  const data = useQuery(
+  const { node } = useQuery(
     graphql`
       query UserQuery(
         $id: ID!
+        $last: Int
         $first: Int
-        $cursor: ID
+        $after: ID
+        $before: ID
       ) {
         node(id: $id) {
-          ...UserTodosFragment
+          ...UserFragment
         }
       }
     `,
     {
-      cursor: "cursor:1",
-      first: 5
+      id: '1',
+      first: 1,
+      last: null,
+      before: null,
+      after: 'cursor:1',
     });
 
-    return <UserTodos data={data} />
+  return <UserTodos user={node} />
 }
+```
 
+The `UserFragment` is marked with the `@refetchable` directive, and `todos` with the `@connection` directive.
+
+```javascript{18,26}
 // UserTodos.js
+
+import {graphql} from 'react-relay';
+import {usePaginationFragment} from 'relay-experimental';
+
 function UserTodos(props) {
   const {
-    data: fragmentData,
+    data,
     loadNext,
     loadPrevious,
     hasNext,
     hasPrevious,
     isLoadingNext,
     isLoadingPrevious,
-    refetch: refetchPagination,
+    refetch,
     } = usePaginationFragment(graphql`
-      fragment UserTodosFragment on User
-      @refetchable(queryName: "UserTodosPaginationQuery") {
+      fragment UserFragment on User
+      @refetchable(queryName: "UserFragmentPaginationQuery") {
         id
-        todos (
-          after: $cursor,
-          first: $count,
-          ) @connection(key: "UserTodos_todos") {
-            edges {
-              node {
-                id
-                ...TodoFragment
-              }
+        name
+        todos(
+          first: $first,
+          last: $last,
+          after: $after,
+          before: $before,
+        ) @connection(key: "UserFragment_todos") {
+          edges {
+            node {
+              id
+              ...TodoFragment
             }
           }
+        }
       }
-    `, props.data.node);
+    `, props.user);
 }
 ```
+
+As with `useRefetchableFragment`, **this component will suspend** upon a request.
+
+---
+
+## In closing
+
+So, is this commit the best thing that has ever happened to Relay?
+
+*Without a doubt.*
+
+The API has been greatly simplified, and with the introduction of suspense for data fetching, 
+you no longer have to infest your code with defensive precautions against nullable data from props.
+
+With this upcoming release, I'd argue that Relay's barrier to entry will have been lowered quite significantly, which has been a major shortcoming of Relay since it was first released.
+
+That being said, `relay-experimental` isn't ready for use in production just yet.  
+For the time being, all we can do is wait patiently for the next release of React.
