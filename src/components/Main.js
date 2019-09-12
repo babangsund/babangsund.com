@@ -1,7 +1,7 @@
-import React from "react"
-import styled from "styled-components"
+import React from 'react';
+import styled from 'styled-components';
 
-import { rhythm } from "utils/typography"
+import {rhythm} from 'utils/typography';
 
 const Container = styled.section`
   flex: 1;
@@ -14,14 +14,14 @@ const Container = styled.section`
     max-width: 60rem;
     padding: ${rhythm(10, 2, 2.5)};
   }
-`
+`;
 
-function Main({ children }) {
+function Main({children}) {
   return (
     <Container>
       <main>{children}</main>
     </Container>
-  )
+  );
 }
 
-export default Main
+export default Main;

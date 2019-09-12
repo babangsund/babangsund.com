@@ -1,8 +1,8 @@
-import { css } from "styled-components"
+import {css} from 'styled-components';
 
 export default css`
-  code[class*="language-"],
-  pre[class*="language-"] {
+  code[class*='language-'],
+  pre[class*='language-'] {
     color: white;
     background: none;
     font-family: Fira Code, Consolas, Menlo, Monaco, source-code-pro,
@@ -28,36 +28,36 @@ export default css`
   }
 
   /* Code blocks */
-  pre[class*="language-"] {
+  pre[class*='language-'] {
     overflow: auto;
     padding: 1.3125rem;
   }
 
-  pre[class*="language-"]::-moz-selection {
+  pre[class*='language-']::-moz-selection {
     /* Firefox */
     background: hsl(207, 4%, 16%);
   }
 
-  pre[class*="language-"]::selection {
+  pre[class*='language-']::selection {
     /* Safari */
     background: hsl(207, 4%, 16%);
   }
 
   /* Text Selection colour */
-  pre[class*="language-"]::-moz-selection,
-  pre[class*="language-"] ::-moz-selection {
+  pre[class*='language-']::-moz-selection,
+  pre[class*='language-'] ::-moz-selection {
     text-shadow: none;
     background: hsla(0, 0%, 100%, 0.15);
   }
 
-  pre[class*="language-"]::selection,
-  pre[class*="language-"] ::selection {
+  pre[class*='language-']::selection,
+  pre[class*='language-'] ::selection {
     text-shadow: none;
     background: hsla(0, 0%, 100%, 0.15);
   }
 
   /* Inline code */
-  :not(pre) > code[class*="language-"] {
+  :not(pre) > code[class*='language-'] {
     background-color: hsla(0, 0%, 100%, 0.15);
     border-radius: 0.3em;
     color: var(--inlineCode-text);
@@ -101,7 +101,7 @@ export default css`
   .token.selector,
   .token.doctype {
     color: rgb(199, 146, 234);
-    font-style: "italic";
+    font-style: 'italic';
   }
 
   .token.class-name {
@@ -181,8 +181,8 @@ export default css`
     }
   }
 
-  .gatsby-highlight pre[class*="language-"] {
+  .gatsby-highlight pre[class*='language-'] {
     float: left;
     min-width: 100%;
   }
-`
+`;

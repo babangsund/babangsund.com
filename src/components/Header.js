@@ -1,8 +1,8 @@
-import React from "react"
-import styled, { css } from "styled-components"
-import { useStaticQuery, graphql, Link } from "gatsby"
+import React from 'react';
+import styled, {css} from 'styled-components';
+import {useStaticQuery, graphql, Link} from 'gatsby';
 
-import { rhythm } from "utils/typography"
+import {rhythm} from 'utils/typography';
 
 const Container = styled.section`
   z-index: 2;
@@ -26,10 +26,10 @@ const Container = styled.section`
     margin: 0;
     color: hsla(0, 0%, 100%, 0.95);
   }
-`
+`;
 
 function Header() {
-  const { site } = useStaticQuery(graphql`
+  const {site} = useStaticQuery(graphql`
     query HeaderQuery {
       site {
         siteMetadata {
@@ -37,26 +37,26 @@ function Header() {
         }
       }
     }
-  `)
+  `);
 
-  const [scrolling, setScrolling] = React.useState(false)
+  const [scrolling, setScrolling] = React.useState(false);
   React.useEffect(() => {
     function scroll() {
-      setScrolling(window.scrollY > 60 ? true : false)
+      setScrolling(window.scrollY > 60 ? true : false);
     }
-    window.addEventListener("scroll", scroll)
-    return () => window.removeEventListener("scroll", scroll)
-  }, [])
+    window.addEventListener('scroll', scroll);
+    return () => window.removeEventListener('scroll', scroll);
+  }, []);
 
   return (
-    <Container scrolling={scrolling ? "true" : undefined}>
+    <Container scrolling={scrolling ? 'true' : undefined}>
       <header>
         <h1>
           <Link to="/">{site.siteMetadata.title}</Link>
         </h1>
       </header>
     </Container>
-  )
+  );
 }
 
-export default Header
+export default Header;

@@ -1,18 +1,18 @@
-import React from "react"
-import { graphql, Link } from "gatsby"
-import styled from "styled-components"
+import React from 'react';
+import {graphql, Link} from 'gatsby';
+import styled from 'styled-components';
 
-import Seo from "components/Seo"
-import Layout from "components/Layout"
-import { rhythm } from "utils/typography"
+import Seo from 'components/Seo';
+import Layout from 'components/Layout';
+import {rhythm} from 'utils/typography';
 
 const H3 = styled.h3`
   margin: ${rhythm(0, 0, 0.25)};
-`
+`;
 
-function BlogPost({ data, path, pageContext }) {
-  const { post } = data,
-    { prev, next } = pageContext
+function BlogPost({data, path, pageContext}) {
+  const {post} = data,
+    {prev, next} = pageContext;
 
   return (
     <Layout path={path}>
@@ -23,12 +23,12 @@ function BlogPost({ data, path, pageContext }) {
             {post.frontmatter.date} • {post.timeToRead} minute read
           </p>
         </header>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-        <div style={{ display: "flex" }}>
+        <div dangerouslySetInnerHTML={{__html: post.html}} />
+        <div style={{display: 'flex'}}>
           {prev && (
             <Link to={prev.fields.slug}>← {prev.frontmatter.title}</Link>
           )}
-          <div style={{ flex: 1 }} />
+          <div style={{flex: 1}} />
           {next && (
             <Link to={next.fields.slug}>{next.frontmatter.title} →</Link>
           )}
@@ -40,7 +40,7 @@ function BlogPost({ data, path, pageContext }) {
         description={post.excerpt}
       />
     </Layout>
-  )
+  );
 }
 
 export const query = graphql`
@@ -54,10 +54,10 @@ export const query = graphql`
     }
   }
   query BlogPostQuery($slug: String!) {
-    post: markdownRemark(fields: { slug: { eq: $slug } }) {
+    post: markdownRemark(fields: {slug: {eq: $slug}}) {
       ...BlogPost
     }
   }
-`
+`;
 
-export default BlogPost
+export default BlogPost;

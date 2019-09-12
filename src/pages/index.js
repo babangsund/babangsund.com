@@ -1,11 +1,11 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
-import styled from "styled-components"
+import React from 'react';
+import {Link, graphql} from 'gatsby';
+import styled from 'styled-components';
 
-import Seo from "components/Seo"
-import Layout from "components/Layout"
+import Seo from 'components/Seo';
+import Layout from 'components/Layout';
 
-import { rhythm } from "utils/typography"
+import {rhythm} from 'utils/typography';
 
 const Article = styled.article`
   &:not(:first-of-type) {
@@ -14,9 +14,9 @@ const Article = styled.article`
   h3 {
     margin-bottom: ${rhythm(0.5)};
   }
-`
+`;
 
-function BlogPost({ blogPost }) {
+function BlogPost({blogPost}) {
   return (
     <Article>
       <h3>
@@ -29,28 +29,28 @@ function BlogPost({ blogPost }) {
       </small>
       <p>{blogPost.frontmatter.excerpt}</p>
     </Article>
-  )
+  );
 }
 
-function Index({ data, path }) {
-  const blogposts = data.blog.edges
+function Index({data, path}) {
+  const blogposts = data.blog.edges;
   return (
     <Layout path={path}>
       <Seo title="Blog by Benjamin A. Bangsund" />
-      {blogposts.map(({ node }) => (
+      {blogposts.map(({node}) => (
         <BlogPost key={node.id} blogPost={node} />
       ))}
     </Layout>
-  )
+  );
 }
 
 export const query = graphql`
   query IndexQuery {
     blog: allMarkdownRemark(
-      sort: { order: DESC, fields: [frontmatter___date] }
+      sort: {order: DESC, fields: [frontmatter___date]}
       filter: {
-        frontmatter: { published: { eq: true } }
-        fileAbsolutePath: { regex: "//src/blog//" }
+        frontmatter: {published: {eq: true}}
+        fileAbsolutePath: {regex: "//src/blog//"}
       }
     ) {
       edges {
@@ -69,6 +69,6 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default Index
+export default Index;

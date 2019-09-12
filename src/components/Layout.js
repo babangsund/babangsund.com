@@ -1,18 +1,18 @@
-import React from "react"
-import styled, { ThemeProvider, createGlobalStyle } from "styled-components"
+import React from 'react';
+import styled, {ThemeProvider, createGlobalStyle} from 'styled-components';
 
-import Main from "components/Main"
-import Header from "components/Header"
-import Footer from "components/Footer"
+import Main from 'components/Main';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
 
-import code from "./code"
+import code from './code';
 
-import theme from "utils/theme"
+import theme from 'utils/theme';
 
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -53,9 +53,9 @@ const GlobalStyle = createGlobalStyle`
     border-left: 0.275rem solid ${p => p.theme.green};
   }
   ${code};
-`
+`;
 
-function Layout({ path, children }) {
+function Layout({path, children}) {
   return (
     <ThemeProvider theme={theme}>
       <Container>
@@ -65,7 +65,7 @@ function Layout({ path, children }) {
         <Footer path={path} />
       </Container>
     </ThemeProvider>
-  )
+  );
 }
 
-export default Layout
+export default Layout;

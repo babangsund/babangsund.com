@@ -1,18 +1,18 @@
 module.exports = {
   siteMetadata: {
-    lang: "en",
-    title: "babangsund",
-    author: "bbangsund",
-    description: "Blog",
-    url: "https://babangsund.com",
-    github: "https://github.com/babangsund",
-    twitter: "https://mobile.twitter.com/babangsund",
-    stackoverflow: "https://stackoverflow.com/users/11754830/babangsund",
+    lang: 'en',
+    title: 'babangsund',
+    author: 'bbangsund',
+    description: 'Blog',
+    url: 'https://babangsund.com',
+    github: 'https://github.com/babangsund',
+    twitter: 'https://mobile.twitter.com/babangsund',
+    stackoverflow: 'https://stackoverflow.com/users/11754830/babangsund',
   },
   plugins: [
-    "gatsby-plugin-catch-links",
-    "gatsby-plugin-react-helmet",
-    "gatsby-plugin-styled-components",
+    'gatsby-plugin-catch-links',
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-styled-components',
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -36,40 +36,40 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
-          "gatsby-remark-copy-linked-files",
+          'gatsby-remark-copy-linked-files',
           {
-            resolve: "gatsby-remark-autolink-headers",
+            resolve: 'gatsby-remark-autolink-headers',
             options: {
               offsetY: 100,
               maintainCase: true,
             },
           },
           {
-            resolve: "gatsby-remark-prismjs",
+            resolve: 'gatsby-remark-prismjs',
             options: {
-              inlineCodeMarker: "`",
+              inlineCodeMarker: '`',
             },
           },
           {
-            resolve: "gatsby-remark-external-links",
+            resolve: 'gatsby-remark-external-links',
             options: {
-              target: "_blank",
+              target: '_blank',
             },
           },
         ],
       },
     },
     {
-      resolve: "gatsby-plugin-manifest",
+      resolve: 'gatsby-plugin-manifest',
       options: {
-        icon: "./bab_lg.png",
-        name: "babangsund",
-        short_name: "babangsund",
-        start_url: "/",
-        background_color: "#1C0046",
-        theme_color: "#1C0046",
-        display: "standalone",
+        icon: './bab_lg.png',
+        name: 'babangsund',
+        short_name: 'babangsund',
+        start_url: '/',
+        background_color: '#1C0046',
+        theme_color: '#1C0046',
+        display: 'standalone',
       },
     },
   ],
-}
+};

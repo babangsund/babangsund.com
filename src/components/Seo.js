@@ -1,10 +1,10 @@
-import React from "react"
-import Helmet from "react-helmet"
-import bab_sm from "../../bab_sm.png"
-import { useStaticQuery, graphql } from "gatsby"
+import React from 'react';
+import Helmet from 'react-helmet';
+import bab_sm from '../../bab_sm.png';
+import {useStaticQuery, graphql} from 'gatsby';
 
-function SEO({ url = "", title = "", description = "" }) {
-  const { site } = useStaticQuery(
+function SEO({url = '', title = '', description = ''}) {
+  const {site} = useStaticQuery(
     graphql`
       query SeoQuery {
         site {
@@ -18,12 +18,12 @@ function SEO({ url = "", title = "", description = "" }) {
         }
       }
     `
-  )
+  );
 
-  const metaUrl = site.siteMetadata.url + url
-  const metaImage = site.siteMetadata.url + bab_sm
-  const metaTitle = title || site.siteMetadata.title
-  const metaDescription = description || site.siteMetadata.description
+  const metaUrl = site.siteMetadata.url + url;
+  const metaImage = site.siteMetadata.url + bab_sm;
+  const metaTitle = title || site.siteMetadata.title;
+  const metaDescription = description || site.siteMetadata.description;
 
   return (
     <Helmet
@@ -47,7 +47,7 @@ function SEO({ url = "", title = "", description = "" }) {
       <meta name="twitter:description" content={metaDescription} />
       <meta name="image" property="og:image" content={metaImage} />
     </Helmet>
-  )
+  );
 }
 
-export default SEO
+export default SEO;
