@@ -546,6 +546,20 @@ This directive takes the `queryName` parameter, which is the name of the generat
 
 The `@refetchable` directive can only be used on the Query type, Viewer type, Node type, or types implementing Node.
 
+`useRefetchableFragment` returns an array which contains two values.
+- The data consumed and returned by the fragment.
+- `refetch`: Function to restart the pagination on the connection.
+  Disposes in-flight pagination queries before refetching. Takes two parameters.
+    - The GraphQL query variables, in the shape of an object mapping from variable name to value.
+    - An object containing a set of options:
+      - `fetchPolicy`: Enum. Setting for how a query may be fetched.
+          - `'store-only'`: Returns local data. No request is made.
+          - `'store-or-network'`: Returns local data if available, otherwise suspends and makes a request.
+          - `'store-and-network'`: Returns local data and then makes a request.
+          - `'network-only'`: Always suspends and sends a request, even if data is available locally.
+      - `onComplete` Function called when the new page has been fetched.
+      If an error occurred during refetch, this function will receive that error as an argument.
+
 **Example usage:**
 
 ```jsx{9}
@@ -564,7 +578,7 @@ function TodoItem(props) {
   `, props.todo);
 
   // refetch the fragment
-  refetch(fetchPolicy, onComplete)
+  refetch({ id: "id:2" }, { onComplete: (error) => console.info("Maybe success!") });
 }
 ```
 
