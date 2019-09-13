@@ -13,6 +13,7 @@ I for one, have never been known as a particularly patient individual.
 
 - [Building Relay from source](#Building-Relay-from-source)
   - [Resolving broken imports](#Resolving-broken-imports)
+  - [Compilation](#Compilation)
   - [Packing for distribution](#Packing-for-distribution)
   - [Installing to project](#Installing-to-project)
 - [API](#API)
@@ -71,6 +72,8 @@ no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
 ### Resolving broken imports 
+
+[*EDIT SEPTEMBER 14: The submitted PR was merged, so these changes are no longer required!*](https://github.com/facebook/relay/commit/bf786471c7c9c8a3cc7d027129c36177544f2c45)
 
 There are currently three files containing broken imports:
 
@@ -159,7 +162,9 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-[I have opened a pull request, so these changes will hopefully become unnecessary in the near future.](https://github.com/facebook/relay/pull/2847)
+~~[I have opened a pull request, so these changes will hopefully become unnecessary in the near future.](https://github.com/facebook/relay/pull/2847)~~ **Merged!**
+
+## Compilation
 
 Now we're ready to compile the source code into consumable production code.  
 Navigate to the root of the Relay project and run the following command:
