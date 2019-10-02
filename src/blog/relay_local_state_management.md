@@ -5,6 +5,9 @@ excerpt: "A controlled input using Relay"
 published: true
 ---
 
+> I've since the writing of this article, been fortunate enough to contribute with some official documentation over at Relay:
+> https://relay.dev/docs/en/local-state-management
+
 Amongst the shrouds of the Relay source code, there are many a treasure to be found.
 One of these treasures is rumoured to be none other, than local state.
 

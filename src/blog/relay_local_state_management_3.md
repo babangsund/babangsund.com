@@ -5,6 +5,9 @@ excerpt: "The data-masking crusader"
 published: true
 ---
 
+> I've since the writing of this article, been fortunate enough to contribute with some official documentation over at Relay:
+> https://relay.dev/docs/en/local-state-management
+
 Every great movie series, is a trilogy.  
 This is a law and thus, there are no exceptions.
 

@@ -5,6 +5,9 @@ excerpt: "Is the drawer open or closed?"
 published: true
 ---
 
+> I've since the writing of this article, been fortunate enough to contribute with some official documentation over at Relay:
+> https://relay.dev/docs/en/local-state-management
+
 [In my previous post](https://babangsund.com/relay_local_state_management/), I explain how to use [Relay](https://relay.dev/) as a local state management library.
 
 If you haven’t read it yet, I highly recommend doing so *first*.
