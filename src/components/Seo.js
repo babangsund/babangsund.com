@@ -39,7 +39,7 @@ function SEO({url = '', title = '', description = ''}) {
       <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
-      <mega name="twitter:site" content="@babangsund" />
+      <meta name="twitter:site" content="@babangsund" />
       <meta name="twitter:image" content={metaImage} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site.siteMetadata.twitter} />
