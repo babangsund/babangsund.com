@@ -679,7 +679,7 @@ Next up, is the Notes component.
 Here we'll add a `LocalQueryRenderer`.
 It works like a regular `QueryRenderer`, except it does **not** send a request to the server, but rather looks up the result in the local store.
 
-It comes from the  [react-relay-local-query-renderer](https://github.com/babangsund/react-relay-local-query-renderer) package.
+It comes from the  [react-relay-local-query](https://github.com/babangsund/react-relay-local-query) package.
 
 ```jsx
 // Notes.js
