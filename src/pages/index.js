@@ -36,7 +36,7 @@ function Index({data, path}) {
   const blogposts = data.blog.edges;
   return (
     <Layout path={path}>
-      <Seo title="Blog by Benjamin A. Bangsund" />
+      <Seo title="Blog by Benjamin Bangsund" />
       {blogposts.map(({node}) => (
         <BlogPost key={node.id} blogPost={node} />
       ))}
