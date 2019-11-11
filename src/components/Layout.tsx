@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import styled, {ThemeProvider, createGlobalStyle} from 'styled-components';
 
 // project
 import code from './code';
@@ -54,12 +54,11 @@ const GlobalStyle = createGlobalStyle`
   ${code};
 `;
 
-
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-function Layout({ children = null }: Props): React.ReactElement {
+function Layout({children = null}: Props): React.ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <Container>

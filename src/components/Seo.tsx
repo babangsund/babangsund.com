@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import * as bab_sm from '../../bab_sm.png';
-import { useStaticQuery, graphql } from 'gatsby';
+import {useStaticQuery, graphql} from 'gatsby';
 
 interface Props {
   url?: string;
@@ -14,7 +14,7 @@ function SEO({
   title = '',
   description = '',
 }: Props): React.ReactElement {
-  const { site } = useStaticQuery(
+  const {site} = useStaticQuery(
     graphql`
       query SeoQuery {
         site {

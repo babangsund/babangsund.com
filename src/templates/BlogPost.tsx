@@ -1,12 +1,12 @@
 import React from 'react';
-import { graphql, Link } from 'gatsby';
+import {graphql, Link} from 'gatsby';
 import styled from 'styled-components';
 
 // project
-import { Post } from '../global';
+import {Post} from '../global';
 import Seo from '../components/Seo';
 import Layout from '../components/Layout';
-import { rhythm } from '../utils/typography';
+import {rhythm} from '../utils/typography';
 
 const H3 = styled.h3`
   margin: ${rhythm(0, 0, 0.25)};
@@ -23,9 +23,9 @@ interface Props {
   };
 }
 
-function BlogPost({ data, path, pageContext }: Props): React.ReactElement {
-  const { post } = data,
-    { prev, next } = pageContext;
+function BlogPost({data, path, pageContext}: Props): React.ReactElement {
+  const {post} = data,
+    {prev, next} = pageContext;
 
   return (
     <Layout>
@@ -36,12 +36,12 @@ function BlogPost({ data, path, pageContext }: Props): React.ReactElement {
             {post.frontmatter.date} • {post.timeToRead} minute read
           </p>
         </header>
-        <div dangerouslySetInnerHTML={{ __html: post.html }} />
-        <div style={{ display: 'flex' }}>
+        <div dangerouslySetInnerHTML={{__html: post.html}} />
+        <div style={{display: 'flex'}}>
           {prev && (
             <Link to={prev.fields.slug}>← {prev.frontmatter.title}</Link>
           )}
-          <div style={{ flex: 1 }} />
+          <div style={{flex: 1}} />
           {next && (
             <Link to={next.fields.slug}>{next.frontmatter.title} →</Link>
           )}

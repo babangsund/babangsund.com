@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 // project
-import { rhythm } from '../utils/typography';
+import {rhythm} from '../utils/typography';
 
 const Container = styled.section`
   flex: 1;
@@ -18,10 +18,10 @@ const Container = styled.section`
 `;
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-function Main({ children }: Props): React.ReactElement {
+function Main({children}: Props): React.ReactElement {
   return (
     <Container>
       <main>{children}</main>

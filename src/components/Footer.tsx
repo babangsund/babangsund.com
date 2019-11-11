@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useStaticQuery, graphql } from 'gatsby';
+import {useStaticQuery, graphql} from 'gatsby';
 
 // project
-import { rhythm } from '../utils/typography';
+import {rhythm} from '../utils/typography';
 
 const Container = styled.section`
   bottom: 0;
@@ -32,7 +32,7 @@ const A = styled.a`
 function Footer(): React.ReactElement {
   const {
     site: {
-      siteMetadata: { twitter, github },
+      siteMetadata: {twitter, github},
     },
   } = useStaticQuery(graphql`
     query FooterQuery {

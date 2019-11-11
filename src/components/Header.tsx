@@ -1,9 +1,9 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { useStaticQuery, graphql, Link } from 'gatsby';
+import styled, {css} from 'styled-components';
+import {useStaticQuery, graphql, Link} from 'gatsby';
 
 // project
-import { rhythm } from '../utils/typography';
+import {rhythm} from '../utils/typography';
 
 interface ContainerProps {
   scrolling: string | undefined;
@@ -34,7 +34,7 @@ const Container = styled.section<ContainerProps>`
 `;
 
 function Header(): React.ReactElement {
-  const { site } = useStaticQuery(graphql`
+  const {site} = useStaticQuery(graphql`
     query HeaderQuery {
       site {
         siteMetadata {

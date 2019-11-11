@@ -3,10 +3,7 @@ import React from 'react';
 const themes = ['dark', 'light'];
 const localStorageKey = 'babangsund.theme';
 
-function useTheme(): [
-  string,
-  () => void
-] {
+function useTheme(): [string, () => void] {
   const [value, setValue] = React.useState<string>(() => {
     try {
       const item = window.localStorage.getItem(localStorageKey);
