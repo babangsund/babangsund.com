@@ -1,11 +1,12 @@
 import React from 'react';
-import {Link, graphql} from 'gatsby';
 import styled from 'styled-components';
+import { Link, graphql } from 'gatsby';
 
-import Seo from 'components/Seo';
-import Layout from 'components/Layout';
-
-import {rhythm} from 'utils/typography';
+// project
+import { Post } from "../global";
+import Seo from '../components/Seo';
+import Layout from '../components/Layout';
+import { rhythm } from '../utils/typography';
 
 const Article = styled.article`
   &:not(:first-of-type) {
@@ -16,7 +17,24 @@ const Article = styled.article`
   }
 `;
 
-function BlogPost({blogPost}) {
+interface Edge {
+  node: Post;
+}
+
+interface BlogPostProps {
+  blogPost: Post;
+}
+
+interface IndexProps {
+  path: string;
+  data: {
+    blog: {
+      edges: Edge[]
+    }
+  }
+}
+
+function BlogPost({ blogPost }: BlogPostProps): React.ReactElement {
   return (
     <Article>
       <h3>
@@ -32,12 +50,12 @@ function BlogPost({blogPost}) {
   );
 }
 
-function Index({data, path}) {
+function Index({ data, path }: IndexProps): React.ReactElement {
   const blogposts = data.blog.edges;
   return (
     <Layout path={path}>
       <Seo title="Blog by Benjamin Bangsund" />
-      {blogposts.map(({node}) => (
+      {blogposts.map(({ node }) => (
         <BlogPost key={node.id} blogPost={node} />
       ))}
     </Layout>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // project
-import Layout from 'components/Layout';
+import Layout from '../components/Layout';
 
 type Props = {
   children: React.ReactChild

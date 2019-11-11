@@ -1,4 +1,5 @@
 export interface Post {
+  id: string;
   html: string;
   excerpt: string;
   timeToRead: string;
@@ -8,5 +9,6 @@ export interface Post {
   frontmatter: {
     date: string;
     title: string;
+    excerpt: string;
   };
 }
