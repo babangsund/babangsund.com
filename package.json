@@ -31,12 +31,17 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
+    "@types/node": "^12.12.7",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.9.4",
     "babel-preset-gatsby": "^0.2.20",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.2.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.2"
   },
   "license": "MIT",
   "scripts": {
