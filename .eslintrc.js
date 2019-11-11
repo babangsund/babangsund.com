@@ -1,14 +1,32 @@
 module.exports = {
-  plugins: ['react', 'react-hooks'],
-  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
-  extends: 'react-app',
-  plugins: ['react-hooks'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['react', 'react-hooks', '@typescript-eslint'],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'prettier/@typescript-eslint',
+  ],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
-  },
-  globals: {
-    graphql: false,
-    __PATH_PREFIX__: true,
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowExpressions: true,
+      },
+    ],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        vars: 'all',
+        args: 'after-used',
+        ignoreRestSiblings: true,
+      },
+    ],
   },
 };
