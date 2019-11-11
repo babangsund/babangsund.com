@@ -4,10 +4,10 @@ import React from 'react';
 import Layout from '../components/Layout';
 
 type Props = {
-  children: React.ReactChild
-}
+  children: React.ReactNode;
+};
 
-function Markdown({ children }: Props): React.ReactNode {
+function Markdown({children}: Props): React.ReactElement {
   return <Layout>{children}</Layout>;
 }
 

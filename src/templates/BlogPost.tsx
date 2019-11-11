@@ -3,7 +3,7 @@ import { graphql, Link } from 'gatsby';
 import styled from 'styled-components';
 
 // project
-import { Post } from "../global";
+import { Post } from '../global';
 import Seo from '../components/Seo';
 import Layout from '../components/Layout';
 import { rhythm } from '../utils/typography';
@@ -16,20 +16,19 @@ interface Props {
   path: string;
   data: {
     post: Post;
-  }
+  };
   pageContext: {
     next: Post;
     prev: Post;
-  }
+  };
 }
 
-
-function BlogPost({ data, path, pageContext }: Props): React.ReactNode {
+function BlogPost({ data, path, pageContext }: Props): React.ReactElement {
   const { post } = data,
     { prev, next } = pageContext;
 
   return (
-    <Layout path={path}>
+    <Layout>
       <article>
         <header>
           <H3>{post.frontmatter.title.toUpperCase()}</H3>

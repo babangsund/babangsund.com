@@ -26,7 +26,6 @@ interface BlogPostProps {
 }
 
 interface IndexProps {
-  path: string;
   data: {
     blog: {
       edges: Edge[]
@@ -50,10 +49,10 @@ function BlogPost({ blogPost }: BlogPostProps): React.ReactElement {
   );
 }
 
-function Index({ data, path }: IndexProps): React.ReactElement {
+function Index({ data }: IndexProps): React.ReactElement {
   const blogposts = data.blog.edges;
   return (
-    <Layout path={path}>
+    <Layout>
       <Seo title="Blog by Benjamin Bangsund" />
       {blogposts.map(({ node }) => (
         <BlogPost key={node.id} blogPost={node} />

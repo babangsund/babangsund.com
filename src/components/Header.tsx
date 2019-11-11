@@ -1,10 +1,15 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
-import {useStaticQuery, graphql, Link} from 'gatsby';
+import styled, { css } from 'styled-components';
+import { useStaticQuery, graphql, Link } from 'gatsby';
 
-import {rhythm} from 'utils/typography';
+// project
+import { rhythm } from '../utils/typography';
 
-const Container = styled.section`
+interface ContainerProps {
+  scrolling: string | undefined;
+}
+
+const Container = styled.section<ContainerProps>`
   z-index: 2;
   width: 100%;
   display: flex;
@@ -28,8 +33,8 @@ const Container = styled.section`
   }
 `;
 
-function Header() {
-  const {site} = useStaticQuery(graphql`
+function Header(): React.ReactElement {
+  const { site } = useStaticQuery(graphql`
     query HeaderQuery {
       site {
         siteMetadata {
@@ -41,7 +46,7 @@ function Header() {
 
   const [scrolling, setScrolling] = React.useState(false);
   React.useEffect(() => {
-    function scroll() {
+    function scroll(): void {
       setScrolling(window.scrollY > 60 ? true : false);
     }
     window.addEventListener('scroll', scroll);

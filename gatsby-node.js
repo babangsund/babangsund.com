@@ -59,7 +59,7 @@ exports.createPages = async ({actions, graphql}) => {
       slug = node.fields.slug,
       prev = blogposts[index - 1] && blogposts[index - 1].node,
       next = blogposts[index + 1] && blogposts[index + 1].node,
-      component = path.resolve(__dirname, 'src/templates/BlogPost.js');
+      component = path.resolve(__dirname, 'src/templates/BlogPost.tsx');
 
     createPage({
       component,

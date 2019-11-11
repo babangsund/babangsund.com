@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useStaticQuery, graphql} from 'gatsby';
+import { useStaticQuery, graphql } from 'gatsby';
 
-import {rhythm} from 'utils/typography';
+// project
+import { rhythm } from '../utils/typography';
 
 const Container = styled.section`
   bottom: 0;
@@ -28,10 +29,10 @@ const A = styled.a`
   color: ${p => p.theme.purple};
 `;
 
-function Footer({path}) {
+function Footer(): React.ReactElement {
   const {
     site: {
-      siteMetadata: {twitter, github, stackoverflow},
+      siteMetadata: { twitter, github },
     },
   } = useStaticQuery(graphql`
     query FooterQuery {
@@ -39,7 +40,6 @@ function Footer({path}) {
         siteMetadata {
           github
           twitter
-          stackoverflow
         }
       }
     }
@@ -59,7 +59,7 @@ function Footer({path}) {
   );
 }
 
-function Github() {
+function Github(): React.ReactElement {
   return (
     <svg
       width="24"
@@ -76,7 +76,7 @@ function Github() {
   );
 }
 
-function Twitter() {
+function Twitter(): React.ReactElement {
   return (
     <svg
       width="24"

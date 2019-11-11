@@ -1,13 +1,12 @@
 import React from 'react';
-import styled, {ThemeProvider, createGlobalStyle} from 'styled-components';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 
-import Main from 'components/Main';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-
+// project
 import code from './code';
-
-import theme from 'utils/theme';
+import Main from './Main';
+import Header from './Header';
+import Footer from './Footer';
+import theme from '../utils/theme';
 
 const Container = styled.section`
   display: flex;
@@ -55,14 +54,19 @@ const GlobalStyle = createGlobalStyle`
   ${code};
 `;
 
-function Layout({path, children}) {
+
+interface Props {
+  children: React.ReactNode
+}
+
+function Layout({ children = null }: Props): React.ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <Container>
         <GlobalStyle />
-        <Header path={path} />
-        <Main path={path}>{children}</Main>
-        <Footer path={path} />
+        <Header />
+        <Main>{children}</Main>
+        <Footer />
       </Container>
     </ThemeProvider>
   );
