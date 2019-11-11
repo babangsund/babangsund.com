@@ -1,7 +1,7 @@
 import '../fonts/fonts.css';
 import Typography from 'typography';
 
-import theme from 'utils/theme';
+import theme from './theme';
 
 const typographyTheme = {
   scaleRatio: 2,
@@ -15,7 +15,7 @@ const typographyTheme = {
   bodyColor: 'hsla(0,0%,100%,0.95)',
   bodyFontFamily: ['Nunito', 'sans-serif'],
   headerFontFamily: ['Nunito', 'sans-serif'],
-  overrideStyles: ({rhythm}) => ({
+  overrideStyles: (/*{rhythm}*/) => ({
     'pre,code': {
       fontFamily: 'Fira Code, -apple-system, monospace',
     },
@@ -33,5 +33,5 @@ if (process.env.NODE_ENV !== 'production') {
 
 export default typography;
 export const scale = typography.scale;
-export const rhythm = (...args) =>
+export const rhythm = (...args: number[]): string =>
   args.map(x => typography.rhythm(x)).join(' ');

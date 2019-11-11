@@ -8,5 +8,5 @@ export default {
   darker: '	hsl(264, 100%, 30%)',
   darkest: 'hsl(264, 100%, 20%)',
   darkester: 'hsl(264, 100%, 15%)',
-  bg: l => `hsl(264, 100%, ${l}%)`,
+  bg: (l: number) => `hsl(264, 100%, ${l}%)`,
 };

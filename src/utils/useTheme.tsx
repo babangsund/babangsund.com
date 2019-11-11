@@ -3,8 +3,11 @@ import React from 'react';
 const themes = ['dark', 'light'];
 const localStorageKey = 'babangsund.theme';
 
-function useTheme() {
-  const [value, setValue] = React.useState(() => {
+function useTheme(): [
+  string,
+  () => void
+] {
+  const [value, setValue] = React.useState<string>(() => {
     try {
       const item = window.localStorage.getItem(localStorageKey);
       const parsed = item && JSON.parse(item);
