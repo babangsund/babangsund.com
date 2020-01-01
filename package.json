@@ -2,7 +2,7 @@
   "name": "babangsund.com",
   "private": true,
   "description": "Benjamin's personal website",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Benjamin Bangsund (https://babangsund.com)",
   "repository": "https://github.com/babangsund/babangsund.com",
   "dependencies": {
