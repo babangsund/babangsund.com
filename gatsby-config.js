@@ -1,3 +1,6 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 module.exports = {
   siteMetadata: {
     lang: 'en',
@@ -14,6 +17,14 @@ module.exports = {
     'gatsby-plugin-catch-links',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
+    {
+      resolve: `gatsby-plugin-s3`,
+      options: {
+        protocol: "https",
+        hostname: "babangsund.com",
+        bucketName: "babangsund.com"
+      },
+    },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
