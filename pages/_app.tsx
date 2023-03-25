@@ -1,5 +1,6 @@
 import Head from "next/head";
 import type { AppProps } from "next/app";
+import { Analytics } from "@vercel/analytics/react";
 import { Nunito, Fira_Code } from "next/font/google";
 
 import styles from "@/styles/App.module.scss";
@@ -25,6 +26,7 @@ const monoFont = Fira_Code({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
+      <Analytics />
       <Seo
         meta={{
           url: "https://babangsund.com/",
