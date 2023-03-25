@@ -9,8 +9,8 @@ const cards = [
   },
   {
     href: "https://notspacexlaunches.com/",
-    title: "Notspacexlaunches.com",
-    description: "Interactive SpaceX launch playback",
+    title: "Interactive SpaceX launch playback",
+    description: "Personal project",
     backgroundImg: "/projects/notspacexlaunches.com.png",
     backgroundImgPriority: true,
   },
