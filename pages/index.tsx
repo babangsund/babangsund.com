@@ -19,12 +19,14 @@ const cards = [
     backgroundImg: "/projects/prime_air_drone.webp",
     title: "Ground control systems",
     description: "Amazon Prime Air",
+    backgroundImgPriority: true,
   },
   {
     href: "https://aws.amazon.com/devops-guru/features/devops-guru-for-rds/",
     backgroundImg: "/projects/dog_rds.png",
     title: "Amazon DevOps Guru & RDS integration",
     description: "Amazon DevOps Guru | Amazon RDS",
+    backgroundImgPriority: true,
   },
   {
     href: "https://aws.amazon.com/blogs/devops/generate-devops-guru-proactive-insights-in-ecs-using-container-insights/",
