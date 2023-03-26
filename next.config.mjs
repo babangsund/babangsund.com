@@ -25,6 +25,15 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(process.cwd(), "styles")],
   },
+  async redirects() {
+    return [
+      {
+        source: "/:slug",
+        destination: "/blog/:slug",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 // Merge MDX config with Next.js config
