@@ -1,6 +1,7 @@
 .header {
   top: 0;
   z-index: 2;
+  width: 100%;
   height: 80px;
   display: flex;
   position: sticky;
@@ -12,11 +13,13 @@
 }
 
 .nav {
+  width: 100%;
   display: flex;
   align-items: center;
 }
 
 .ul {
+  width: 100%;
   padding: 0 25px;
   list-style: none;
   display: flex;
@@ -24,6 +27,11 @@
 
 .li {
   margin-left: 25px;
+  color: rgb(var(--foreground-secondary-rgba));
+
+  a {
+    color: inherit;
+  }
 
   &:first-child {
     margin-left: 0;
@@ -31,14 +39,27 @@
     pointer-events: none;
   }
 
-  color: rgb(var(--foreground-secondary-rgba));
+  &:last-child {
+    margin-left: auto;
+  }
 
   &:hover:not(.active) {
     color: rgb(var(--foreground-rgba));
   }
 
-  a {
-    color: inherit;
+  @media (max-width: 767.98px) {
+    margin-left: calc(25px / 2);
+
+    &:first-child {
+      margin-right: calc(35px / 2);
+    }
+  }
+
+  @media (max-width: 430px) {
+    &:first-child {
+      display: none;
+      margin-right: calc(35px / 3);
+    }
   }
 }
 

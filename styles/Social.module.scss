@@ -1,0 +1,42 @@
+.linkedIn {
+  margin-top: -5px;
+}
+
+.social {
+  display: flex;
+  list-style: none;
+  align-items: center;
+
+  li:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+
+.link {
+  & .github {
+    &,
+    &:hover {
+      @media (prefers-color-scheme: dark) {
+        filter: invert(1);
+      }
+    }
+  }
+
+  img {
+    opacity: 0.6;
+    display: block;
+    filter: brightness(0);
+    transition: opacity, filter;
+    will-change: opacity, filter;
+
+    @media (prefers-color-scheme: dark) {
+      // filter: invert(1);
+      filter: brightness(0) invert(1);
+    }
+
+    &:hover {
+      opacity: 1;
+      filter: unset;
+    }
+  }
+}

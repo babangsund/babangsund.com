@@ -1,12 +1,12 @@
 import clsx from "clsx";
 import Link from "next/link";
-
-import styles from "@/styles/Navigation.module.scss";
 import { useRouter } from "next/router";
+
+import { Social } from "./Social/Social";
+import styles from "@/styles/Navigation.module.scss";
 
 export function Navigation() {
   const route = useRouter();
-
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -29,6 +29,9 @@ export function Navigation() {
             })}
           >
             <Link href="/blog">Blog</Link>
+          </li>
+          <li className={styles.li}>
+            <Social />
           </li>
         </ul>
       </nav>

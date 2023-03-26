@@ -17,7 +17,7 @@ const cards = [
   {
     href: "https://www.aboutamazon.com/news/transportation/amazon-prime-air-prepares-for-drone-deliveries",
     backgroundImg: "/projects/prime_air_drone.webp",
-    title: "Ground control systems",
+    title: "Commerical & flight test ground control",
     description: "Amazon Prime Air",
     backgroundImgPriority: true,
   },
@@ -31,13 +31,13 @@ const cards = [
   {
     href: "https://aws.amazon.com/blogs/devops/generate-devops-guru-proactive-insights-in-ecs-using-container-insights/",
     backgroundImg: "/projects/dog_proactive.png",
-    title: "Proactive Insight Analysis",
+    title: "Proactive insight analysis",
     description: "Amazon DevOps Guru",
   },
   {
     href: "https://aws.amazon.com/blogs/devops/automate-container-anomaly-monitoring-of-amazon-elastic-kubernetes-service-clusters-with-amazon-devops-guru/",
     backgroundImg: "/projects/dog_eks.png",
-    title: "Amazon EKS & ECS Container Anomaly Monitoring",
+    title: "Amazon EKS & ECS container anomaly monitoring",
     description: "Amazon DevOps Guru",
   },
   {
@@ -61,7 +61,7 @@ const cards = [
   {
     href: "https://docs.aws.amazon.com/codeguru/latest/profiler-ug/working-with-visualizations-heap-summary.html",
     backgroundImg: "/projects/profiler_heap.png",
-    title: "Heap Summary Graphs",
+    title: "Heap summary graphs",
     description: "Amazon CodeGuru Profiler",
   },
   {
@@ -73,7 +73,7 @@ const cards = [
   {
     href: "https://mindworking.eu/produkter/",
     backgroundImg: "/projects/mindworking.png",
-    title: "Real Estate web application",
+    title: "Real estate web application",
     description: "Mindworking.dk",
   },
 ];
