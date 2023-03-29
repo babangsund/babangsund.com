@@ -38,7 +38,7 @@ const cards = [
     href: "https://aws.amazon.com/blogs/devops/automate-container-anomaly-monitoring-of-amazon-elastic-kubernetes-service-clusters-with-amazon-devops-guru/",
     backgroundImg: "/projects/dog_eks.png",
     title: "Amazon EKS & ECS container anomaly monitoring",
-    description: "Amazon DevOps Guru",
+    description: "Amazon DevOps Guru | Amazon EKS | Amazon ECS",
   },
   {
     href: "https://aws.amazon.com/devops-guru/",

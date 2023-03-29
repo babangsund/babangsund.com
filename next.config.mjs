@@ -28,7 +28,7 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/:slug",
+        source: "/((?!api|_next/static|_next/image|favicon.ico|blog)):slug",
         destination: "/blog/:slug",
         permanent: true,
       },
