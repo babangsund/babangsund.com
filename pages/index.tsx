@@ -17,7 +17,7 @@ const cards = [
   {
     href: "https://www.aboutamazon.com/news/transportation/amazon-prime-air-prepares-for-drone-deliveries",
     backgroundImg: "/projects/prime_air_drone.webp",
-    title: "Commerical & flight test ground control",
+    title: "Commercial & flight test ground control",
     description: "Amazon Prime Air",
     backgroundImgPriority: true,
   },
