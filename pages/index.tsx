@@ -8,6 +8,13 @@ const cards = [
     description: "My personal tech blog",
   },
   {
+    href: "https://www.anduril.com/mission-autonomy/",
+    title: "Lattice Space, Autonomy & Web Platform",
+    description: "Anduril",
+    backgroundImg: "/projects/anduril_lattice.jpeg",
+    backgroundImgPriority: true,
+  },
+  {
     href: "https://notspacexlaunches.com/",
     title: "Interactive SpaceX launch playback",
     description: "Personal project",
