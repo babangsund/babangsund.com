@@ -3,6 +3,13 @@ import styles from "@/styles/Home.module.scss";
 
 const cards = [
   {
+    href: "https://notrocketlablaunches.com/",
+    title: "Rocket Lab launch playback",
+    description: "Personal project",
+    backgroundImg: "/projects/notrocketlablaunches.com.png",
+    backgroundImgPriority: true,
+  },
+  {
     href: "/blog",
     title: "Blog",
     description: "My personal tech blog",
@@ -33,7 +40,6 @@ const cards = [
     backgroundImg: "/projects/dog_rds.png",
     title: "Amazon DevOps Guru & RDS integration",
     description: "Amazon DevOps Guru | Amazon RDS",
-    backgroundImgPriority: true,
   },
   {
     href: "https://aws.amazon.com/blogs/devops/generate-devops-guru-proactive-insights-in-ecs-using-container-insights/",
