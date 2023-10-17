@@ -3,16 +3,16 @@ import styles from "@/styles/Home.module.scss";
 
 const cards = [
   {
+    href: "/blog",
+    title: "Blog",
+    description: "My personal tech blog",
+  },
+  {
     href: "https://notrocketlablaunches.com/",
     title: "Rocket Lab launch playback",
     description: "Personal project",
     backgroundImg: "/projects/notrocketlablaunches.com.png",
     backgroundImgPriority: true,
-  },
-  {
-    href: "/blog",
-    title: "Blog",
-    description: "My personal tech blog",
   },
   {
     href: "https://www.anduril.com/mission-autonomy/",
@@ -23,7 +23,7 @@ const cards = [
   },
   {
     href: "https://notspacexlaunches.com/",
-    title: "Interactive SpaceX launch playback",
+    title: "SpaceX launch playback",
     description: "Personal project",
     backgroundImg: "/projects/notspacexlaunches.com.png",
     backgroundImgPriority: true,
