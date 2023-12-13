@@ -12,7 +12,6 @@ interface CardProps {
 }
 
 const externalLinkProps = {
-  rel: "noreferrer",
   target: "_blank",
 };
 
