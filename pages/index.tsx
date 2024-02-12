@@ -8,20 +8,19 @@ const cards = [
     description: "My personal tech blog",
   },
   {
-    href: "https://notrocketlablaunches.com/",
-    title: "Rocket Lab launch playback",
-    description: "Personal project",
-    backgroundImg: "/projects/notrocketlablaunches.com.png",
-    backgroundImgPriority: true,
-  },
-  {
     href: "https://www.stokespace.com/",
     title: "Manufacturing & Ground Software",
     description: "Stoke Space",
     backgroundImg: "/projects/stoke_space.jpg",
     backgroundImgPriority: true,
   },
-
+  {
+    href: "https://notrocketlablaunches.com/",
+    title: "Rocket Lab launch playback",
+    description: "Personal project",
+    backgroundImg: "/projects/notrocketlablaunches.com.png",
+    backgroundImgPriority: true,
+  },
   {
     href: "https://www.anduril.com/mission-autonomy/",
     title: "Lattice Space, Autonomy & Web Platform",
