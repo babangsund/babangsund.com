@@ -18,7 +18,7 @@ const cards = [
     href: "https://www.stokespace.com/",
     title: "Manufacturing & Ground Software",
     description: "Stoke Space",
-    backgroundImg: "/projects/stoke_space.jpeg",
+    backgroundImg: "/projects/stoke_space.jpg",
     backgroundImgPriority: true,
   },
 
