@@ -15,6 +15,14 @@ const cards = [
     backgroundImgPriority: true,
   },
   {
+    href: "https://www.stokespace.com/",
+    title: "Manufacturing & Ground Software",
+    description: "Stoke Space",
+    backgroundImg: "/projects/stoke_space.jpeg",
+    backgroundImgPriority: true,
+  },
+
+  {
     href: "https://www.anduril.com/mission-autonomy/",
     title: "Lattice Space, Autonomy & Web Platform",
     description: "Anduril",
@@ -33,7 +41,7 @@ const cards = [
     backgroundImg: "/projects/prime_air_drone.webp",
     title: "Commercial & flight test ground control",
     description: "Amazon Prime Air",
-    backgroundImgPriority: true,
+    backgroundImgPriority: false,
   },
   {
     href: "https://aws.amazon.com/devops-guru/features/devops-guru-for-rds/",
